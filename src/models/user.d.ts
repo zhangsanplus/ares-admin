@@ -1,0 +1,30 @@
+declare namespace UserType {
+  interface LoginParams {
+    username:string
+    password:string
+  }
+
+  interface LoginResponse {
+    token: string
+    auth: string[]
+    role: number
+  }
+
+  interface ListParams extends PagingRequest{
+    name:string
+    phone: string
+  }
+
+  interface ListItem {
+    id: number
+    name:string
+    sex: string
+    role: number
+  }
+
+  interface UserInfo {
+    username: string
+    role: number
+    authList: string[]
+  }
+}

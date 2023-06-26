@@ -1,0 +1,79 @@
+// $button-hover: lighten(#165dff, 10%);
+@import 'element-plus/dist/index.css';
+@import 'element-plus/theme-chalk/dark/css-vars.css';
+@import './theme.scss';
+
+.el-menu {
+  border-right: none;
+
+  &.el-menu--popup,
+  &.el-menu--collapse {
+    .el-menu-item,
+    .el-sub-menu {
+      &.is-active {
+        .el-sub-menu__title {
+          color: var(--el-menu-active-color);
+        }
+      }
+    }
+  }
+
+  &:not(.el-menu--collapse) {
+    .el-menu-item {
+      border-right: 3px solid var(--el-bg-color-overlay);
+
+      &.is-active {
+        background-color: var(--el-color-primary-light-9);
+        border-color: var(--el-menu-active-color);
+      }
+    }
+
+    .el-sub-menu {
+      &.is-active.is-opened {
+        >.el-sub-menu__title {
+          color: var(--el-menu-active-color);
+        }
+      }
+    }
+  }
+}
+
+.el-button {
+
+  // 长按钮样式
+  &[long] {
+    width: 100%;
+  }
+}
+
+// 调整表头样式
+.el-table th.el-table__cell {
+  color: var(--el-text-color-primary);
+  font-weight: normal;
+  background-color: var(--el-fill-color) !important;
+}
+
+// 无border时去除表头下面的边框
+.el-table:not(.el-table--border) thead:not(.is-group) th.el-table__cell.is-leaf {
+  border-bottom: 1px solid #0000;
+}
+
+// fix 暗黑模式下固定列样式
+.el-table__body-wrapper tr td.el-table-fixed-column--left,
+.el-table__body-wrapper tr td.el-table-fixed-column--right,
+.el-table__body-wrapper tr th.el-table-fixed-column--left,
+.el-table__body-wrapper tr th.el-table-fixed-column--right,
+.el-table__footer-wrapper tr td.el-table-fixed-column--left,
+.el-table__footer-wrapper tr td.el-table-fixed-column--right,
+.el-table__footer-wrapper tr th.el-table-fixed-column--left,
+.el-table__footer-wrapper tr th.el-table-fixed-column--right,
+.el-table__header-wrapper tr td.el-table-fixed-column--left,
+.el-table__header-wrapper tr td.el-table-fixed-column--right,
+.el-table__header-wrapper tr th.el-table-fixed-column--left,
+.el-table__header-wrapper tr th.el-table-fixed-column--right {
+  background-color: var(--el-bg-color-overlay);
+}
+
+.el-divider--horizontal {
+  margin: 18px 0;
+}

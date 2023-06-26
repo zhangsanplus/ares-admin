@@ -1,0 +1,10 @@
+// 分页样式
+.x-table-pagination {
+  position: relative;
+  padding: 12px 0 0 12px;
+
+  .el-pagination {
+    justify-content: flex-end;
+    background-color: var(--el-bg-color-overlay);
+  }
+}
