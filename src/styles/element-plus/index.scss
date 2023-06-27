@@ -20,7 +20,7 @@
 
   &:not(.el-menu--collapse) {
     .el-menu-item {
-      border-right: 3px solid var(--el-bg-color-overlay);
+      border-right: 3px solid var(--el-menu-bg-color);
 
       &.is-active {
         background-color: var(--el-color-primary-light-9);
