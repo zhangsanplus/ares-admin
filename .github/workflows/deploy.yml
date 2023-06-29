@@ -1,29 +1,35 @@
-name: Build and Deploy
+name: deploy
 
 on:
   push:
-    branches:
-      - main # 只有在 main 分支提交代码时触发构建和部署
-
+    branches: ["main"]
 jobs:
-  build-and-deploy:
+  build:
     runs-on: ubuntu-latest
 
+    strategy:
+      matrix:
+        node-version: ["16.x"]
+
     steps:
-      - name: Checkout code
-        uses: actions/checkout@v2
+      - name: checkout
+        uses: actions/checkout@main
 
-      - name: Install pnpm
-        run: npm install pnpm@7 -g
-
-      - name: Install dependencies
-        run: pnpm install
-
-      - name: Build project
-        run: npm run build
-
-      - name: Deploy to GitHub Pages
-        uses: peaceiris/actions-gh-pages@v3
+      - name: install node
+        uses: actions/setup-node@v1
         with:
-          github_token: ${{ secrets.CI_TOKEN }} # 使用预设的 GITHUB_TOKEN
-          publish_dir: ./dist
+          node-version: ${{ matrix.node-version }}
+
+      - name: install & build
+        run: |
+          npm install pnpm@7 -g
+          pnpm install
+          npm run build
+
+      - name: deploy
+        env:
+          access_token: ${{ secrets.CI_TOKEN }}
+        run: |
+          echo $access_token
+          sed -i 's/\r//' deploy.sh
+          bash ./deploy.sh

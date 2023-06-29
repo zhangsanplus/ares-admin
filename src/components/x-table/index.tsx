@@ -192,7 +192,7 @@ export default defineComponent({
     /**
      * 排序
      */
-    function handleTableSortChange({ prop, order }: any) {
+    function handleTableSortChange({ prop, order }: XTableSort) {
       const { pageSize } = props
       onChange({ pageNum: 1, pageSize, prop, order, type: 'sort' })
     }
@@ -285,12 +285,12 @@ export default defineComponent({
     /**
      * 渲染多级列
      */
-    function renderColumnChildren(item: XTableColumn, children: Required<XTableColumn>['children']) {
-      if (item.hidden) return null
+    function renderColumnChildren(column: XTableColumn, children: Required<XTableColumn>['children']) {
+      if (column.hidden) return
       return (
-        <ElTableColumn {...getColumnProps(item)}>
+        <ElTableColumn {...getColumnProps(column)}>
           {
-            children.map(item => renderTableColumn(item))
+            children.map(column => renderTableColumn(column))
           }
         </ElTableColumn>
       )
@@ -367,11 +367,11 @@ export default defineComponent({
             v-slots={extraSlots}
           >
             {
-              props.columns.map((item) => {
-                if (Array.isArray(item.children)) {
-                  return renderColumnChildren(item, item.children)
+              props.columns.map((column) => {
+                if (Array.isArray(column.children)) {
+                  return renderColumnChildren(column, column.children)
                 }
-                return renderTableColumn(item)
+                return renderTableColumn(column)
               })
             }
           </ElTable>

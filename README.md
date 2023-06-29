@@ -7,7 +7,7 @@
 
 [![License](https://img.shields.io/npm/l/package.json.svg?style=flat)](https://github.com/zhangsanplus/ares-admin/blob/main/LICENSE)
 
-基于 Element Plus 和 Vue3 的开箱即用的中后台管理系统前端模板
+基于 Element Plus 和 Vue3 的开箱即用的中后台前端模板
 </div>
 
 ## 🔥 Overview
@@ -18,7 +18,7 @@
 
 ## 🚀 Preview
 
-在线预览 [Ares Admin](https://zhangsanplus.github.io/ares-admin/)
+在线预览 [Ares Admin](https://zhangsanplus.github.io/)
 
 ![screenshot](./screenshot/1.png)
 ![screenshot](./screenshot/2.png)
