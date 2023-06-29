@@ -261,4 +261,4 @@ function handleTableChange(data: XTableChangeData) {
   state.pageNum = pageNum
   state.pageSize = pageSize
 }
-</script>@/hooks/column@/hooks/local-columns
+</script>
