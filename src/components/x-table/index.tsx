@@ -1,6 +1,6 @@
 import { ElPagination, ElTable, ElTableColumn } from 'element-plus'
 import XColumn from '@/components/x-column/index.vue'
-import { isFunction, isUndefined } from '@/utils/is'
+import { isUndefined } from '@/utils/is'
 import type { PropType } from 'vue'
 import './index.scss'
 
@@ -97,9 +97,9 @@ export default defineComponent({
      * 初始排序
      */
     defaultSort: {
-      type: Object as PropType<{ prop: string; order: 'ascending' | 'descending' }>,
+      type: Object as PropType<XTableSort>,
       default() {
-        return { prop: '', order: '' }
+        return null
       },
     },
 
@@ -123,19 +123,12 @@ export default defineComponent({
   setup(props, { slots, attrs, emit }) {
     // 定义需要继承的非 props 属性
     const nonPropsAttrs = attrs
-    const { prop, order } = props.defaultSort
-    const tableState = reactive<{
-      tid: number
-      currentPage: number
-      sortBy: string
-      sortOrder: 'ascending' | 'descending'
-      tableData: XTableData[]
-    }>({
+    const { prop, order } = props.defaultSort || {}
+    const tableState = reactive<XTableState>({
       tid: 0,
       currentPage: 1,
       sortBy: prop,
       sortOrder: order,
-      tableData: [],
     })
 
     const showPagination = computed(() => {
@@ -151,14 +144,6 @@ export default defineComponent({
     })
 
     watch(
-      () => props.dataSource,
-      (value) => {
-        tableState.tableData = value
-      },
-      { immediate: true },
-    )
-
-    watch(
       () => props.pageNum,
       () => {
         tableState.currentPage = props.pageNum
@@ -166,9 +151,20 @@ export default defineComponent({
     )
 
     /**
+     * 获取插槽
+     */
+    function getSlot(column: XTableColumn, suffix?: string) {
+      const name = column.prop || column.type
+      if (name) {
+        const key = suffix ? `${name}-${suffix}` : name
+        return slots[key]
+      }
+    }
+
+    /**
      * 改变表格列的排序和分页
      */
-    function onChange(data: XTableChangeParams) {
+    function onChange(data: XTableChangeData) {
       emit('change', data)
     }
 
@@ -221,22 +217,11 @@ export default defineComponent({
     function getColumnProps(column: XTableColumn) {
       const col = { ...column }
       Reflect.deleteProperty(col, 'children')
-      Reflect.deleteProperty(col, 'format')
+      Reflect.deleteProperty(col, 'hidden')
       col.key = column.key || column.prop || column.type
-      col.minWidth = column.minWidth ?? 100
       col.showOverflowTooltip = col.showOverflowTooltip ?? true
       col.showOverflowTooltip = column.prop === 'action' ? false : column.showOverflowTooltip
       return col
-    }
-
-    /**
-     * 渲染列
-     */
-    function renderFormatColumn(column: XTableColumn, row: XTableData) {
-      const value = row[column.prop]
-      return isFunction(column.format)
-        ? column.format({ prop: column.prop, value, row })
-        : value
     }
 
     /**
@@ -248,8 +233,8 @@ export default defineComponent({
           <ElTableColumn {...getColumnProps(column)}>
             {{
               default: (scope: any) => {
-                const slot = slots[column.prop]
-                return slot ? slot(scope) : null
+                const slot = getSlot(column)
+                return slot?.(scope)
               },
             }}
           </ElTableColumn>
@@ -261,27 +246,40 @@ export default defineComponent({
     }
 
     /**
-     * 渲染 字段列 和 字段头 插槽
+     * 渲染普通列
+     */
+    function renderBaseColumn(column: XTableColumn) {
+      const columnSlots: {
+        default?: (scope: Record<string, any>) => any
+        header?: (scope: Record<string, any>) => any
+      } = {}
+      const slot = getSlot(column)
+      const headerSlot = getSlot(column, 'header')
+
+      if (slot) {
+        columnSlots.default = scope => slot(scope)
+      }
+
+      if (headerSlot) {
+        columnSlots.header = scope => headerSlot(scope)
+      }
+
+      return (
+        <ElTableColumn {...getColumnProps(column)} >
+          {columnSlots}
+        </ElTableColumn>
+      )
+    }
+
+    /**
+     * 渲染列
      */
     function renderTableColumn(column: XTableColumn) {
-      if (column.hidden) return null
+      if (column.hidden) return
       if (column.type) {
         return renderTypeColumn(column)
       }
-      return (
-        <ElTableColumn {...getColumnProps(column)} >
-          {{
-            default: (scope: XTableColumnScope) => {
-              const slot = slots[column.prop]
-              return slot ? slot(scope) : renderFormatColumn(column, scope.row)
-            },
-            header: (scope: Omit<XTableColumnScope, 'row'>) => {
-              const slot = slots[`${column.prop}-header`]
-              return slot ? slot(scope) : scope.column.label
-            },
-          }}
-        </ElTableColumn>
-      )
+      return renderBaseColumn(column)
     }
 
     /**
@@ -340,17 +338,34 @@ export default defineComponent({
 
     return () => {
       const tableProps = {
-        ref: 'XTable',
+        ref: 'elTableRef',
         ...nonPropsAttrs,
         maxHeight: mHeight.value,
         key: tableState.tid,
-        data: tableState.tableData,
+        data: props.dataSource,
         defaultSort: props.defaultSort,
         onSortChange: handleTableSortChange,
       }
+
+      const extraSlots: {
+        append?: () => any
+        empty?: () => any
+      } = {}
+
+      if (slots.append) {
+        extraSlots.append = () => slots.append?.()
+      }
+
+      if (slots.empty) {
+        extraSlots.empty = () => slots.empty?.()
+      }
+
       return (
         <div class="x-table">
-          <ElTable {...tableProps}>
+          <ElTable
+            {...tableProps}
+            v-slots={extraSlots}
+          >
             {
               props.columns.map((item) => {
                 if (Array.isArray(item.children)) {

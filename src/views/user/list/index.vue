@@ -137,7 +137,7 @@ function handleQuery() {
   getList()
 }
 
-function handleTableChange({ pageSize, pageNum }: XTableChangeParams) {
+function handleTableChange({ pageSize, pageNum }: XTableChangeData) {
   queryForm.pageNum = pageNum
   queryForm.pageSize = pageSize
   getList()

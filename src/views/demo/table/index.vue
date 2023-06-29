@@ -59,6 +59,10 @@
         <el-button type="info" @click="clearSelection">
           清除选择
         </el-button>
+
+        <el-button type="info" @click="resetColumns">
+          重置表头
+        </el-button>
       </el-col>
 
       <el-col :span="8" style="text-align: right;">
@@ -71,6 +75,7 @@
     <x-table
       ref="tableRef"
       v-model:visible-column="dialogVisible"
+      border
       :columns="columns"
       :data-source="tableData"
       :default-sort="{ prop: 'name', order: 'descending' }"
@@ -80,25 +85,31 @@
       @change="handleTableChange"
       @column-change="handleColumnChange"
       @selection-change="handleSelectionChange"
+      @header-dragend="handleHeaderDragend"
     >
-      <template #date-header>
-        <el-button plain size="small">
-          自定义日期
-        </el-button>
+      <template #append>
+        <div style=" padding: 12px;text-align: center;">
+          好好学习，天天向上
+        </div>
       </template>
 
-      <template #date="{ row }">
-        今天是： <el-button type="primary" size="small">
-          {{ row.date }}
-        </el-button>
+      <template #expand="{ row }">
+        <p style="margin: 0 8px;padding: 15px; background: var(--el-table-header-bg-color);">
+          这条数据的日期是
+          <el-text type="primary">
+            {{ row.date }}
+          </el-text>
+        </p>
       </template>
 
       <template #status="{ row }">
-        <el-switch
-          :model-value="row.status"
-          :active-value="1"
-          :inactive-value="1"
-        />
+        <el-switch :model-value="row.status" :active-value="1" :inactive-value="1" />
+      </template>
+
+      <template #age-header>
+        <el-button plain size="small">
+          自动记住列宽变化
+        </el-button>
       </template>
 
       <template #action>
@@ -119,35 +130,32 @@
 </template>
 
 <script setup lang='ts'>
-import useColumns from '@/hooks/columns'
+import useLocalColumns from '@/hooks/local-columns'
 
-const columns = useColumns(
+const { columns, reset: resetColumns } = useLocalColumns(
   'table1',
   [
     {
       type: 'selection',
-      prop: 'index',
       width: 40,
     },
     {
       type: 'index',
-      prop: 'index',
       label: '序号',
       align: 'center',
-      width: 80,
+      width: 60,
     },
     {
-      label: '日期',
-      prop: 'date',
-      align: 'left',
-      sortable: 'custom',
+      type: 'expand',
+      label: '展开行',
+      width: 70,
     },
     {
       label: '姓名',
       prop: 'name',
       sortable: true,
-      format({ row }: any) {
-        return `格式：${row.name}`
+      formatter(row) {
+        return h('span', { style: 'color: coral' }, row.name)
       },
     },
     {
@@ -170,14 +178,17 @@ const columns = useColumns(
       label: '年龄',
       prop: 'age',
       hidden: false,
+      width: 160,
     },
     {
       label: '性别',
+      sortable: 'custom',
       prop: 'sex',
     },
     {
       label: '状态',
       prop: 'status',
+      align: 'center',
     },
     {
       label: '操作',
@@ -189,18 +200,14 @@ const columns = useColumns(
   ],
 )
 
+const tableRef = ref()
+const dialogVisible = ref(false)
 const state = reactive({
   value: '',
   pageSize: 10,
   pageNum: 1,
   tableTotal: 100,
 })
-
-const tableRef = ref()
-
-function clearSelection() {
-  tableRef.value.$refs.XTable.clearSelection()
-}
 
 const tableData = computed(() => {
   return Array.from({ length: state.pageSize }).map((_, index) => {
@@ -217,23 +224,41 @@ const tableData = computed(() => {
   })
 })
 
-function handleSelectionChange(val: XTableData[]) {
-  console.log('val =>', toRaw(val))
+function showCustomColumn() {
+  dialogVisible.value = true
 }
 
-function handleTableChange(data: XTableChangeParams) {
-  const { pageSize, pageNum } = data
-  state.pageNum = pageNum
-  state.pageSize = pageSize
-}
-
-const dialogVisible = ref(false)
-
+// 自定义列
 function handleColumnChange(cols: XTableColumn[]) {
   columns.value = cols
 }
 
-function showCustomColumn() {
-  dialogVisible.value = true
+// 清除多选
+function clearSelection() {
+  tableRef.value.$refs.elTableRef.clearSelection()
 }
-</script>
+
+// 表头拖拽记忆
+function handleHeaderDragend(newWidth: number, _oldWidth: number, column: any) {
+  columns.value.forEach((i) => {
+    if (i.prop && i.prop === column.property) {
+      i.width = newWidth
+    }
+    if (i.type && i.type === column.type) {
+      i.width = newWidth
+    }
+  })
+}
+
+// 多选
+function handleSelectionChange(val: XTableData[]) {
+  console.log('val =>', toRaw(val))
+}
+
+// 分页排序
+function handleTableChange(data: XTableChangeData) {
+  const { pageSize, pageNum } = data
+  state.pageNum = pageNum
+  state.pageSize = pageSize
+}
+</script>@/hooks/column@/hooks/local-columns

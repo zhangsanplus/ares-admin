@@ -50,7 +50,7 @@
 .el-table th.el-table__cell {
   color: var(--el-text-color-primary);
   font-weight: normal;
-  background-color: var(--el-fill-color) !important;
+  background-color: var(--el-table-header-bg-color) !important;
 }
 
 // 无border时去除表头下面的边框

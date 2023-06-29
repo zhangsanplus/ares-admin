@@ -38,6 +38,7 @@
     "axios": "1.4.0",
     "echarts": "^5.4.2",
     "element-plus": "^2.3.6",
+    "lodash-es": "^4.17.21",
     "mitt": "^3.0.0",
     "nprogress": "^0.2.0",
     "pinia": "2.1.3",

@@ -21,6 +21,5 @@ ignore:
   - .npm
   - .github
   - node_modules
-  - pre
   - dist
   - public

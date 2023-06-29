@@ -1,33 +1,35 @@
-interface XTableColumn {
-  label?: string
-  prop: string
-  type?: 'selection' | 'index' | 'expand'
-  width?: number
-  minWidth?: number
-  align?: 'left' | 'center' | 'right'
-  fixed?: 'left' | 'right' | true
-  sortable?: boolean | 'custom'
-  showOverflowTooltip?: boolean
-  children?: XTableColumn[]
-  hidden?: boolean
-  format?: (row: XTableData) => string
-  [key:string]: any
-}
+import type ElTable from 'element-plus/lib/components/table';
+import type { ElTableColumn } from 'element-plus/lib/components/table';
 
-interface XTableData {
-  [key: string]: any
-}
+export { }
 
-interface XTableColumnScope {
-  $index: number
-  row: XTableData
-  column: Record<string, any>
-}
+type ElTableType = InstanceType<typeof ElTable>;
+type ElTableProps = ElTableType['$props']
+type ElTableColumnProps = InstanceType<typeof ElTableColumn>['$props']
+type ElTableSort = Pick<Required<ElTableProps>['defaultSort'], 'prop' | 'order'>
 
-interface XTableChangeParams {
-  pageNum: number
-  pageSize: number
-  prop: string
-  order: 'ascending' | 'descending'
-  type: 'size' | 'number' | 'sort'
+declare global {
+  type XTableSort = ElTableSort
+
+  interface XTableColumn extends ElTableColumnProps {
+    children?: XTableColumn[]
+    hidden?: boolean
+  }
+
+  interface XTableData {
+    [key: string]: any
+  }
+
+  interface XTableState {
+    tid: number
+    currentPage: number
+    sortBy: XTableSort['prop']
+    sortOrder: XTableSort['order']
+  }
+
+  interface XTableChangeData extends XTableSort {
+    type: 'size' | 'number' | 'sort'
+    pageNum: number
+    pageSize: number
+  }
 }
