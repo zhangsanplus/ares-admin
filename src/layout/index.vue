@@ -1,37 +1,37 @@
 <template>
-  <el-container class="app-layout" :style="asideStyle">
+  <div class="app-layout" :class="{ 'is-mobile': hideMenu }" :style="asideStyle">
     <el-drawer
       v-if="hideMenu"
-      :model-value="!appStore.collapsed"
-      :with-header="false"
-      :size="appStore.menuWidth"
       direction="ltr"
       class="app-layout-drawer"
+      :model-value="!appStore.collapsed"
+      :size="appStore.menuWidth"
+      :with-header="false"
+      :lock-scroll="false"
       @close="handleDrawerClose"
     >
       <app-logo />
       <app-menu />
     </el-drawer>
 
-    <el-aside v-else class="app-layout-sider">
+    <div v-else class="app-layout-sider">
       <app-logo />
       <app-menu />
-    </el-aside>
+    </div>
 
-    <el-container class="app-layout-content">
-      <el-header class="app-layout-header">
+    <section class="app-layout-content">
+      <header class="app-layout-header">
         <app-header />
-      </el-header>
-      <el-main class="app-layout-main">
+      </header>
+
+      <main class="app-layout-main">
         <router-view v-slot="{ Component, route }">
-          <!-- <keep-alive> -->
           <component :is="Component" :key="route.fullPath" />
-          <!-- </keep-alive> -->
         </router-view>
         <app-footer />
-      </el-main>
-    </el-container>
-  </el-container>
+      </main>
+    </section>
+  </div>
 </template>
 
 <script setup lang="ts">
@@ -76,26 +76,15 @@ onBeforeUnmount(() => {
 .app-layout {
   height: 100%;
 
-  &-header {
-    width: 100%;
-    height: var(--app-header-height);
-    padding: 0;
-    background-color: var(--el-bg-color-overlay);
-    border-bottom: 1px solid var(--el-border-color-lighter);
+  &.is-mobile {
+    .app-layout-content {
+      padding-left: 0;
+    }
   }
 
   &-content {
-    height: 100%;
-  }
-
-  &-sider {
-    width: auto;
-    height: 100%;
-    background-color: var(--el-bg-color-overlay);
-  }
-
-  &-main {
-    padding: var(--app-margin);
+    padding-left: var(--app-aside-width);
+    transition: padding .3s ease-in-out;
   }
 
   &-drawer {
@@ -103,6 +92,29 @@ onBeforeUnmount(() => {
       height: 100vh;
       padding: 0;
     }
+  }
+
+  &-sider {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: var(--app-aside-width);
+    height: 100vh;
+    background-color: var(--el-bg-color-overlay);
+    transition: width .3s ease-in-out;
+  }
+
+  &-header {
+    position: sticky;
+    top: 0;
+    z-index: 10;
+    height: var(--app-header-height);
+    background-color: var(--el-bg-color-overlay);
+    border-bottom: 1px solid var(--el-border-color-lighter);
+  }
+
+  &-main {
+    padding: var(--app-margin);
   }
 }
 </style>

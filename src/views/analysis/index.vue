@@ -105,9 +105,9 @@ function generatePieData() {
 
 .card-group {
   display: flex;
-  gap: var(--el-main-padding);
+  gap: var(--app-margin);
   width: 100%;
-  padding-top: var(--el-main-padding);
+  padding-top: var(--app-margin);
 
   .x-card {
     flex: 1;

@@ -25,7 +25,7 @@ defineProps<{
 
 <style lang="scss">
 .x-card {
-  padding: var(--app-padding);
+  padding: var(--app-margin);
   background-color: var(--el-bg-color-overlay);
   border-radius: 4px;
 

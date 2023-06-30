@@ -22,12 +22,11 @@ declare global {
 
   interface XTableState {
     tid: number
-    currentPage: number
-    sortBy: XTableSort['prop']
-    sortOrder: XTableSort['order']
+    sortBy?: XTableSort['prop']
+    sortOrder?: XTableSort['order']
   }
 
-  interface XTableChangeData extends XTableSort {
+  interface XTableChangeData extends Partial<XTableSort> {
     type: 'size' | 'number' | 'sort'
     pageNum: number
     pageSize: number

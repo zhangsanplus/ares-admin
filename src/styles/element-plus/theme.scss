@@ -34,16 +34,6 @@
   .el-table {
     --el-table-header-bg-color: #f6f7f8;
   }
-
-  .el-menu {
-    .el-menu-item,
-    .el-sub-menu__title {
-      &:hover {
-        background-color: rgba(0, 0, 0, 0.05);
-        border-color: transparent;
-      }
-    }
-  }
 }
 
 html.dark {
@@ -58,14 +48,5 @@ html.dark {
 
   .el-table {
     --el-table-header-bg-color: var(--el-fill-color);
-  }
-
-  .el-menu {
-    .el-menu-item,
-    .el-sub-menu__title {
-      &:hover {
-        background-color: var(--el-menu-hover-bg-color);
-      }
-    }
   }
 }

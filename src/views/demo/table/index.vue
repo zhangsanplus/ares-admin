@@ -108,7 +108,7 @@
 
       <template #age-header>
         <el-button plain size="small">
-          自动记住列宽变化
+          刷新自动记住列宽
         </el-button>
       </template>
 
@@ -177,13 +177,13 @@ const { columns, reset: resetColumns } = useLocalColumns(
     {
       label: '年龄',
       prop: 'age',
-      hidden: false,
+      align: 'center',
       width: 160,
     },
     {
       label: '性别',
-      sortable: 'custom',
       prop: 'sex',
+      sortable: 'custom',
     },
     {
       label: '状态',
@@ -205,7 +205,7 @@ const dialogVisible = ref(false)
 const state = reactive({
   value: '',
   pageSize: 10,
-  pageNum: 1,
+  pageNum: 2,
   tableTotal: 100,
 })
 
@@ -252,11 +252,12 @@ function handleHeaderDragend(newWidth: number, _oldWidth: number, column: any) {
 
 // 多选
 function handleSelectionChange(val: XTableData[]) {
-  console.log('val =>', toRaw(val))
+  console.log('selection change =>', JSON.parse(JSON.stringify(val)))
 }
 
 // 分页排序
 function handleTableChange(data: XTableChangeData) {
+  console.log(`${data.type} change =>`, data)
   const { pageSize, pageNum } = data
   state.pageNum = pageNum
   state.pageSize = pageSize

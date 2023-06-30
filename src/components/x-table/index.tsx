@@ -4,6 +4,10 @@ import { isUndefined } from '@/utils/is'
 import type { PropType } from 'vue'
 import './index.scss'
 
+function getDefaultSort(attrs: Record<string, any>): any {
+  return attrs['default-sort'] || attrs.defaultSort || {}
+}
+
 export default defineComponent({
   name: 'XTable',
   inheritAttrs: false,
@@ -94,16 +98,6 @@ export default defineComponent({
     },
 
     /**
-     * 初始排序
-     */
-    defaultSort: {
-      type: Object as PropType<XTableSort>,
-      default() {
-        return null
-      },
-    },
-
-    /**
      * 行数据的 Key
      */
     rowKey: {
@@ -121,14 +115,12 @@ export default defineComponent({
   },
   emits: ['change', 'columnChange', 'update:visibleColumn'],
   setup(props, { slots, attrs, emit }) {
-    // 定义需要继承的非 props 属性
     const nonPropsAttrs = attrs
-    const { prop, order } = props.defaultSort || {}
+    const { prop: sortBy, order: sortOrder } = getDefaultSort(attrs)
     const tableState = reactive<XTableState>({
       tid: 0,
-      currentPage: 1,
-      sortBy: prop,
-      sortOrder: order,
+      sortBy,
+      sortOrder,
     })
 
     const showPagination = computed(() => {
@@ -142,13 +134,6 @@ export default defineComponent({
       }
       return showPagination.value ? props.maxHeight - 44 : props.maxHeight
     })
-
-    watch(
-      () => props.pageNum,
-      () => {
-        tableState.currentPage = props.pageNum
-      },
-    )
 
     /**
      * 获取插槽
@@ -232,7 +217,7 @@ export default defineComponent({
         return (
           <ElTableColumn {...getColumnProps(column)}>
             {{
-              default: (scope: any) => {
+              default: (scope: Record<string, any>) => {
                 const slot = getSlot(column)
                 return slot?.(scope)
               },
@@ -306,9 +291,8 @@ export default defineComponent({
         total: props.total,
         layout: props.pagerLayout,
         pageSize: props.pageSize,
-        defaultPageSize: props.pageSize,
         pageSizes: props.pageSizes,
-        currentPage: tableState.currentPage,
+        currentPage: props.pageNum,
         onSizeChange: handlePageSizeChange,
         onCurrentChange: handlePageNumChange,
       }
@@ -343,7 +327,6 @@ export default defineComponent({
         maxHeight: mHeight.value,
         key: tableState.tid,
         data: props.dataSource,
-        defaultSort: props.defaultSort,
         onSortChange: handleTableSortChange,
       }
 

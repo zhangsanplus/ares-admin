@@ -28,7 +28,5 @@ const menuList = transformRouteToMenu(filterRoutes)
 </script>
 
 <style lang="scss">
-.app-menu {
-  height: calc(100% - var(--app-header-height));
-}
+@import './index.scss';
 </style>

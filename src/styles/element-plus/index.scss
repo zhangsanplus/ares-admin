@@ -3,41 +3,6 @@
 @import 'element-plus/theme-chalk/dark/css-vars.css';
 @import './theme.scss';
 
-.el-menu {
-  border-right: none;
-
-  &.el-menu--popup,
-  &.el-menu--collapse {
-    .el-menu-item,
-    .el-sub-menu {
-      &.is-active {
-        .el-sub-menu__title {
-          color: var(--el-menu-active-color);
-        }
-      }
-    }
-  }
-
-  &:not(.el-menu--collapse) {
-    .el-menu-item {
-      border-right: 3px solid var(--el-menu-bg-color);
-
-      &.is-active {
-        background-color: var(--el-color-primary-light-9);
-        border-color: var(--el-menu-active-color);
-      }
-    }
-
-    .el-sub-menu {
-      &.is-active.is-opened {
-        >.el-sub-menu__title {
-          color: var(--el-menu-active-color);
-        }
-      }
-    }
-  }
-}
-
 .el-button {
 
   // 长按钮样式

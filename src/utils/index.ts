@@ -3,6 +3,13 @@ import useClipboard from 'vue-clipboard3'
 export const noop: Fn = () => {}
 
 /**
+ * sleep
+ */
+export function sleep(ms: number) {
+  return new Promise(resolve => setTimeout(resolve, ms))
+}
+
+/**
  * 点击复制
  */
 export function copyText(text: string | number, showToast = true) {
@@ -16,13 +23,6 @@ export function copyText(text: string | number, showToast = true) {
     .catch((error: Error) => {
       console.error('copy', error)
     })
-}
-
-/**
- * sleep
- */
-export function sleep(ms: number) {
-  return new Promise(resolve => setTimeout(resolve, ms))
 }
 
 /**

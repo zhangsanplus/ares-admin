@@ -17,12 +17,10 @@ const appStore = useAppStore()
 .app-logo {
   display: flex;
   align-items: center;
-  width: var(--app-aside-width);
   height: var(--app-header-height);
   padding: 0 16px;
   overflow: hidden;
   border-bottom: 1px solid var(--el-border-color-lighter);
-  transition: width .3s;
 }
 
 .app-name {
