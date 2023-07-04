@@ -48,11 +48,13 @@ function handleClick() {
 
   .el-tag__close {
     margin-left: 2px;
-    transition: all .25s;
+    transition: all .2s;
   }
 
   &.el-tag--info {
+    --el-tag-bg-color: var(--el-fill-color);
     --el-tag-hover-color: var(--el-color-info-light-7);
+    --el-tag-text-color: var(--el-text-color-regular);
 
     .el-tag__close {
       opacity: 0;
@@ -62,7 +64,6 @@ function handleClick() {
       .el-tag__close {
         color: inherit;
         opacity: 1;
-        transition: opacity .25s;
       }
     }
   }

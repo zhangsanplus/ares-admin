@@ -41,7 +41,6 @@ onMounted(() => {
 
 <style lang="scss">
 .app-tabs {
-  padding-left: 4px;
   border-bottom: 1px solid var(--el-border-color-lighter);
 
   .el-scrollbar__bar.is-horizontal {
@@ -49,7 +48,7 @@ onMounted(() => {
   }
 
   &-wrap {
-    padding: 4px 0;
+    padding: 4px 6px;
     white-space: nowrap;
   }
 
