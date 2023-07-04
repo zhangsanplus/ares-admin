@@ -19,10 +19,9 @@ const isMobile = computed(() => appStore.device === 'mobile')
 <style lang="scss">
 .app-header {
   display: flex;
-  flex: 1;
   align-items: center;
   justify-content: space-between;
-  height: 100%;
-  color: var(--el-text-color-primary);
+  height: calc(var(--app-navbar-height));
+  border-bottom: 1px solid var(--el-border-color-lighter);
 }
 </style>

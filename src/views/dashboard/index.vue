@@ -1,13 +1,11 @@
 <template>
-  <x-card>
-    <h5 style="font-weight: normal;font-size: 18px;">
-      欢迎使用 {{ appStore.title }}！
-    </h5>
-  </x-card>
+  <analysis />
 </template>
 
-<script setup lang="ts">
-import useAppStore from '@/store/modules/app'
+<script setup lang="ts" name="dashboard">
+import Analysis from '@/views/analysis/index.vue'
 
-const appStore = useAppStore()
+onActivated(() => {
+  console.log('/dashboard => onActivated')
+})
 </script>

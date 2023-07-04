@@ -33,16 +33,12 @@ import dayjs from 'dayjs'
 import BarChart from './components/bar-chart.vue'
 import LineChart from './components/line-chart.vue'
 import PieChart from './components/pie-chart.vue'
-import type { BarChartData, LineChartData } from '@/plugins/echarts'
+import type { BarChartData, LineChartData, PieChartData } from '@/plugins/echarts'
 
 const type = ref<'IP' | 'PV' | 'UV'>('IP')
 const lineData = ref<LineChartData[]>([])
 const barData = ref<BarChartData[]>([])
-const pieData = ref<any>({})
-
-lineData.value = generateLineData()
-barData.value = generateBarData()
-pieData.value = generatePieData()
+const pieData = ref<PieChartData[]>([])
 
 function handleChange() {
   barData.value = generateBarData()
@@ -92,6 +88,12 @@ function generatePieData() {
     }
   })
 }
+
+onMounted(() => {
+  lineData.value = generateLineData()
+  barData.value = generateBarData()
+  pieData.value = generatePieData()
+})
 </script>
 
 <style lang="scss" scoped>

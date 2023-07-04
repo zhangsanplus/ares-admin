@@ -1,6 +1,6 @@
 .app-menu {
-  height: calc(100% - var(--app-header-height));
-  border-right: none;
+  height: calc(100% - var(--app-navbar-height));
+  border-right: 1px solid var(--el-border-color-lighter);
 }
 
 :root {

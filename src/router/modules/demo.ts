@@ -9,6 +9,7 @@ const demo: RouteRecordRaw = {
   meta: {
     title: '常用组件',
     icon: 'menu-demo',
+    order: 98,
   },
   children: [
     {

@@ -262,4 +262,8 @@ function handleTableChange(data: XTableChangeData) {
   state.pageNum = pageNum
   state.pageSize = pageSize
 }
+
+onMounted(() => {
+  console.log('/demo/table => onMounted')
+})
 </script>

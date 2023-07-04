@@ -30,7 +30,7 @@ defineProps<{
   border-radius: 4px;
 
   &.is-full {
-    min-height: calc(100vh - var(--app-margin) * 2 - var(--app-header-height) - var(--app-footer-height));
+    min-height: var(--app-main-height);
   }
 
   &+& {

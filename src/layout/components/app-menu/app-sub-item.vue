@@ -22,6 +22,7 @@
 </template>
 
 <script setup lang="ts" name="app-sub-item">
+import { RouteNameEnum } from '@/enums/route'
 import { isExternal } from '@/utils/is'
 import type { MenuItem } from 'vue-router'
 
@@ -41,7 +42,10 @@ function handleClick(path: string) {
   if (isExternal(path)) {
     window.open(path, '_blank', 'noopener,noreferrer')
   } else if (fullPath === path) {
-    router.replace(`/redirect${fullPath}`)
+    router.replace({
+      name: RouteNameEnum.REDIRECT,
+      params: { path: fullPath },
+    })
   } else {
     router.push(path)
   }

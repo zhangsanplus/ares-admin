@@ -1,5 +1,5 @@
 import NProgress from 'nprogress'
-import { PathEnum } from '@/enums/page'
+import { RouteNameEnum } from '@/enums/route'
 import useUserStore from '@/store/modules/user'
 import type { LocationQueryRaw, Router } from 'vue-router'
 
@@ -13,9 +13,9 @@ NProgress.configure({
 })
 
 const ROUTER_WHITE_LIST = [
-  PathEnum.FORBIDDEN,
-  PathEnum.NOT_FOUND,
-  PathEnum.REDIRECT,
+  RouteNameEnum.FORBIDDEN,
+  RouteNameEnum.NOT_FOUND,
+  RouteNameEnum.REDIRECT,
 ]
 
 export default function createPermissionGuard(router: Router) {
@@ -25,20 +25,20 @@ export default function createPermissionGuard(router: Router) {
     const userStore = useUserStore()
 
     // 判断是访问登陆页，有 Token 就在当前页面，没有 Token 重置路由到登陆页
-    if (to.path === PathEnum.LOGIN) {
+    if (to.path === RouteNameEnum.LOGIN) {
       if (userStore.token) return next(from.fullPath)
       return next()
     }
 
     // 判断访问页面是否在路由白名单地址中，如果存在直接放行
-    if (ROUTER_WHITE_LIST.includes(to.path as PathEnum)) {
+    if (ROUTER_WHITE_LIST.includes(to.name as RouteNameEnum)) {
       return next()
     }
 
     // 判断是否有 Token，没有重定向到 login 页面
     if (!userStore.token) {
       return next({
-        path: PathEnum.LOGIN,
+        path: RouteNameEnum.LOGIN,
         query: {
           redirect: to.fullPath,
           ...to.query,
@@ -50,7 +50,7 @@ export default function createPermissionGuard(router: Router) {
     // 页面权限验证
     if (!userStore.hasRole(to.meta.role)) {
       return next({
-        path: PathEnum.FORBIDDEN,
+        path: RouteNameEnum.FORBIDDEN,
       })
     }
 

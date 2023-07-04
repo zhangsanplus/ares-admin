@@ -1,15 +1,10 @@
-interface AppDefaultSettings {
-  storagePrefix: string
-  title: string
-  menuWidth: number
-  theme: 'light' | 'dark' | 'auto'
-}
-
-const defaultSettings: AppDefaultSettings = {
+const defaultSetting: AppType.DefaultSetting = {
   theme: 'light',
-  title: 'Ares Admin',
+  size: 'default',
   storagePrefix: 'ares',
+  title: 'Ares Admin',
   menuWidth: 220,
+  showTabs: true,
 }
 
-export default defaultSettings
+export default defaultSetting

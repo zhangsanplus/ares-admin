@@ -9,21 +9,21 @@
 
 <script setup lang="ts">
 import { ArrowRight } from '@element-plus/icons-vue'
-import { PathEnum } from '@/enums/page'
+import { HOME_ROUTE_INFO, RouteNameEnum } from '@/enums/route'
 import type { RouteLocationMatched } from 'vue-router'
 
-const currentRoute = useRoute()
 const router = useRouter()
+const currentRoute = useRoute()
 const breadcrumbs = ref<RouteLocationMatched[]>([])
 
 function isDashboard(route: RouteLocationMatched) {
-  return route.path === PathEnum.DASHBOARD
+  return route.name === RouteNameEnum.DASHBOARD
 }
 
 function getBreadcrumb() {
   let matched = currentRoute.matched.filter(item => item.meta && item.meta.title)
   if (!isDashboard(matched[0])) {
-    matched = [{ path: PathEnum.DASHBOARD, meta: { title: '首页' } } as any].concat(matched)
+    matched = [HOME_ROUTE_INFO as any].concat(matched)
   }
 
   breadcrumbs.value = matched.filter((item) => {

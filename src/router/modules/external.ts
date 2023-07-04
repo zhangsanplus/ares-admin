@@ -5,6 +5,9 @@ const external: RouteRecordRaw = {
   path: '/external',
   name: 'external',
   component: Layout,
+  meta: {
+    order: -12,
+  },
   children: [
     {
       path: 'https://github.com/zhangsanplus/ares-admin',

@@ -10,6 +10,7 @@ const user: RouteRecordRaw = {
     title: '个人信息',
     icon: 'menu-user',
     alwaysShow: true,
+    order: 97,
   },
   children: [
     {

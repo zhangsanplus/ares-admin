@@ -17,7 +17,7 @@ const appStore = useAppStore()
 .app-logo {
   display: flex;
   align-items: center;
-  height: var(--app-header-height);
+  height: var(--app-navbar-height);
   padding: 0 16px;
   overflow: hidden;
   border-bottom: 1px solid var(--el-border-color-lighter);

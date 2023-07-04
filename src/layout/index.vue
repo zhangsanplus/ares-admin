@@ -1,5 +1,5 @@
 <template>
-  <div class="app-layout" :class="{ 'is-mobile': hideMenu }" :style="asideStyle">
+  <div class="app-layout" :class="{ 'is-mobile': hideMenu }" :style="layoutStyle">
     <el-drawer
       v-if="hideMenu"
       direction="ltr"
@@ -22,12 +22,11 @@
     <section class="app-layout-content">
       <header class="app-layout-header">
         <app-header />
+        <app-tabs v-if="appStore.showTabs" />
       </header>
 
       <main class="app-layout-main">
-        <router-view v-slot="{ Component, route }">
-          <component :is="Component" :key="route.fullPath" />
-        </router-view>
+        <blank-layout />
         <app-footer />
       </main>
     </section>
@@ -36,16 +35,19 @@
 
 <script setup lang="ts">
 import useAppStore from '@/store/modules/app'
+import BlankLayout from './blank-layout.vue'
 import AppFooter from './components/app-footer/index.vue'
 import AppHeader from './components/app-header/index.vue'
 import AppLogo from './components/app-logo/index.vue'
 import AppMenu from './components/app-menu/index.vue'
+import AppTabs from './components/app-tabs/index.vue'
 
 const appStore = useAppStore()
 const hideMenu = computed(() => appStore.device === 'mobile')
-const asideStyle = computed(() => {
+const layoutStyle = computed(() => {
   return {
     '--app-aside-width': appStore.collapsed ? '64px' : `${appStore.menuWidth}px`,
+    '--app-tabs-height': appStore.showTabs ? '34px' : '0px',
   }
 })
 
@@ -75,6 +77,10 @@ onBeforeUnmount(() => {
 <style lang="scss">
 .app-layout {
   height: 100%;
+
+  --app-navbar-height: 50px;
+  --app-footer-height: 40px;
+  --app-main-height: calc(100vh - var(--app-margin) * 2 - var(--app-navbar-height) - var(--app-tabs-height) - var(--app-footer-height));
 
   &.is-mobile {
     .app-layout-content {
@@ -108,9 +114,7 @@ onBeforeUnmount(() => {
     position: sticky;
     top: 0;
     z-index: 10;
-    height: var(--app-header-height);
     background-color: var(--el-bg-color-overlay);
-    border-bottom: 1px solid var(--el-border-color-lighter);
   }
 
   &-main {

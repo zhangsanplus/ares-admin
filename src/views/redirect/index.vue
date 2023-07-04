@@ -4,14 +4,12 @@ export default defineComponent({
   setup() {
     const route = useRoute()
     const router = useRouter()
+
     onBeforeMount(() => {
-      const { params, query } = route
-      const { path } = params
-      router.replace({
-        path: `/${Array.isArray(path) ? path.join('/') : path}`,
-        query,
-      })
+      const path = route.params.path as string
+      router.replace({ path })
     })
+
     return () => null
   },
 })

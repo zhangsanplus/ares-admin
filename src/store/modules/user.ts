@@ -1,8 +1,8 @@
 import * as userApi from '@/api/user'
-import { PathEnum } from '@/enums/page'
-import defaultSettings from '@/settings'
+import { RouteNameEnum } from '@/enums/route'
+import defaultSetting from '@/settings'
 
-const { storagePrefix } = defaultSettings
+const { storagePrefix } = defaultSetting
 const useUserStore = defineStore('user', () => {
   const router = useRouter()
   const token = useStorage(`${storagePrefix}-token`, '')
@@ -44,7 +44,7 @@ const useUserStore = defineStore('user', () => {
   const logout = () => {
     token.value = ''
     userinfo.value = {} as any
-    router.replace(PathEnum.LOGIN)
+    router.replace({ name: RouteNameEnum.LOGIN })
   }
 
   return {

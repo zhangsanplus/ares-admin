@@ -55,11 +55,11 @@ export function transformRouteToMenu(routes: RouteRecordRaw[] = []) {
 }
 
 // 过滤路由
-export function filterRoute(routes: RouteRecordRaw[], predicate: (route: RouteRecordRaw) => boolean) {
+export function filterRoutes(routes: RouteRecordRaw[], predicate: (route: RouteRecordRaw) => boolean) {
   return routes.reduce((result: RouteRecordRaw[], route: RouteRecordRaw) => {
     if (predicate(route)) {
       if (route.children) {
-        result.push({ ...route, children: filterRoute(route.children, predicate) })
+        result.push({ ...route, children: filterRoutes(route.children, predicate) })
       } else {
         result.push({ ...route })
       }

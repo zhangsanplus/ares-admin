@@ -1,13 +1,15 @@
-import defaultSettings from '@/settings'
+import defaultSetting from '@/settings'
 
-const { storagePrefix } = defaultSettings
+const { storagePrefix } = defaultSetting
 const useAppStore = defineStore('app', () => {
-  const title = ref(defaultSettings.title)
-  const menuWidth = ref(defaultSettings.menuWidth)
-  const device = ref<'desktop' | 'mobile'>('desktop')
+  const title = ref(defaultSetting.title)
+  const menuWidth = ref(defaultSetting.menuWidth)
+  const showTabs = ref(defaultSetting.showTabs)
+  const device = ref<AppType.Device>('desktop')
+  const size = useStorage(`${storagePrefix}-size`, defaultSetting.size)
   const collapsed = useStorage(`${storagePrefix}-collapsed`, false)
   const isDark = useDark({
-    initialValue: defaultSettings.theme,
+    initialValue: defaultSetting.theme,
     storageKey: `${storagePrefix}-theme`,
   })
 
@@ -36,20 +38,30 @@ const useAppStore = defineStore('app', () => {
   /**
    * set device
    */
-  function setDevice(value: 'desktop' | 'mobile') {
+  function setDevice(value: AppType.Device) {
     device.value = value
+  }
+
+  /**
+   * 修改 element 尺寸
+   */
+  function setSize(value: AppType.DefaultSetting['size']) {
+    size.value = value
   }
 
   return {
     isDark,
+    size,
     title,
     device,
     collapsed,
     menuWidth,
+    showTabs,
     toggleCollapse,
     toggleDark,
     setCollapse,
     setDevice,
+    setSize,
   }
 })
 
