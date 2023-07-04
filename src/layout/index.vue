@@ -57,7 +57,7 @@ function handleDrawerClose() {
 
 function resizeHandler() {
   const rect = document.body.getBoundingClientRect()
-  const isMobile = rect.width - 1 < 992
+  const isMobile = rect.width < 980
   appStore.setDevice(isMobile ? 'mobile' : 'desktop')
   appStore.setCollapse(isMobile)
 }

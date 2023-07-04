@@ -6,7 +6,7 @@ const useAppStore = defineStore('app', () => {
   const menuWidth = ref(defaultSetting.menuWidth)
   const showTabs = ref(defaultSetting.showTabs)
   const device = ref<AppType.Device>('desktop')
-  const size = useStorage(`${storagePrefix}-size`, defaultSetting.size)
+  const size = useStorage<AppType.DefaultSetting['size']>(`${storagePrefix}-size`, defaultSetting.size)
   const collapsed = useStorage(`${storagePrefix}-collapsed`, false)
   const isDark = useDark({
     initialValue: defaultSetting.theme,
