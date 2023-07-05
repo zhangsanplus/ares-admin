@@ -79,7 +79,9 @@ async function handleSelect(command: string) {
 
     if (isActivated.value) {
       const prevTab = visitedTabList.value[index - 1]
-      router.push(prevTab.fullPath)
+      if (prevTab) {
+        router.push(prevTab.fullPath)
+      }
     }
   }
   else if (command === CommandEnum.others) {

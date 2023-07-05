@@ -21,11 +21,16 @@ const props = defineProps<{
 
 const tabsStore = useTabsStore()
 const router = useRouter()
+const visitedTabList = toRef(tabsStore, 'visitedTabList')
 const route = computed(() => props.tab as RouteLocationNormalized)
 const closable = computed(() => !props.tab.meta?.affixTab)
 
 function handleClose() {
   tabsStore.deleteTab(props.index, props.tab.name as string)
+  const prevTab = visitedTabList.value[props.index - 1]
+  if (prevTab) {
+    router.push(prevTab.fullPath)
+  }
 }
 
 function handleClick() {
