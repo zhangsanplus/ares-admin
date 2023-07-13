@@ -1,7 +1,7 @@
 import axios from 'axios'
 import { ResponseEnum } from '@/enums/http'
 import useUserStore from '@/store/modules/user'
-import type { AxiosError, AxiosInstance, AxiosRequestConfig, InternalAxiosRequestConfig } from 'axios'
+import type { AxiosInstance, AxiosRequestConfig, InternalAxiosRequestConfig } from 'axios'
 
 const URL = import.meta.env.VITE_APP_API_BASE_URL
 const config = {
@@ -53,8 +53,10 @@ class RequestHttp {
         }
         return res
       },
-      (error: AxiosError) => {
-        if (error?.message) {
+      (error) => {
+        if (axios.isCancel(error)) {
+          console.error(error.message)
+        } else if (error?.message) {
           ElMessage.error(error.message)
         }
         return Promise.reject(error)
@@ -62,12 +64,12 @@ class RequestHttp {
     )
   }
 
-  get<T = any>(url: string, params?: object): Promise<HttpResponse<T>> {
-    return this.service.get(url, { params }) as any
+  get<T = any>(url: string, params?: Record<string, any>, config: AxiosRequestConfig = {}): Promise<HttpResponse<T>> {
+    return this.service.get(url, { params, ...config })
   }
 
-  post<T = any>(url: string, params?: any, config?: AxiosRequestConfig): Promise<HttpResponse<T>> {
-    return this.service.post(url, params, config) as any
+  post<T = any>(url: string, data?: any, config?: AxiosRequestConfig): Promise<HttpResponse<T>> {
+    return this.service.post(url, data, config)
   }
 }
 

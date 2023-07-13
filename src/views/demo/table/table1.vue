@@ -4,25 +4,25 @@
       <el-row>
         <el-col :span="8" :xs="24">
           <el-form-item label="用户名">
-            <el-input v-model="state.value" placeholder="请输入" />
+            <el-input v-model="queryForm.name" placeholder="请输入" />
           </el-form-item>
         </el-col>
 
         <el-col :span="8" :xs="24">
           <el-form-item label="电话">
-            <el-input v-model="state.value" placeholder="请输入" />
+            <el-input v-model="queryForm.phone" placeholder="请输入" />
           </el-form-item>
         </el-col>
 
         <el-col :span="8" :xs="24">
           <el-form-item label="地址">
-            <el-input v-model="state.value" placeholder="请输入" />
+            <el-input v-model="queryForm.name" placeholder="请输入" />
           </el-form-item>
         </el-col>
 
         <el-col :span="8" :xs="24">
           <el-form-item label="出生日期">
-            <el-input v-model="state.value" placeholder="请输入" />
+            <el-input v-model="queryForm.name" placeholder="请输入" />
           </el-form-item>
         </el-col>
       </el-row>
@@ -79,9 +79,9 @@
       :columns="columns"
       :data-source="tableData"
       :default-sort="{ prop: 'name', order: 'descending' }"
-      :total="state.tableTotal"
-      :page-size="state.pageSize"
-      :page-num="state.pageNum"
+      :total="tableTotal"
+      :page-size="queryForm.pageSize"
+      :page-num="queryForm.pageNum"
       @change="handleTableChange"
       @column-change="handleColumnChange"
       @selection-change="handleSelectionChange"
@@ -130,6 +130,7 @@
 </template>
 
 <script setup lang='ts'>
+import { getUserList } from '@/api/user'
 import useLocalColumns from '@/hooks/local-columns'
 
 const { columns, reset: resetColumns } = useLocalColumns(
@@ -200,30 +201,29 @@ const { columns, reset: resetColumns } = useLocalColumns(
   ],
 )
 
-const tableRef = ref()
-const dialogVisible = ref(false)
-const state = reactive({
-  value: '',
+const queryForm = reactive({
+  name: '',
+  phone: '',
   pageSize: 10,
-  pageNum: 2,
-  tableTotal: 100,
+  pageNum: 1,
 })
 
-const tableData = computed(() => {
-  return Array.from({ length: state.pageSize }).map((_, index) => {
-    const i = index + (state.pageNum - 1) * state.pageSize
-    return {
-      date: `${i + 1}月${i + 1}日`,
-      name: `李${i + 1}`,
-      age: Math.floor(Math.random() * 100),
-      sex: Math.random() > 0.5 ? '男' : '女',
-      city: Math.random() > 0.5 ? '上海市' : '北京市',
-      area: `上海市普陀区金沙江路上海市普陀区金沙江路${i + 1}号`,
-      status: Math.random() > 0.5 ? 0 : 1,
-    }
-  })
+const dialogVisible = ref(false)
+const tableRef = ref()
+const tableTotal = ref(0)
+const tableData = ref<UserType.ListItem[]>([])
+
+async function getList() {
+  const { data } = await getUserList(queryForm)
+  tableData.value = data.list
+  tableTotal.value = data.count
+}
+
+onMounted(() => {
+  getList()
 })
 
+// 自定义列弹窗
 function showCustomColumn() {
   dialogVisible.value = true
 }
@@ -259,11 +259,7 @@ function handleSelectionChange(val: XTableData[]) {
 function handleTableChange(data: XTableChangeData) {
   console.log(`${data.type} change =>`, data)
   const { pageSize, pageNum } = data
-  state.pageNum = pageNum
-  state.pageSize = pageSize
+  queryForm.pageNum = pageNum
+  queryForm.pageSize = pageSize
 }
-
-onMounted(() => {
-  console.log('/demo/table => onMounted')
-})
 </script>

@@ -1,7 +1,7 @@
 declare namespace UserType {
   interface LoginParams {
-    username:string
-    password:string
+    username: string
+    password: string
   }
 
   interface LoginResponse {
@@ -10,16 +10,21 @@ declare namespace UserType {
     role: number
   }
 
-  interface ListParams extends PagingRequest{
-    name:string
+  interface ListParams {
+    name: string
     phone: string
   }
 
   interface ListItem {
     id: number
-    name:string
+    name: string
     sex: string
     role: number
+    date: string
+    age: number
+    city: string
+    area: string
+    status: number
   }
 
   interface UserInfo {

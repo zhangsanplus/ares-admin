@@ -38,16 +38,22 @@ interface NodeOptions extends Option {
 interface PagingRequest {
   pageNum: number
   pageSize: number
-  sortField?: string
-  sortOrder?: 'ascend' | 'descend'
+}
+
+/**
+ * 排序请求
+ */
+interface SortRequest {
+  sortField: string
+  sortOrder: 'ascending' | 'descending'
 }
 
 /**
  * 返回分页信息
  */
-interface PagingInfo<T> {
+interface PagingResult<T> {
   count: number
-  list: T[]
+  list: T
 }
 
 /**

@@ -1,4 +1,6 @@
-import { getLoginData, getUserData } from './mock'
+import request from '@/utils/request'
+import { getLoginData, getUserData } from './__mock__'
+import type { AxiosRequestConfig } from 'axios'
 
 export function login(params: UserType.LoginParams) {
   // return request.post<UserType.LoginResponse>('/user/login', params)
@@ -6,6 +8,9 @@ export function login(params: UserType.LoginParams) {
 }
 
 export function getUserList(params: UserType.ListParams) {
-  // return request.get<PagingInfo<UserType.ListItem[]>>('/article/list', params)
   return getUserData(params)
+}
+
+export function getArticleList(params: PagingRequest & ArticleType.ListParams, config?: AxiosRequestConfig) {
+  return request.get<PagingResult<ArticleType.ListItem[]>>('https://api.yoogle.top/mock/list', params, config)
 }

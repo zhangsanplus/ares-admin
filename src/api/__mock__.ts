@@ -13,7 +13,7 @@ export async function getLoginData(params: any): Promise<HttpResponse<UserType.L
   }
 }
 
-export async function getUserData(params: any): Promise<HttpResponse<PagingInfo<UserType.ListItem>>> {
+export async function getUserData(params: any): Promise<HttpResponse<PagingResult<UserType.ListItem[]>>> {
   await sleep(500)
   const count = 50
   const start = (params.pageNum - 1) * params.pageSize
@@ -23,8 +23,13 @@ export async function getUserData(params: any): Promise<HttpResponse<PagingInfo<
       return {
         id: i,
         name: `公孙${i + 1}`,
+        date: `${i + 1}月${i + 1}日`,
+        age: Math.floor(Math.random() * 100),
         sex: Math.random() > 0.5 ? '男' : '女',
         role: Math.random() > 0.5 ? 1 : 2,
+        city: Math.random() > 0.5 ? '上海市' : '北京市',
+        status: Math.random() > 0.5 ? 0 : 1,
+        area: `上海市普陀区金沙江路上海市普陀区金沙江路${i + 1}号`,
       }
     })
 

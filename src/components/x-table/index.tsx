@@ -1,15 +1,18 @@
-import { ElPagination, ElTable, ElTableColumn } from 'element-plus'
+import { ElLoading, ElPagination, ElTable, ElTableColumn } from 'element-plus'
 import XColumn from '@/components/x-column/index.vue'
 import { isUndefined } from '@/utils/is'
 import type { PropType } from 'vue'
 import './index.scss'
 
 function getDefaultSort(attrs: Record<string, any>): any {
-  return attrs['default-sort'] || attrs.defaultSort || {}
+  return attrs['default-sort'] || attrs.defaultSort
 }
 
 export default defineComponent({
   name: 'XTable',
+  directives: {
+    loading: ElLoading.directive,
+  },
   inheritAttrs: false,
   props: {
     /**
@@ -26,6 +29,14 @@ export default defineComponent({
     dataSource: {
       type: Array as PropType<XTableData[]>,
       required: true,
+    },
+
+    /**
+     * loading
+     */
+    loading: {
+      type: Boolean,
+      default: false,
     },
 
     /**
@@ -116,7 +127,7 @@ export default defineComponent({
   emits: ['change', 'columnChange', 'update:visibleColumn'],
   setup(props, { slots, attrs, emit }) {
     const nonPropsAttrs = attrs
-    const { prop: sortBy, order: sortOrder } = getDefaultSort(attrs)
+    const { prop: sortBy, order: sortOrder } = getDefaultSort(attrs) || {}
     const tableState = reactive<XTableState>({
       tid: 0,
       sortBy,
@@ -347,6 +358,7 @@ export default defineComponent({
         <div class="x-table">
           <ElTable
             {...tableProps}
+            v-loading={props.loading}
             v-slots={extraSlots}
           >
             {

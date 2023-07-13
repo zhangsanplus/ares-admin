@@ -4,7 +4,7 @@ ls:
     .dir: kebab-case
     .html: kebab-case
     .js: kebab-case
-    .ts: kebab-case
+    .ts: kebab-case | regex:^__[a-zA-Z]+__$
     .d.ts: kebab-case
     .css: kebab-case
     .scss: kebab-case

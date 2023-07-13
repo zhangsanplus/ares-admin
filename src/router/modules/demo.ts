@@ -21,11 +21,19 @@ const demo: RouteRecordRaw = {
       },
     },
     {
-      path: '/demo/table',
+      path: '/demo/table1',
       name: 'table',
-      component: () => import('@/views/demo/table/index.vue'),
+      component: () => import('@/views/demo/table/table1.vue'),
       meta: {
         title: '查询表格',
+      },
+    },
+    {
+      path: '/demo/table2',
+      name: 'table2',
+      component: () => import('@/views/demo/table/table2.vue'),
+      meta: {
+        title: 'UseTable',
       },
     },
   ],
