@@ -28,18 +28,24 @@ interface TableProps<TDataItem> {
 // 请求参数
 type TableServiceParams<TParams> = TParams & TablePaging & TableSort
 
+// 请求结果
+type TableServiceReturn<TDataItem> = PagingResult<TDataItem[]> | TDataItem[]
+
+// 请求响应
+type TableServiceResponse<TDataItem> = HttpResponse<TableServiceReturn<TDataItem>>
+
 // 请求方法
-type UseTableService<TResult, TParams> = (params: TableServiceParams<TParams>, config?: AxiosRequestConfig) => Promise<HttpResponse<TResult>>
+type UseTableService<TDataItem, TParams> = (params: TableServiceParams<TParams>, config?: AxiosRequestConfig) => Promise<TableServiceResponse<TDataItem>>
 
 // 配置项
-interface UseTableOptions<TResult, TParams> {
+interface UseTableOptions<TDataItem, TParams> {
   immediate?: boolean
   pageable?: boolean
   defaultParams?: TParams
   defaultSort?: TableSort
   defaultPaging?: Partial<TablePaging>
-  onSuccess?: (data: HttpResponse<TResult>, params: Record<string, any>) => void
-  onError?: (e: unknown, params: Record<string, any>) => void
+  onSuccess?: (data: TableServiceResponse<TDataItem>, params: TableServiceParams<TParams>) => void
+  onError?: (e: unknown, params: TableServiceParams<TParams>) => void
   onFinally?: () => void
 }
 
@@ -56,10 +62,10 @@ interface UseTableReturn<TDataItem, TParams> {
 
 export default function useTable<
   TDataItem,
-  TParams extends Record<string, any>,
+  TParams extends Record<string, unknown>,
 >(
-  service: UseTableService<PagingResult<TDataItem[]> | TDataItem[], TParams>,
-  options: UseTableOptions<PagingResult<TDataItem[]> | TDataItem[], TParams> = {},
+  service: UseTableService<TDataItem, TParams>,
+  options: UseTableOptions<TDataItem, TParams> = {},
 ): UseTableReturn<TDataItem, TParams> {
   const {
     defaultParams,

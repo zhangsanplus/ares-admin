@@ -76,6 +76,8 @@ const { tableProps, form, data, query, reset, cancel } = useTable(getArticleList
   defaultParams: {
     title: '',
   },
+  onSuccess(data, params) {
+    console.log('data, params =>', data, params)
+  },
 })
-console.log('data =>', data)
 </script>
