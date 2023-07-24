@@ -56,7 +56,7 @@ pnpm run dev
 
 ```bash
 # 测试环境
-npm run build:staging
+npm run build:test
 
 # 生产环境
 npm run build

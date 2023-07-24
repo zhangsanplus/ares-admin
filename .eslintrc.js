@@ -4,13 +4,11 @@ module.exports = {
   rules: {
     '@typescript-eslint/brace-style': 0,
     '@typescript-eslint/semi': 2,
-    '@typescript-eslint/prefer-function-type': 'error',
     'semi': 2,
     'curly': 0,
     'eol-last': 0,
     'no-console': 0,
     'no-mixed-operators': 0,
-    'prefer-template': 'error',
     // antfu
     'antfu/if-newline': 0,
     // vue

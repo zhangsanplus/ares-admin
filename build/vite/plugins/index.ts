@@ -12,13 +12,11 @@ import type { PluginOption } from 'vite'
 
 export function createVitePlugins(isBuild: boolean) {
   const vitePlugins: PluginOption[] = [
-    // vue支持
     vue(),
-    // jsx支持
     vueJsx(),
-    // setup语法糖组件名支持
+    // setup name
     vueSetupExtend(),
-    // svg loader
+    // svg
     svgIconsPlugin(isBuild),
     // 自动引入组件和图标
     // 自动按需注册组件

@@ -21,7 +21,6 @@ export function autoImportDeps() {
           prefix: 'Icon',
         }),
       ],
-
       // 自动导入 Vue 相关函数，如：ref, reactive, toRef 等
       imports: [
         'vue',
@@ -30,16 +29,11 @@ export function autoImportDeps() {
         '@vueuse/core',
         'pinia',
       ],
-
       dts: 'types/auto-imports.d.ts',
     }),
-
     Components({
-      // Avoid parsing src/components. 避免解析到src/components
-      dirs: [],
-
+      dirs: [], // Avoid parsing src/components. 避免解析到src/components
       deep: false,
-
       resolvers: [
         // 自动导入 Element Plus 组件
         ElementPlusResolver({
@@ -50,12 +44,9 @@ export function autoImportDeps() {
           enabledCollections: ['ep'],
         }),
       ],
-
       dts: 'types/components.d.ts',
     }),
 
-    Icons({
-      autoInstall: true,
-    }),
+    Icons(),
   ]
 }

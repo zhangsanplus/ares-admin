@@ -1,4 +1,5 @@
 import path from 'node:path'
+import process from 'node:process'
 import { defineConfig, loadEnv } from 'vite'
 import { createVitePlugins } from './build/vite/plugins'
 import proxy from './build/vite/proxy'
@@ -8,7 +9,8 @@ import type { ConfigEnv, UserConfig } from 'vite'
 export default defineConfig(({ command, mode }: ConfigEnv): UserConfig => {
   const root = process.cwd()
   const isBuild = command === 'build'
-  const { VITE_BUILD_OUTPUT_DIR, VITE_DROP_CONSOLE } = loadEnv(mode, root) as ImportMetaEnv
+  const isProd = mode === 'production'
+  const env = loadEnv(mode, root) as ImportMetaEnv
 
   return {
     base: './',
@@ -20,18 +22,18 @@ export default defineConfig(({ command, mode }: ConfigEnv): UserConfig => {
         },
       ],
     },
-    plugins: createVitePlugins(isBuild),
     server: {
       host: '0.0.0.0',
-      port: 2023,
+      port: env.VITE_DEV_PORT,
       https: false,
       proxy,
     },
     esbuild: {
-      pure: VITE_DROP_CONSOLE === 'true' ? ['console.log', 'debugger'] : [],
+      pure: isProd ? ['console.log', 'debugger'] : [],
     },
+    plugins: createVitePlugins(isBuild),
     build: {
-      outDir: VITE_BUILD_OUTPUT_DIR,
+      outDir: env.VITE_BUILD_OUTPUT_DIR,
       chunkSizeWarningLimit: 2000,
       rollupOptions: {
         output: {

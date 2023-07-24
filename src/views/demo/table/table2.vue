@@ -72,7 +72,7 @@ const columns = ref([
   },
 ])
 
-const { tableProps, form, data, query, reset, cancel } = useTable(getArticleList, {
+const { tableProps, form, query, reset, cancel } = useTable(getArticleList, {
   defaultParams: {
     title: '',
   },
