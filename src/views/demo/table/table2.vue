@@ -21,12 +21,19 @@
             重置
           </el-button>
 
-          <el-button type="info" @click="cancel">
-            <template #icon>
-              <i-ep-search />
+          <el-popover
+            :width="240"
+            placement="top-start"
+            effect="dark"
+            trigger="hover"
+            content="在需要时可调用 abort 方法来取消请求。打开 DevTools 工具模拟网速可进行测试"
+          >
+            <template #reference>
+              <el-button type="info" @click="abort">
+                取消请求
+              </el-button>
             </template>
-            取消
-          </el-button>
+          </el-popover>
         </el-space>
       </template>
     </x-query-form>
@@ -72,7 +79,7 @@ const columns = ref([
   },
 ])
 
-const { tableProps, form, query, reset, cancel } = useTable(getArticleList, {
+const { tableProps, form, query, reset, abort } = useTable(getArticleList, {
   defaultParams: {
     title: '',
   },

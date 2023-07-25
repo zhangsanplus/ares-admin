@@ -52,6 +52,11 @@ export function useECharts(chartRef: Ref<HTMLDivElement>, setOptions: Fn) {
     initCharts()
   })
 
+  onActivated(() => {
+    chartInstance?.dispose()
+    initCharts()
+  })
+
   onUnmounted(() => {
     removeResizeFn()
     if (chartInstance) {

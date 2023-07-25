@@ -57,7 +57,7 @@ interface UseTableReturn<TDataItem, TParams> {
   tableProps: ComputedRef<TableProps<TDataItem>>
   query: () => Promise<void>
   reset: () => Promise<void>
-  cancel: () => void
+  abort: () => void
 }
 
 export default function useTable<
@@ -159,7 +159,7 @@ export default function useTable<
     await fetchData()
   }
 
-  const cancel = () => {
+  const abort = () => {
     controller.value?.abort()
   }
 
@@ -192,6 +192,6 @@ export default function useTable<
     tableProps,
     query,
     reset,
-    cancel,
+    abort,
   }
 }
