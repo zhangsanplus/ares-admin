@@ -1,6 +1,6 @@
 {
   "name": "ares-admin",
-  "version": "1.0.1",
+  "version": "1.0.2",
   "private": true,
   "description": "A ready-to-use admin template based on Vue 3 and Element Plus, offering fast and efficient development experience",
   "author": "zhangsanplus",
@@ -30,8 +30,9 @@
     "lint:js": "eslint . --fix",
     "lint:ls": "ls-lint",
     "lint": "npm run lint:css && npm run lint:js && npm run lint:ls",
+    "typecheck": "vue-tsc --noEmit",
     "preview": "npm run build && vite preview",
-    "typecheck": "vue-tsc --noEmit"
+    "commit": "git-cz"
   },
   "dependencies": {
     "@vueuse/core": "10.2.1",
@@ -60,6 +61,8 @@
     "@vitejs/plugin-vue": "4.2.3",
     "@vitejs/plugin-vue-jsx": "3.0.1",
     "@vue/babel-plugin-jsx": "1.1.5",
+    "commitizen": "^4.3.0",
+    "cz-git": "^1.7.0",
     "eslint": "8.45.0",
     "eslint-plugin-antfu": "0.39.8",
     "husky": "^8.0.3",
@@ -89,6 +92,11 @@
   },
   "resolutions": {
     "bin-wrapper": "npm:bin-wrapper-china"
+  },
+  "config": {
+    "commitizen": {
+      "path": "node_modules/cz-git"
+    }
   },
   "lint-staged": {
     "*.{ts,tsx,vue}": [

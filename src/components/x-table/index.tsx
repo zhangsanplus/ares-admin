@@ -336,8 +336,8 @@ export default defineComponent({
         ref: 'elTableRef',
         ...nonPropsAttrs,
         maxHeight: mHeight.value,
-        key: tableState.tid,
         data: props.dataSource,
+        rowKey: props.rowKey,
         onSortChange: handleTableSortChange,
       }
 

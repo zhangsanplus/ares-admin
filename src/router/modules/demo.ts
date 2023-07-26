@@ -29,6 +29,14 @@ const demo: RouteRecordRaw = {
       },
     },
     {
+      path: '/demo/table3',
+      name: 'table3',
+      component: () => import('@/views/demo/table/table3.vue'),
+      meta: {
+        title: '表格示例',
+      },
+    },
+    {
       path: '/demo/table2',
       name: 'table2',
       component: () => import('@/views/demo/table/table2.vue'),
