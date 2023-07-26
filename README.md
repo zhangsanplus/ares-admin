@@ -1,7 +1,7 @@
 
 <div align="center">
 
-<img src="./screenshot/logo.png" height="260" />
+<img src="./screenshot/logo.png" height="200" />
 
 <h1>Ares Admin</h1>
 
