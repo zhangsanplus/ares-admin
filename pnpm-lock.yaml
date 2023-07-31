@@ -8,6 +8,7 @@ specifiers:
   '@babel/core': 7.22.9
   '@commitlint/cli': 17.6.7
   '@commitlint/config-conventional': 17.6.7
+  '@element-plus/icons-vue': ^2.1.0
   '@iconify-json/ep': ^1.1.11
   '@ls-lint/ls-lint': 2.0.1
   '@types/node': 20.4.4
@@ -20,6 +21,7 @@ specifiers:
   axios: 1.4.0
   commitizen: ^4.3.0
   cz-git: ^1.7.0
+  dayjs: ^1.11.9
   echarts: 5.4.3
   element-plus: 2.3.8
   eslint: 8.45.0
@@ -58,8 +60,10 @@ specifiers:
   vue3-slide-verify: ^1.1.4
 
 dependencies:
+  '@element-plus/icons-vue': 2.1.0_vue@3.3.4
   '@vueuse/core': 10.2.1_vue@3.3.4
   axios: 1.4.0
+  dayjs: 1.11.9
   echarts: 5.4.3
   element-plus: 2.3.8_vue@3.3.4
   lodash-es: 4.17.21
@@ -3823,8 +3827,8 @@ packages:
     engines: {node: '>=8'}
     dev: true
 
-  /dayjs/1.11.8:
-    resolution: {integrity: sha512-LcgxzFoWMEPO7ggRv1Y2N31hUf2R0Vj7fuy/m+Bg1K8rr+KAs1AEy4y9jd5DXe8pbHgX+srkHNS7TH6Q6ZhYeQ==}
+  /dayjs/1.11.9:
+    resolution: {integrity: sha512-QvzAURSbQ0pKdIye2txOzNaHmxtUBXerpY0FJsFXUMKbIZeFm5ht1LS/jFsrncjnmtv8HsG0W2g6c0zUjZWmpA==}
     dev: false
 
   /de-indent/1.0.2:
@@ -4127,7 +4131,7 @@ packages:
       '@types/lodash-es': 4.17.7
       '@vueuse/core': 9.13.0_vue@3.3.4
       async-validator: 4.2.5
-      dayjs: 1.11.8
+      dayjs: 1.11.9
       escape-html: 1.0.3
       lodash: 4.17.21
       lodash-es: 4.17.21
