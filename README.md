@@ -1,7 +1,7 @@
 
 <div align="center">
 
-<img src="./screenshot/logo.png" height="200" />
+<img src="https://github.com/zhangsanplus/ares-admin/blob/main/screenshot/logo.png?raw=true" height="200" />
 
 <h1>Ares Admin</h1>
 
@@ -20,9 +20,9 @@
 
 在线预览 [Ares Admin](https://zhangsanplus.github.io/)
 
-![screenshot](./screenshot/1.png)
-![screenshot](./screenshot/2.png)
-![screenshot](./screenshot/3.png)
+![screenshot](https://github.com/zhangsanplus/ares-admin/blob/main/screenshot/1.png?raw=true)
+![screenshot](https://github.com/zhangsanplus/ares-admin/blob/main/screenshot/2.png?raw=true)
+![screenshot](https://github.com/zhangsanplus/ares-admin/blob/main/screenshot/3.png?raw=true)
 
 ## ✨ 特性
 
