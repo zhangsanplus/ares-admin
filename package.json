@@ -57,6 +57,7 @@
     "@commitlint/config-conventional": "17.6.7",
     "@iconify-json/ep": "^1.1.11",
     "@ls-lint/ls-lint": "2.0.1",
+    "@types/lodash-es": "^4.17.8",
     "@types/node": "20.4.4",
     "@types/nprogress": "^0.2.0",
     "@vitejs/plugin-legacy": "4.1.1",

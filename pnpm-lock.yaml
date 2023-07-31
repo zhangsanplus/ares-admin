@@ -11,6 +11,7 @@ specifiers:
   '@element-plus/icons-vue': ^2.1.0
   '@iconify-json/ep': ^1.1.11
   '@ls-lint/ls-lint': 2.0.1
+  '@types/lodash-es': ^4.17.8
   '@types/node': 20.4.4
   '@types/nprogress': ^0.2.0
   '@vitejs/plugin-legacy': 4.1.1
@@ -82,6 +83,7 @@ devDependencies:
   '@commitlint/config-conventional': 17.6.7
   '@iconify-json/ep': 1.1.11
   '@ls-lint/ls-lint': 2.0.1
+  '@types/lodash-es': 4.17.8
   '@types/node': 20.4.4
   '@types/nprogress': 0.2.0
   '@vitejs/plugin-legacy': 4.1.1_terser@5.19.2+vite@4.4.7
@@ -2181,15 +2183,13 @@ packages:
       '@types/node': 20.4.4
     dev: true
 
-  /@types/lodash-es/4.17.7:
-    resolution: {integrity: sha512-z0ptr6UI10VlU6l5MYhGwS4mC8DZyYer2mCoyysZtSF7p26zOX8UpbrV0YpNYLGS8K4PUFIyEr62IMFFjveSiQ==}
+  /@types/lodash-es/4.17.8:
+    resolution: {integrity: sha512-euY3XQcZmIzSy7YH5+Unb3b2X12Wtk54YWINBvvGQ5SmMvwb11JQskGsfkH/5HXK77Kr8GF0wkVDIxzAisWtog==}
     dependencies:
       '@types/lodash': 4.14.195
-    dev: false
 
   /@types/lodash/4.14.195:
     resolution: {integrity: sha512-Hwx9EUgdwf2GLarOjQp5ZH8ZmblzcbTBC2wtQWNKARBSxM9ezRIAUpeDTgoQRAFB0+8CNWXVA9+MaSOzOF3nPg==}
-    dev: false
 
   /@types/mdast/3.0.11:
     resolution: {integrity: sha512-Y/uImid8aAwrEA24/1tcRZwpxX3pIFTSilcNDKSPn+Y2iDywSEachzRuvgAYYLR3wpGXAsMbv5lvKLDZLeYPAw==}
@@ -4128,14 +4128,14 @@ packages:
       '@floating-ui/dom': 1.4.2
       '@popperjs/core': /@sxzz/popperjs-es/2.11.7
       '@types/lodash': 4.14.195
-      '@types/lodash-es': 4.17.7
+      '@types/lodash-es': 4.17.8
       '@vueuse/core': 9.13.0_vue@3.3.4
       async-validator: 4.2.5
       dayjs: 1.11.9
       escape-html: 1.0.3
       lodash: 4.17.21
       lodash-es: 4.17.21
-      lodash-unified: 1.0.3_tknf7errc3xdqocd3ryzzla7vq
+      lodash-unified: 1.0.3_4ajcxmh7xypglrfp7rcdlxdpou
       memoize-one: 6.0.0
       normalize-wheel-es: 1.2.0
       vue: 3.3.4
@@ -6218,14 +6218,14 @@ packages:
     resolution: {integrity: sha512-mKnC+QJ9pWVzv+C4/U3rRsHapFfHvQFoFB92e52xeyGMcX6/OlIl78je1u8vePzYZSkkogMPJ2yjxxsb89cxyw==}
     dev: false
 
-  /lodash-unified/1.0.3_tknf7errc3xdqocd3ryzzla7vq:
+  /lodash-unified/1.0.3_4ajcxmh7xypglrfp7rcdlxdpou:
     resolution: {integrity: sha512-WK9qSozxXOD7ZJQlpSqOT+om2ZfcT4yO+03FuzAHD0wF6S0l0090LRPDx3vhTTLZ8cFKpBn+IOcVXK6qOcIlfQ==}
     peerDependencies:
       '@types/lodash-es': '*'
       lodash: '*'
       lodash-es: '*'
     dependencies:
-      '@types/lodash-es': 4.17.7
+      '@types/lodash-es': 4.17.8
       lodash: 4.17.21
       lodash-es: 4.17.21
     dev: false
