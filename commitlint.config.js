@@ -23,6 +23,7 @@ module.exports = {
       { value: 'perf', name: 'perf:     性能优化' },
       { value: 'revert', name: 'revert:   代码回退' },
       { value: 'test', name: 'test:     添加或修改测试' },
+      { value: 'types', name: 'types:    类型文件更改' },
       { value: 'ci', name: 'ci:       修改 CI 配置、脚本' },
     ],
   },

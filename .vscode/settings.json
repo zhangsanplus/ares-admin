@@ -1,16 +1,21 @@
 {
   "typescript.tsdk": "./node_modules/typescript/lib",
+  "prettier.enable": false,
   "npm.packageManager": "pnpm",
   "local-history.enabled": 0,
-  "prettier.enable": false,
+  "files.associations": {
+    "*.css": "postcss"
+  },
   "editor.formatOnSave": false,
   "editor.codeActionsOnSave": {
-    "source.fixAll.eslint": true,
+    "source.organizeImports": false,
     "source.fixAll.stylelint": true,
-    "source.organizeImports": false
+    "source.fixAll.eslint": true
   },
   "cSpell.words": [
+    "iconify",
     "sider",
+    "taze",
     "zhangsanplus"
   ]
 }
