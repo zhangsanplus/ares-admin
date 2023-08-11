@@ -1,9 +1,9 @@
 {
   "name": "ares-admin",
-  "version": "1.0.2",
+  "version": "1.0.3",
   "private": true,
   "packageManager": "pnpm@7.14.1",
-  "description": "A ready-to-use admin template based on Vue 3 and Element Plus, offering fast and efficient development experience",
+  "description": "A management system template based on Vue 3 and Element Plus for a fast and efficient development experience",
   "author": "zhangsanplus",
   "license": "MIT",
   "homepage": "https://github.com/zhangsanplus/ares-admin",
