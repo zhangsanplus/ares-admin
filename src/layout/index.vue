@@ -98,6 +98,10 @@ onBeforeUnmount(() => {
       height: 100vh;
       padding: 0;
     }
+
+    .app-menu {
+      border-right: 0;
+    }
   }
 
   &-sider {
