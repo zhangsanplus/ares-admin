@@ -131,7 +131,7 @@
 
 <script setup lang='ts'>
 import { getUserList } from '@/api/user'
-import useLocalColumns from '@/hooks/local-columns'
+import useLocalColumns from '@/composables/local-columns'
 
 const { columns, reset: resetColumns } = useLocalColumns(
   'table1',
