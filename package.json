@@ -33,6 +33,7 @@
     "lint": "npm run lint:css && npm run lint:js && npm run lint:ls",
     "typecheck": "vue-tsc --noEmit",
     "preview": "npm run build && vite preview",
+    "release": "bumpp",
     "up": "taze major -I",
     "commit": "git-cz"
   },
@@ -66,6 +67,7 @@
     "@vitejs/plugin-vue": "^4.2.3",
     "@vitejs/plugin-vue-jsx": "^3.0.1",
     "@vue/babel-plugin-jsx": "^1.1.5",
+    "bumpp": "^9.1.1",
     "commitizen": "^4.3.0",
     "cz-git": "^1.7.1",
     "eslint": "^8.46.0",
