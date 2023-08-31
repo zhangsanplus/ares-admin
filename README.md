@@ -14,15 +14,9 @@
 
 **Ares Admin** 是一个中后台管理系统模板，以古希腊神话中战神 Ares 命名。模板借鉴了多个优秀的开源项目，并对一些常用功能进行封装，帮助用户在工作中能够快速地搭建各种中后台项目，让开发变得更加简单和高效。
 
-无论你是刚开始学习中后台开发，还是已经有一定经验的开发者，Ares Admin 都能帮助你快速构建出令人满意的系统。
+无论你是刚开始学习，还是已经有一定经验的开发者，Ares Admin 都能帮助你快速构建出令人满意的系统。
 
-## 🍧 预览
-
-在线预览 [Ares Admin](https://zhangsanplus.github.io/)
-
-![screenshot](https://github.com/zhangsanplus/ares-admin/blob/main/screenshot/1.png?raw=true)
-![screenshot](https://github.com/zhangsanplus/ares-admin/blob/main/screenshot/2.png?raw=true)
-![screenshot](https://github.com/zhangsanplus/ares-admin/blob/main/screenshot/3.png?raw=true)
+如果你有移动端H5多页面的需求，推荐你使用 [Ares Moblie](https://github.com/zhangsanplus/ares-mobile) 模板。
 
 ## ✨ 特性
 
@@ -32,9 +26,18 @@
 - **Vite** - 快速启动的 Vite
 - **Pinia** - 新一代 Vue.js 状态管理库
 - **Vueuse**  -  实用的Vue组合式API工具集
-- **ESLint** - 代码检查
+- **ESLint** - 代码检查和修复
 - **Stylelint** - CSS 格式化
-- **LsLint** - 文件命名检查
+- **Lslint** - 文件命名检查
+
+## 🍧 预览
+
+在线预览 [Ares Admin](https://zhangsanplus.github.io/)
+
+![login](https://github.com/zhangsanplus/ares-admin/blob/main/screenshot/0.png?raw=true)
+![preview1](https://github.com/zhangsanplus/ares-admin/blob/main/screenshot/1.png?raw=true)
+![preview2](https://github.com/zhangsanplus/ares-admin/blob/main/screenshot/2.png?raw=true)
+![preview3](https://github.com/zhangsanplus/ares-admin/blob/main/screenshot/3.png?raw=true)
 
 ## 🌈 安装和使用
 
@@ -56,10 +59,10 @@ pnpm run dev
 
 ```bash
 # 测试环境
-npm run build:test
+pnpm run build:test
 
 # 生产环境
-npm run build
+pnpm run build
 ```
 
 ## 如何贡献

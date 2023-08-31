@@ -11,20 +11,25 @@
     "type": "git",
     "url": "git+https://github.com/zhangsanplus/ares-admin.git"
   },
+  "bugs": {
+    "url": "https://github.com/zhangsanplus/ares-admin/issues"
+  },
   "keywords": [
     "vue3",
     "typescript",
     "element-plus",
+    "template",
     "admin",
-    "template"
+    "ares-admin"
   ],
   "engines": {
-    "node": ">=16.0.0"
+    "node": ">=16.15.0"
   },
   "scripts": {
     "dev": "vite --host",
     "build": "vue-tsc --noEmit && vite build",
     "build:test": "vue-tsc --noEmit && vite build --mode test",
+    "preview": "npm run build && vite preview",
     "preinstall": "npx only-allow pnpm",
     "prepare": "husky install",
     "lint:css": "stylelint **/*.{css,scss,vue} --fix",
@@ -32,10 +37,9 @@
     "lint:ls": "ls-lint",
     "lint": "npm run lint:css && npm run lint:js && npm run lint:ls",
     "typecheck": "vue-tsc --noEmit",
-    "preview": "npm run build && vite preview",
+    "commit": "git-cz",
     "release": "bumpp",
-    "up": "taze major -I",
-    "commit": "git-cz"
+    "up": "taze major -I"
   },
   "dependencies": {
     "@element-plus/icons-vue": "^2.1.0",
@@ -91,8 +95,6 @@
     "unplugin-vue-components": "^0.25.1",
     "vite": "^4.4.9",
     "vite-plugin-compression": "^0.5.1",
-    "vite-plugin-progress": "^0.0.7",
-    "vite-plugin-restart": "^0.3.1",
     "vite-plugin-svg-icons": "^2.0.1",
     "vite-plugin-vue-setup-extend": "^0.4.0",
     "vue-tsc": "1.8.8"
