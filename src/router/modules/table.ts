@@ -1,19 +1,19 @@
 import Layout from '@/layout/index.vue'
 import type { RouteRecordRaw } from 'vue-router'
 
-const demo: RouteRecordRaw = {
-  path: '/demo',
-  name: 'demo',
+const table: RouteRecordRaw = {
+  path: '/table',
+  name: 'table',
   component: Layout,
-  redirect: '/demo/form',
+  redirect: '/table/form',
   meta: {
-    title: '常用组件',
-    icon: 'menu-demo',
+    title: '表单表格',
+    icon: 'menu-table',
     order: 98,
   },
   children: [
     {
-      path: '/demo/form',
+      path: '/table/form',
       name: 'form',
       component: () => import('@/views/demo/form/index.vue'),
       meta: {
@@ -21,7 +21,7 @@ const demo: RouteRecordRaw = {
       },
     },
     {
-      path: '/demo/table1',
+      path: '/table/table1',
       name: 'table',
       component: () => import('@/views/demo/table/table1.vue'),
       meta: {
@@ -29,7 +29,7 @@ const demo: RouteRecordRaw = {
       },
     },
     {
-      path: '/demo/table3',
+      path: '/table/table3',
       name: 'table3',
       component: () => import('@/views/demo/table/table3.vue'),
       meta: {
@@ -37,7 +37,7 @@ const demo: RouteRecordRaw = {
       },
     },
     {
-      path: '/demo/table2',
+      path: '/table/table2',
       name: 'table2',
       component: () => import('@/views/demo/table/table2.vue'),
       meta: {
@@ -47,4 +47,4 @@ const demo: RouteRecordRaw = {
   ],
 }
 
-export default demo
+export default table

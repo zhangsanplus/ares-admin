@@ -8,25 +8,18 @@ on:
 jobs:
   build:
     runs-on: ubuntu-latest
-
-    strategy:
-      matrix:
-        node-version: ["16.x"]
-
     steps:
-      - name: checkout
-        uses: actions/checkout@main
-
-      - name: install node
-        uses: actions/setup-node@v1
+      - uses: actions/checkout@main
+      - uses: pnpm/action-setup@v2
+      - uses: actions/setup-node@v3
         with:
-          node-version: ${{ matrix.node-version }}
+          node-version: 16.x
+          cache: pnpm
 
       - name: install & build
         run: |
-          npm install pnpm@7 -g
           pnpm install
-          npm run build
+          pnpm run build
 
       - name: deploy
         env:

@@ -14,7 +14,7 @@ const directive: RouteRecordRaw = {
     {
       path: '/directive/index',
       name: 'directiveIndex',
-      component: () => import('@/views/directive/index.vue'),
+      component: () => import('@/views/demo/directive/index.vue'),
       meta: {
         title: '自定义指令',
         icon: 'menu-directive',

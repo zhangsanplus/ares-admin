@@ -15,7 +15,7 @@ const nest: RouteRecordRaw = {
     {
       path: '/nest/nest1',
       name: 'nest1',
-      component: () => import('@/views/nest/index.vue'),
+      component: () => import('@/views/demo/nest/index.vue'),
       meta: {
         title: '测试1',
       },
@@ -23,7 +23,7 @@ const nest: RouteRecordRaw = {
     {
       path: '/nest/nest2',
       name: 'nest2',
-      component: () => import('@/views/nest/index.vue'),
+      component: () => import('@/views/demo/nest/index.vue'),
       meta: {
         title: '测试2',
       },
@@ -40,7 +40,7 @@ const nest: RouteRecordRaw = {
         {
           path: '/nest/nest3/1',
           name: 'nest3-1',
-          component: () => import('@/views/nest/index.vue'),
+          component: () => import('@/views/demo/nest/index.vue'),
           meta: {
             title: '测试3-1',
           },
@@ -48,7 +48,7 @@ const nest: RouteRecordRaw = {
         {
           path: '/nest/nest3/2',
           name: 'nest3-2',
-          component: () => import('@/views/nest/index.vue'),
+          component: () => import('@/views/demo/nest/index.vue'),
           meta: {
             title: '测试3-2',
           },
