@@ -2,15 +2,17 @@ import type { ProxyOptions } from 'vite'
 
 type ProxyTargetList = Record<string, ProxyOptions>
 
-const API_BASE_URL = '/api'
-const API_TARGET_URL = 'http://localhost:3000'
+export function createProxy(env: ImportMetaEnv) {
+  const { VITE_DEV_PROXY_PATH, VITE_DEV_PROXY_TARGET } = env
+  const proxy: ProxyTargetList = {}
 
-const init: ProxyTargetList = {
-  [API_BASE_URL]: {
-    target: API_TARGET_URL,
-    changeOrigin: true,
-    rewrite: path => path.replace(new RegExp(`^${API_BASE_URL}`), ''),
-  },
+  if (VITE_DEV_PROXY_PATH) {
+    proxy[VITE_DEV_PROXY_PATH] = {
+      target: VITE_DEV_PROXY_TARGET,
+      changeOrigin: true,
+      rewrite: path => path.replace(new RegExp(`^${VITE_DEV_PROXY_PATH}`), ''),
+    }
+  }
+
+  return proxy
 }
-
-export default init

@@ -5,21 +5,13 @@ const table: RouteRecordRaw = {
   path: '/table',
   name: 'table',
   component: Layout,
-  redirect: '/table/form',
+  redirect: '/table/table1',
   meta: {
     title: '表单表格',
     icon: 'menu-table',
     order: 98,
   },
   children: [
-    {
-      path: '/table/form',
-      name: 'form',
-      component: () => import('@/views/demo/form/index.vue'),
-      meta: {
-        title: '查询表单',
-      },
-    },
     {
       path: '/table/table1',
       name: 'table',

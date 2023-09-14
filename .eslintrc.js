@@ -13,7 +13,8 @@ module.exports = {
     'antfu/if-newline': 0,
     // vue
     'vue/component-name-in-template-casing': [2, 'kebab-case'],
-    'vue/component-tags-order': [
+    'vue/component-tags-order': 0, // deprecated and replaced by vue/block-order
+    'vue/block-order': [
       2,
       {
         order: [

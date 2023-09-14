@@ -11,7 +11,7 @@
       <el-dropdown trigger="click" @command="toggleSize">
         <el-button text circle>
           <el-icon>
-            <svg-icon name="text-size" />
+            <i-custom-text-size />
           </el-icon>
         </el-button>
 
@@ -32,8 +32,8 @@
 
       <el-button text circle @click="toggleFullScreen">
         <el-icon>
-          <svg-icon v-if="isFullscreen" name="fullscreen-exit" />
-          <svg-icon v-else name="fullscreen" />
+          <i-custom-fullscreen-exit v-if="isFullscreen" />
+          <i-custom-fullscreen v-else />
         </el-icon>
       </el-button>
 
@@ -57,7 +57,7 @@
       <template #dropdown>
         <el-dropdown-menu>
           <el-dropdown-item :command="CommandEnum.github">
-            <el-icon><svg-icon name="github" /></el-icon>
+            <el-icon><i-custom-github /></el-icon>
             项目源码
           </el-dropdown-item>
           <el-dropdown-item :command="CommandEnum.setting">

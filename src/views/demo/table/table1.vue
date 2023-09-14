@@ -78,7 +78,7 @@
       border
       :columns="columns"
       :data-source="tableData"
-      :default-sort="{ prop: 'name', order: 'descending' }"
+      :default-sort="{ prop: 'age', order: 'ascending' }"
       :total="tableTotal"
       :page-size="queryForm.pageSize"
       :page-num="queryForm.pageNum"
@@ -87,28 +87,13 @@
       @selection-change="handleSelectionChange"
       @header-dragend="handleHeaderDragend"
     >
-      <template #append>
-        <div style=" padding: 12px;text-align: center;">
-          好好学习，天天向上
-        </div>
-      </template>
-
-      <template #expand="{ row }">
-        <p style="margin: 0 8px;padding: 15px; background: var(--el-table-header-bg-color);">
-          这条数据的日期是
-          <el-text type="primary">
-            {{ row.date }}
-          </el-text>
-        </p>
-      </template>
-
       <template #status="{ row }">
-        <el-switch :model-value="row.status" :active-value="1" :inactive-value="1" />
+        <el-switch v-model="row.status" :active-value="1" :inactive-value="0" />
       </template>
 
-      <template #age-header>
+      <template #sex-header>
         <el-button plain size="small">
-          刷新自动记住列宽
+          刷新自动恢复列宽
         </el-button>
       </template>
 
@@ -124,6 +109,12 @@
             删除
           </el-link>
         </x-space>
+      </template>
+
+      <template #append>
+        <div style=" padding: 12px;text-align: center;">
+          好好学习，天天向上
+        </div>
       </template>
     </x-table>
   </x-card>
@@ -147,14 +138,8 @@ const { columns, reset: resetColumns } = useLocalColumns(
       width: 60,
     },
     {
-      type: 'expand',
-      label: '展开行',
-      width: 70,
-    },
-    {
       label: '姓名',
       prop: 'name',
-      sortable: true,
       formatter(row) {
         return h('span', { style: 'color: coral' }, row.name)
       },
@@ -178,17 +163,18 @@ const { columns, reset: resetColumns } = useLocalColumns(
     {
       label: '年龄',
       prop: 'age',
+      sortable: true,
       align: 'center',
       width: 160,
     },
     {
       label: '性别',
       prop: 'sex',
-      sortable: 'custom',
     },
     {
       label: '状态',
       prop: 'status',
+      sortable: 'custom',
       align: 'center',
     },
     {
@@ -215,6 +201,7 @@ const tableData = ref<UserType.ListItem[]>([])
 
 async function getList() {
   const { data } = await getUserList(queryForm)
+  data.list.sort((a, b) => a.age - b.age)
   tableData.value = data.list
   tableTotal.value = data.count
 }
@@ -238,7 +225,7 @@ function clearSelection() {
   tableRef.value.$refs.elTableRef.clearSelection()
 }
 
-// 表头拖拽记忆
+// 表头宽度本地化
 function handleHeaderDragend(newWidth: number, _oldWidth: number, column: any) {
   columns.value.forEach((i) => {
     if (i.prop && i.prop === column.property) {

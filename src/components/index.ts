@@ -1,4 +1,3 @@
-import SvgIcon from './svg-icon/index.vue'
 import XCard from './x-card/index.vue'
 import XColumn from './x-column/index.vue'
 import XQueryForm from './x-query-form/index.vue'
@@ -7,7 +6,6 @@ import XTable from './x-table'
 import type { App, Component } from 'vue'
 
 const components: Record<string, Component> = {
-  SvgIcon,
   XSpace,
   XTable,
   XCard,

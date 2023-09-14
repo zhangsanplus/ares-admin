@@ -6,21 +6,18 @@ import vueLegacy from '@vitejs/plugin-legacy'
 import vue from '@vitejs/plugin-vue'
 import vueJsx from '@vitejs/plugin-vue-jsx'
 import vueSetupExtend from 'vite-plugin-vue-setup-extend'
-import { autoImportDeps } from './autoImport'
-import { svgIconsPlugin } from './svgIcons'
+import { unpluginDeps } from './unplugin'
 import type { PluginOption } from 'vite'
 
 export function createVitePlugins(isBuild: boolean) {
   const vitePlugins: PluginOption[] = [
     vue(),
+    // jsx 语法支持
     vueJsx(),
-    // setup name
+    // setup 组件名语法糖
     vueSetupExtend(),
-    // svg
-    svgIconsPlugin(isBuild),
-    // 自动引入组件和图标
-    // 自动按需注册组件
-    ...autoImportDeps(),
+    // 自动导入组件和字体图标等
+    ...unpluginDeps(),
   ]
 
   if (isBuild) {

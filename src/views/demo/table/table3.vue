@@ -17,6 +17,23 @@
       :pageable="false"
     />
   </x-card>
+
+  <x-card title="展开行">
+    <x-table
+      :columns="columns3"
+      :data-source="tableData3"
+      :pageable="false"
+    >
+      <template #expand="{ row }">
+        <p style="margin: 0 8px;padding: 15px; background: var(--el-table-header-bg-color);">
+          这条数据的日期是
+          <el-text type="primary">
+            {{ row.date }}
+          </el-text>
+        </p>
+      </template>
+    </x-table>
+  </x-card>
 </template>
 
 <script setup lang='ts'>
@@ -33,6 +50,22 @@ const columns = [
   {
     label: '日期',
     prop: 'date',
+  },
+  {
+    label: '姓名',
+    prop: 'name',
+  },
+  {
+    label: '地址',
+    prop: 'address',
+  },
+]
+
+const columns3 = [
+  {
+    type: 'expand',
+    label: '展开行',
+    width: 70,
   },
   {
     label: '姓名',
@@ -86,6 +119,34 @@ const tableData1 = [
 ]
 
 const tableData2 = [
+  {
+    id: 1,
+    date: '2016-05-02',
+    name: 'wangxiaohu',
+    address: 'No. 189, Grove St, Los Angeles',
+  },
+  {
+    id: 2,
+    date: '2016-05-04',
+    name: 'wangxiaohu',
+    address: 'No. 189, Grove St, Los Angeles',
+  },
+  {
+    id: 3,
+    date: '2016-05-01',
+    name: 'wangxiaohu',
+    hasChildren: true,
+    address: 'No. 189, Grove St, Los Angeles',
+  },
+  {
+    id: 4,
+    date: '2016-05-03',
+    name: 'wangxiaohu',
+    address: 'No. 189, Grove St, Los Angeles',
+  },
+]
+
+const tableData3 = [
   {
     id: 1,
     date: '2016-05-02',
