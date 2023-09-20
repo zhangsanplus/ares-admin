@@ -1,6 +1,6 @@
 {
   "name": "ares-admin",
-  "version": "1.0.4",
+  "version": "1.0.5",
   "private": true,
   "packageManager": "pnpm@8.7.6",
   "description": "A management system template based on Vue 3 and Element Plus for a fast and efficient development experience",
