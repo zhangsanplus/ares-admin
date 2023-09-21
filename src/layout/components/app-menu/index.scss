@@ -5,6 +5,8 @@
 
 :root {
   .el-menu {
+    border-right: none;
+
     &.el-menu--popup,
     &.el-menu--collapse {
       .el-menu-item,
@@ -38,10 +40,10 @@
 
     .el-menu-item,
     .el-sub-menu__title {
-      transition: all 0.3s;
+      transition: background-color .25s ease;
 
       &:hover {
-        background-color: rgba(0, 0, 0, 0.05);
+        background-color: #f7f8fa;
         border-color: transparent;
       }
     }

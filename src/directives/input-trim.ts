@@ -2,7 +2,7 @@
  * v-input-trim
  * 输入框去两端空格指令
  * <el-input v-model="value" v-input-trim />
-*/
+ */
 
 import type { Directive } from 'vue'
 

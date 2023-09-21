@@ -4,7 +4,7 @@ import { cloneDeep } from 'lodash-es'
  * 合并历史数据
  * @param storageValue 本地数据
  * @param defaultValue 默认数据
- * @returns
+ * @returns Array
  */
 function mergeColumn(storageValue: XTableColumn[], defaultValue: XTableColumn[]) {
   return defaultValue.map((col) => {

@@ -1,7 +1,9 @@
 <template>
-  <el-menu class="app-menu" :default-active="activeMenu" :collapse="isCollapse">
-    <app-sub-item :menu-list="menuList" />
-  </el-menu>
+  <el-scrollbar class="app-menu">
+    <el-menu :default-active="activeMenu" :collapse="isCollapse">
+      <app-sub-item :menu-list="menuList" />
+    </el-menu>
+  </el-scrollbar>
 </template>
 
 <script setup lang='ts'>

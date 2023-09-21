@@ -99,13 +99,13 @@
 
       <template #action>
         <x-space>
-          <el-link :underline="false" type="primary">
+          <el-link :underline="false" type="primary" @click="handleClick">
             新增
           </el-link>
-          <el-link :underline="false" type="primary">
+          <el-link :underline="false" type="primary" @click="handleClick">
             修改
           </el-link>
-          <el-link :underline="false" type="primary">
+          <el-link :underline="false" type="primary" @click="handleClick">
             删除
           </el-link>
         </x-space>
@@ -210,6 +210,11 @@ onMounted(() => {
   getList()
 })
 
+// 操作
+function handleClick() {
+  ElMessage.info('开发中！')
+}
+
 // 自定义列弹窗
 function showCustomColumn() {
   dialogVisible.value = true
@@ -244,9 +249,9 @@ function handleSelectionChange(val: XTableData[]) {
 
 // 分页排序
 function handleTableChange(data: XTableChangeData) {
-  console.log(`${data.type} change =>`, data)
   const { pageSize, pageNum } = data
   queryForm.pageNum = pageNum
   queryForm.pageSize = pageSize
+  ElMessage.success(`${data.type} change ✨`)
 }
 </script>
