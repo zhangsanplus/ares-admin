@@ -3,7 +3,7 @@ import { ResponseEnum } from '@/enums/http'
 import useUserStore from '@/store/modules/user'
 import type { AxiosInstance, AxiosRequestConfig, InternalAxiosRequestConfig } from 'axios'
 
-const URL = import.meta.env.VITE_APP_API_BASE_URL
+const URL = import.meta.env.VITE_API_BASE_URL
 const config = {
   // 默认地址
   baseURL: URL,
@@ -38,6 +38,7 @@ class RequestHttp {
      * 响应拦截器
      */
     this.service.interceptors.response.use(
+      // 2xx 时触发
       (response) => {
         const res = response.data
         // 响应数据为二进制流
@@ -49,10 +50,11 @@ class RequestHttp {
             const userStore = useUserStore()
             userStore.logout()
           }
-          return Promise.reject(new Error(res.msg || 'Request Error'))
+          return Promise.reject(res.msg || 'Request Error')
         }
         return res
       },
+      // 非 2xx 时触发
       (error) => {
         if (axios.isCancel(error)) {
           console.error(error.message)

@@ -8,10 +8,10 @@ interface ImportMetaEnv {
   /** 端口号 */
   VITE_DEV_PORT: number
 
-  /** 代理路径 */
+  /** 开发代理路径 */
   VITE_DEV_PROXY_PATH?: string
 
-  /** 代理域名 */
+  /** 开发代理域名 */
   VITE_DEV_PROXY_TARGET?: string
 
   /** 打包生成的文件目录 */
