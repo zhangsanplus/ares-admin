@@ -1,7 +1,7 @@
 <template>
   <div class="app-logo">
-    <img src="@/assets/logo.png" alt="logo" width="32">
-    <div class="app-name">
+    <img src="/logo.svg" alt="logo" width="32">
+    <div v-show="!appStore.collapsed" class="app-name">
       {{ appStore.title }}
     </div>
   </div>
@@ -24,9 +24,9 @@ const appStore = useAppStore()
 }
 
 .app-name {
-  padding-left: 16px;
+  padding-left: 8px;
   font-weight: 500;
-  font-size: 18px;
+  font-size: 17px;
   white-space: nowrap;
   word-break: keep-all;
 }

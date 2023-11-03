@@ -1,13 +1,11 @@
 
 <div align="center">
 
-<img src="https://github.com/zhangsanplus/ares-admin/blob/main/screenshot/logo.png?raw=true" height="200" />
+<img src="https://github.com/zhangsanplus/ares-admin/blob/main/screenshot/logo.png?raw=true" height="120" />
 
-<h1>Ares Admin</h1>
+[![License](https://img.shields.io/npm/l/package.json.svg?style=flat)](https://github.com/zhangsanplus/ares-admin/blob/main/LICENSE) [![release](https://img.shields.io/github/release/zhangsanplus/ares-admin.svg)](release)
 
-[![License](https://img.shields.io/npm/l/package.json.svg?style=flat)](https://github.com/zhangsanplus/ares-admin/blob/main/LICENSE)
-
-基于 Element Plus 和 Vue3 的开箱即用的中后台前端模板
+[Ares Admin](https://github.com/zhangsanplus/ares-admin/) - 基于 Element Plus 和 Vue3 的开箱即用的中后台前端模板
 </div>
 
 ## 🔥 介绍
@@ -16,7 +14,7 @@
 
 无论你是刚开始学习，还是已经有一定经验的开发者，Ares Admin 都能帮助你快速构建出令人满意的系统。
 
-如果你有移动端（SPA、MPA）需求，推荐你使用模板 [Ares Moblie](https://github.com/zhangsanplus/ares-mobile)
+如果你有移动端（SPA、MPA）需求，推荐你使用 [Ares Moblie](https://github.com/zhangsanplus/ares-mobile) 模板
 
 ## ✨ 特性
 
