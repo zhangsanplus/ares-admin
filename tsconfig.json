@@ -2,27 +2,27 @@
   // https://cn.vitejs.dev/guide/features.html#typescript
   "compilerOptions": {
     "target": "esnext",
+    "jsx": "preserve",
+    "lib": ["esnext", "dom"],
+    "experimentalDecorators": true,
+    "baseUrl": ".",
     "module": "esnext",
     "moduleResolution": "node",
-    "strict": true,
-    "jsx": "preserve",
-    "importHelpers": true,
-    "experimentalDecorators": true,
-    "sourceMap": true,
+    "paths": {
+      "@/*": ["src/*"]
+    },
     "resolveJsonModule": true,
-    "isolatedModules": true,
-    "esModuleInterop": true,
-    "lib": ["esnext", "dom"],
-    "skipLibCheck": true,
     "types": [
       "node",
       "vite/client",
       "unplugin-icons/types/vue"
     ],
-    "baseUrl": ".",
-    "paths": {
-      "@/*": ["src/*"]
-    }
+    "strict": true,
+    "importHelpers": true,
+    "sourceMap": true,
+    "esModuleInterop": true,
+    "isolatedModules": true,
+    "skipLibCheck": true
   },
   "include": [
     "src/**/*.ts",

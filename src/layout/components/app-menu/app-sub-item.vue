@@ -26,8 +26,7 @@ import type { MenuItem } from 'vue-router'
 withDefaults(defineProps<{
   menuList: MenuItem[]
   showIcon?: boolean
-}>(),
-{
+}>(), {
   showIcon: true,
 })
 

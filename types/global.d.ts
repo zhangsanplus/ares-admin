@@ -15,7 +15,7 @@ interface PromiseFn<T = any, R = T> {
 /**
  * 普通对象
  */
-type AnyObject<T = unknown> = Record<string, T>;
+type AnyObject<T = unknown> = Record<string, T>
 
 /**
  * 选项
@@ -29,7 +29,7 @@ interface Option<T = unknown, R = string> {
  * 节点项
  */
 interface NodeOptions extends Option {
-  children?: NodeOptions[];
+  children?: NodeOptions[]
 }
 
 /**

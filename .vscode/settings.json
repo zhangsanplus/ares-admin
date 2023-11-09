@@ -6,11 +6,60 @@
   "files.associations": {
     "*.css": "postcss"
   },
+  "eslint.validate": [
+    "javascript",
+    "typescript",
+    "vue",
+    "html",
+    "markdown",
+    "json",
+    "jsonc",
+    "yaml"
+  ],
+  "eslint.rules.customizations": [
+    {
+      "severity": "off",
+      "rule": "style/*"
+    },
+    {
+      "severity": "off",
+      "rule": "*-indent"
+    },
+    {
+      "severity": "off",
+      "rule": "*-spacing"
+    },
+    {
+      "severity": "off",
+      "rule": "*-spaces"
+    },
+    {
+      "severity": "off",
+      "rule": "*-order"
+    },
+    {
+      "severity": "off",
+      "rule": "*-dangle"
+    },
+    {
+      "severity": "off",
+      "rule": "*-newline"
+    },
+    {
+      "severity": "off",
+      "rule": "*quotes"
+    },
+    {
+      "severity": "off",
+      "rule": "*semi"
+    }
+  ],
+  "eslint.experimental.useFlatConfig": true,
   "editor.formatOnSave": false,
   "editor.codeActionsOnSave": {
-    "source.organizeImports": false,
+    "source.organizeImports": "never",
     "source.fixAll.stylelint": true,
-    "source.fixAll.eslint": true
+    "source.fixAll.eslint": "explicit"
   },
   "cSpell.words": [
     "bumpp",

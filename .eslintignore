@@ -6,7 +6,8 @@ dist-*
 *.sh
 *.md
 
-.history
 .vscode
 .husky
+
+.history
 .github

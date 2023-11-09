@@ -261,7 +261,7 @@ export default defineComponent({
       }
 
       return (
-        <ElTableColumn {...getColumnProps(column)} >
+        <ElTableColumn {...getColumnProps(column)}>
           {columnSlots}
         </ElTableColumn>
       )

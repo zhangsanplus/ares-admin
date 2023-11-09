@@ -1,4 +1,3 @@
-
 declare namespace AppType {
   interface DefaultSetting {
     theme: 'light' | 'dark' | 'auto'
