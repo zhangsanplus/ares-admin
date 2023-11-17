@@ -22,6 +22,5 @@ const isMobile = computed(() => appStore.device === 'mobile')
   align-items: center;
   justify-content: space-between;
   height: calc(var(--app-navbar-height));
-  border-bottom: 1px solid var(--el-border-color-lighter);
 }
 </style>

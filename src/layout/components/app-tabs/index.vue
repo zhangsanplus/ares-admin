@@ -41,7 +41,8 @@ onMounted(() => {
 
 <style lang="scss">
 .app-tabs {
-  border-bottom: 1px solid var(--el-border-color-lighter);
+  border-top: 1px solid var(--el-border-color-lighter);
+  border-left: 1px solid var(--el-border-color-extra-light);
 
   .el-scrollbar__bar.is-horizontal {
     height: 6px;

@@ -14,7 +14,7 @@
 
 无论你是刚开始学习，还是已经有一定经验的开发者，Ares Admin 都能帮助你快速构建出令人满意的系统。
 
-如果你有移动端（SPA、MPA）需求，推荐你使用 [Ares Moblie](https://github.com/zhangsanplus/ares-mobile) 模板
+如果你有移动端（SPA、MPA）需求，推荐你使用 [Ares Moblie](https://github.com/zhangsanplus/ares-mobile) 模板。
 
 ## ✨ 特性
 

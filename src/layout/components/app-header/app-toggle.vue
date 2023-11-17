@@ -28,7 +28,7 @@ const { toggleCollapse } = appStore
     z-index: 1;
     width: 1px;
     height: 20px;
-    background-color: var(--el-border-color-extra-light);
+    background-color: var(--el-border-color-lighter);
     transform: translateY(-50%);
     transition: opacity .25s;
     content: '';

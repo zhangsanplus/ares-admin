@@ -46,18 +46,22 @@ function handleClick() {
   border: none;
   border-radius: 2px;
   cursor: pointer;
+  transition: all .2s;
 
-  &.is-closable {
-    padding-right: 3px;
-  }
+  &.el-tag {
+    --el-tag-bg-color: var(--el-color-info-light-9);
 
-  .el-tag__close {
-    margin-left: 2px;
-    transition: all .2s;
+    .el-tag__close {
+      margin-left: 2px;
+
+      &:hover {
+        color: var(--el-color-primary);
+        background: transparent;
+      }
+    }
   }
 
   &.el-tag--info {
-    --el-tag-bg-color: var(--el-fill-color);
     --el-tag-hover-color: var(--el-color-info-light-7);
     --el-tag-text-color: var(--el-text-color-regular);
 
@@ -66,11 +70,18 @@ function handleClick() {
     }
 
     &:hover {
+      --el-tag-text-color: var(--el-text-color-regular);
+
       .el-tag__close {
-        color: inherit;
         opacity: 1;
       }
     }
+  }
+}
+
+html.dark {
+  .app-tab-item.el-tag {
+    --el-tag-bg-color: var(--el-color-info-light-8);
   }
 }
 </style>
