@@ -1,14 +1,35 @@
 {
-  "typescript.tsdk": "./node_modules/typescript/lib",
+  // Enable the ESlint flat config support
+  "eslint.experimental.useFlatConfig": true,
+
+  // Disable the default formatter
   "prettier.enable": false,
-  "npm.packageManager": "pnpm",
-  "local-history.enabled": 0,
-  "files.associations": {
-    "*.css": "postcss"
+  "editor.formatOnSave": false,
+
+  // Auto fix
+  "editor.codeActionsOnSave": {
+    "source.fixAll.eslint": "explicit",
+    "source.organizeImports": "never"
   },
+
+  "eslint.rules.customizations": [
+    { "rule": "style/*", "severity": "off" },
+    { "rule": "format/*", "severity": "off" },
+    { "rule": "*-indent", "severity": "off" },
+    { "rule": "*-spacing", "severity": "off" },
+    { "rule": "*-spaces", "severity": "off" },
+    { "rule": "*-order", "severity": "off" },
+    { "rule": "*-dangle", "severity": "off" },
+    { "rule": "*-newline", "severity": "off" },
+    { "rule": "*quotes", "severity": "off" },
+    { "rule": "*semi", "severity": "off" }
+  ],
+
   "eslint.validate": [
     "javascript",
+    "javascriptreact",
     "typescript",
+    "typescriptreact",
     "vue",
     "html",
     "markdown",
@@ -16,51 +37,21 @@
     "jsonc",
     "yaml"
   ],
-  "eslint.rules.customizations": [
-    {
-      "severity": "off",
-      "rule": "style/*"
-    },
-    {
-      "severity": "off",
-      "rule": "*-indent"
-    },
-    {
-      "severity": "off",
-      "rule": "*-spacing"
-    },
-    {
-      "severity": "off",
-      "rule": "*-spaces"
-    },
-    {
-      "severity": "off",
-      "rule": "*-order"
-    },
-    {
-      "severity": "off",
-      "rule": "*-dangle"
-    },
-    {
-      "severity": "off",
-      "rule": "*-newline"
-    },
-    {
-      "severity": "off",
-      "rule": "*quotes"
-    },
-    {
-      "severity": "off",
-      "rule": "*semi"
-    }
-  ],
-  "eslint.experimental.useFlatConfig": true,
-  "editor.formatOnSave": false,
-  "editor.codeActionsOnSave": {
-    "source.organizeImports": "never",
-    "source.fixAll.stylelint": true,
-    "source.fixAll.eslint": "explicit"
+
+  // markdown
+  "markdownlint.config": {
+    "single-h1": false,
+    "no-inline-html": false,
+    "first-line-h1": false,
+    "fenced-code-language": false,
+    "no-duplicate-header": false
   },
+
+  "npm.packageManager": "pnpm",
+  "typescript.tsdk": "./node_modules/typescript/lib",
+
+  // extensions
+  "local-history.enabled": 0,
   "cSpell.words": [
     "bumpp",
     "Customizer",
