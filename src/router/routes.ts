@@ -2,25 +2,12 @@ import { HOME_ROUTE_INFO, RouteNameEnum } from '@/enums/route'
 import Layout from '@/layout/index.vue'
 import type { RouteRecordRaw } from 'vue-router'
 
-const modules = import.meta.glob('./modules/*.ts', { import: 'default', eager: true })
-
-function formatModules(_modules: Record<string, any>, result: RouteRecordRaw[]) {
-  Object.keys(_modules).forEach((key) => {
-    const _module = _modules[key]
-    if (!_module) return
-    const moduleList = Array.isArray(_module)
-      ? [..._module]
-      : [_module]
-    result.push(...moduleList)
-  })
-  return result
-}
-
 const BASE_ROUTE: RouteRecordRaw = {
   path: '/',
   name: 'layout',
   component: Layout,
   redirect: '/dashboard',
+  meta: { order: 99 },
   children: [
     {
       ...HOME_ROUTE_INFO,
@@ -48,7 +35,7 @@ const LOGIN_ROUTE: RouteRecordRaw = {
   },
 }
 
-const NOT_FOUND_ROUTE: RouteRecordRaw = {
+export const NOT_FOUND_ROUTE: RouteRecordRaw = {
   path: '/:pathMatch(.*)*',
   name: 'pathMatch',
   redirect: '/exception/404',
@@ -57,15 +44,23 @@ const NOT_FOUND_ROUTE: RouteRecordRaw = {
   },
 }
 
-const appRoutes = formatModules(modules, [])
+function formatModules(_modules: Record<string, any>, result: RouteRecordRaw[]) {
+  Object.keys(_modules).forEach((key) => {
+    const _module = _modules[key]
+    if (!_module) return
+    const moduleList = Array.isArray(_module)
+      ? [..._module]
+      : [_module]
+    result.push(...moduleList)
+  })
+  return result
+}
 
-appRoutes.sort((a, b) => {
-  return (b.meta?.order ?? 0) - (a.meta?.order ?? 0)
-})
+const modules = import.meta.glob(['./modules/*.ts'], { import: 'default', eager: true })
+const appRoutes = formatModules(modules, [])
 
 export const routes: RouteRecordRaw[] = [
   LOGIN_ROUTE,
   BASE_ROUTE,
   ...appRoutes,
-  NOT_FOUND_ROUTE,
 ]

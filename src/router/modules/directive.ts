@@ -8,7 +8,7 @@ const directive: RouteRecordRaw = {
   redirect: '/directive/index',
   meta: {
     title: '常用指令',
-    order: 99,
+    order: 89,
   },
   children: [
     {

@@ -47,9 +47,6 @@
     "no-duplicate-header": false
   },
 
-  "npm.packageManager": "pnpm",
-  "typescript.tsdk": "./node_modules/typescript/lib",
-
   // extensions
   "local-history.enabled": 0,
   "cSpell.words": [
@@ -59,5 +56,8 @@
     "sider",
     "taze",
     "zhangsanplus"
-  ]
+  ],
+
+  "npm.packageManager": "pnpm",
+  "typescript.tsdk": "./node_modules/typescript/lib"
 }

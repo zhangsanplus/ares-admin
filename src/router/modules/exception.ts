@@ -10,7 +10,7 @@ const exception: RouteRecordRaw = {
   meta: {
     title: '异常页',
     icon: 'menu-exception',
-    order: -11,
+    order: 39,
   },
   children: [
     {

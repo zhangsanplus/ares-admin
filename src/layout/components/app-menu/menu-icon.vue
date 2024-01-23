@@ -10,6 +10,7 @@ import MenuDirective from '~icons/custom-menu/directive'
 import MenuException from '~icons/custom-menu/exception'
 import MenuLink from '~icons/custom-menu/link'
 import MenuNest from '~icons/custom-menu/nest'
+import MenuRoute from '~icons/custom-menu/route'
 import MenuTable from '~icons/custom-menu/table'
 import MenuUser from '~icons/custom-menu/user'
 
@@ -23,6 +24,7 @@ const icons: Record<string, any> = {
   'menu-exception': MenuException,
   'menu-link': MenuLink,
   'menu-nest': MenuNest,
+  'menu-route': MenuRoute,
   'menu-table': MenuTable,
   'menu-user': MenuUser,
 }

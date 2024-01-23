@@ -1,6 +1,6 @@
 import { guid, sleep } from '@/utils'
 
-export async function getLoginData(params: any): Promise<HttpResponse<UserType.LoginResponse>> {
+export async function mockLoginData(params: any): Promise<HttpResponse<UserType.LoginResponse>> {
   await sleep(800)
   return {
     msg: '成功',
@@ -13,7 +13,7 @@ export async function getLoginData(params: any): Promise<HttpResponse<UserType.L
   }
 }
 
-export async function getUserData(params: any): Promise<HttpResponse<PagingResult<UserType.ListItem[]>>> {
+export async function mockUserData(params: any): Promise<HttpResponse<PagingResult<UserType.ListItem[]>>> {
   await sleep(500)
   const count = 50
   const start = (params.pageNum - 1) * params.pageSize
@@ -40,5 +40,27 @@ export async function getUserData(params: any): Promise<HttpResponse<PagingResul
       list,
       count,
     },
+  }
+}
+
+export async function mockMenuList(username: string): Promise<HttpResponse<UserType.MenuItem[]>> {
+  console.log('mockMenuList =>', username)
+  const data = [
+    {
+      // 省略其他配置
+      name: 'async-route',
+      children: [
+        { name: 'async-route-1' },
+        { name: 'async-route-2' },
+      ],
+    },
+  ]
+
+  await sleep(500)
+
+  return {
+    msg: '成功',
+    code: 0,
+    data: username === 'admin' ? data : [],
   }
 }

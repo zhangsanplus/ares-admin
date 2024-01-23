@@ -32,4 +32,9 @@ declare namespace UserType {
     role: number
     authList: string[]
   }
+
+  interface MenuItem {
+    name: string
+    children?: UserType.MenuItem[]
+  }
 }

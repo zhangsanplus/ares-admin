@@ -1,4 +1,4 @@
-const TOKEN_KEY = 'app-token'
+const TOKEN_KEY = 'ares-token'
 
 export function isLogin() {
   return !!localStorage.getItem(TOKEN_KEY)

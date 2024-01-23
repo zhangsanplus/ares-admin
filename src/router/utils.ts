@@ -1,10 +1,9 @@
 import { isExternal } from '@/utils/is'
+import asyncRoutes from './async-routes'
 import type { MenuItem, RouteRecordRaw } from 'vue-router'
 
 /**
  * 将两个路径拼接为一个
- * @param path1 路径 1
- * @param path2 路径 2
  */
 function joinPath(path1: string, path2: string) {
   if (path2.startsWith('/')) return path2
@@ -49,12 +48,16 @@ function transformRouterPath(routes: RouteRecordRaw[], baseUrl = '/') {
   })
 }
 
-// 路由转菜单
+/**
+ * 路由转菜单
+ */
 export function transformRouteToMenu(routes: RouteRecordRaw[] = []) {
   return transformRouterPath(routes).map(getMenuItem)
 }
 
-// 过滤路由
+/**
+ * 过滤路由
+ */
 export function filterRoutes(routes: RouteRecordRaw[], predicate: (route: RouteRecordRaw) => boolean) {
   return routes.reduce((result: RouteRecordRaw[], route: RouteRecordRaw) => {
     if (predicate(route)) {
@@ -66,4 +69,24 @@ export function filterRoutes(routes: RouteRecordRaw[], predicate: (route: RouteR
     }
     return result
   }, [])
+}
+
+/**
+ * 将后端数据生成真实的路由
+ */
+export function generateRoutes(data: UserType.MenuItem[]) {
+  const routes: RouteRecordRaw[] = []
+
+  data.forEach((item) => {
+    const route = asyncRoutes[item.name]
+    if (route) {
+      routes.push(route)
+
+      if (item.children) {
+        route.children = generateRoutes(item.children)
+      }
+    }
+  })
+
+  return routes
 }

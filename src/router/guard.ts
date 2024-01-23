@@ -1,6 +1,7 @@
 import NProgress from 'nprogress'
 import { RouteNameEnum } from '@/enums/route'
 import useUserStore from '@/store/modules/user'
+import { NOT_FOUND_ROUTE } from './routes'
 import type { Router } from 'vue-router'
 
 NProgress.configure({
@@ -24,7 +25,7 @@ export default function createPermissionGuard(router: Router) {
 
     const userStore = useUserStore()
 
-    // 判断是访问登陆页，有 Token 就在当前页面，没有 Token 重置路由到登陆页
+    // 判断访问的页面是登陆页，如果有 Token 就不需要再去登录了
     if (to.name === RouteNameEnum.LOGIN) {
       if (userStore.token) return next(from.fullPath)
       return next()
@@ -47,12 +48,22 @@ export default function createPermissionGuard(router: Router) {
       })
     }
 
-    // 页面权限验证
-    if (!userStore.hasRole(to.meta.role)) {
-      return next({
-        name: RouteNameEnum.FORBIDDEN,
-      })
+    // 获取动态路由
+    if (!userStore.isMenuLoaded) {
+      await userStore.getMenuData()
+
+      userStore.asyncRoutes.forEach(route => router.addRoute(route))
+      router.addRoute(NOT_FOUND_ROUTE)
+
+      return next({ ...to, replace: true })
     }
+
+    // 角色验证（角色验证和动态路由使用一种即可）
+    // if (!userStore.hasRole(to.meta.role)) {
+    //   return next({
+    //     name: RouteNameEnum.FORBIDDEN,
+    //   })
+    // }
 
     // 正常访问页面
     next()
@@ -63,7 +74,7 @@ export default function createPermissionGuard(router: Router) {
   })
 
   router.onError((error) => {
-    NProgress.start()
+    NProgress.done()
     console.warn('路由错误 =>', error.message)
   })
 }

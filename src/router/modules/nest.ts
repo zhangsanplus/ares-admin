@@ -10,6 +10,7 @@ const nest: RouteRecordRaw = {
   meta: {
     title: '多级菜单',
     icon: 'menu-nest',
+    order: 59,
   },
   children: [
     {

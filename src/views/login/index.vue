@@ -15,7 +15,7 @@
         >
           <el-form-item prop="username">
             <el-input
-              v-model="form.username"
+              v-model.trim="form.username"
               :validate-event="false"
               placeholder="请输入账号"
             >
@@ -27,7 +27,7 @@
 
           <el-form-item prop="password">
             <el-input
-              v-model="form.password"
+              v-model.trim="form.password"
               :validate-event="false"
               type="password"
               show-password

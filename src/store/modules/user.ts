@@ -1,5 +1,6 @@
 import * as userApi from '@/api/user'
 import { RouteNameEnum } from '@/enums/route'
+import { generateRoutes } from '@/router/utils'
 import defaultSetting from '@/settings'
 
 const { storagePrefix } = defaultSetting
@@ -7,6 +8,22 @@ const useUserStore = defineStore('user', () => {
   const router = useRouter()
   const token = useStorage(`${storagePrefix}-token`, '')
   const userinfo = useStorage<UserType.UserInfo>(`${storagePrefix}-user`, {} as any)
+  const menulist = ref<UserType.MenuItem[]>([])
+  const isMenuLoaded = ref(false)
+  const asyncRoutes = computed(() => generateRoutes(menulist.value))
+
+  /**
+   * 获取动态菜单
+   */
+  const getMenuData = async () => {
+    try {
+      isMenuLoaded.value = true
+      const { data = [] } = await userApi.getMenuList(userinfo.value.username)
+      menulist.value = data
+    } catch (error) {
+      console.error(error)
+    }
+  }
 
   /**
    * 权限验证
@@ -43,6 +60,8 @@ const useUserStore = defineStore('user', () => {
    */
   const logout = () => {
     token.value = ''
+    isMenuLoaded.value = false
+    menulist.value = []
     userinfo.value = {} as any
     router.replace({ name: RouteNameEnum.LOGIN })
   }
@@ -54,6 +73,10 @@ const useUserStore = defineStore('user', () => {
     hasRole,
     login,
     logout,
+
+    isMenuLoaded,
+    asyncRoutes,
+    getMenuData,
   }
 })
 

@@ -1,16 +1,13 @@
-import request from '@/utils/request'
-import { getLoginData, getUserData } from './__mock__'
-import type { AxiosRequestConfig } from 'axios'
+import { mockLoginData, mockMenuList, mockUserData } from './__mock__'
 
 export function login(params: UserType.LoginParams) {
-  // return request.post<UserType.LoginResponse>('/user/login', params)
-  return getLoginData(params)
+  return mockLoginData(params)
+}
+
+export function getMenuList(params: string) {
+  return mockMenuList(params)
 }
 
 export function getUserList(params: UserType.ListParams) {
-  return getUserData(params)
-}
-
-export function getArticleList(params: PagingRequest & ArticleType.ListParams, config?: AxiosRequestConfig) {
-  return request.get<PagingResult<ArticleType.ListItem[]>>('https://api.hsmy.fun/mock/list', params, config)
+  return mockUserData(params)
 }

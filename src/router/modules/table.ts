@@ -9,7 +9,7 @@ const table: RouteRecordRaw = {
   meta: {
     title: '表单表格',
     icon: 'menu-table',
-    order: 98,
+    order: 79,
   },
   children: [
     {

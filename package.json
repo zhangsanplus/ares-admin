@@ -34,7 +34,7 @@
     "preinstall": "npx only-allow pnpm",
     "prepare": "husky install",
     "lint:css": "stylelint **/*.{css,scss,vue} --fix",
-    "lint:js": "eslint . --fix",
+    "lint:js": "eslint --fix",
     "lint:ls": "ls-lint",
     "lint": "npm run lint:css && npm run lint:js && npm run lint:ls",
     "typecheck": "vue-tsc --noEmit",

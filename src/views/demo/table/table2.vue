@@ -56,7 +56,7 @@
 </template>
 
 <script setup lang='ts'>
-import { getArticleList } from '@/api/user'
+import { getArticleList } from '@/api/article'
 import useTable from '@/composables/table'
 
 const columns = ref([
