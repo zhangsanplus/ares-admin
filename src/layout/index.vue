@@ -119,7 +119,7 @@ onBeforeUnmount(() => {
     top: 0;
     z-index: 10;
     background-color: var(--el-bg-color-overlay);
-    box-shadow: 3px 1px 4px 0 var(--app-shadow);
+    box-shadow: 3px 3px 4px 0 var(--app-shadow);
   }
 
   &-main {

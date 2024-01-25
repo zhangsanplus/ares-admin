@@ -16,13 +16,28 @@
 
         <el-col :span="8" :xs="24">
           <el-form-item label="地址">
-            <el-input v-model="queryForm.name" placeholder="请输入" />
+            <el-select
+              v-model="queryForm.address"
+              clearable
+              filterable
+              placeholder="请选择"
+              style="width: 100%;"
+            >
+              <el-option label="上海市普陀区 120 弄" value="1" />
+              <el-option label="上海市嘉定区 340 弄" value="2" />
+              <el-option label="上海市宝山区 560 弄" value="3" />
+            </el-select>
           </el-form-item>
         </el-col>
 
         <el-col :span="8" :xs="24">
           <el-form-item label="出生日期">
-            <el-input v-model="queryForm.name" placeholder="请输入" />
+            <el-date-picker
+              v-model="queryForm.date"
+              type="date"
+              placeholder="请选择"
+              style="width: 100%;"
+            />
           </el-form-item>
         </el-col>
       </el-row>
@@ -47,7 +62,7 @@
 
     <el-divider />
 
-    <el-row class="mb18">
+    <el-row style="margin-bottom: 18px;">
       <el-col :span="16">
         <el-button type="primary">
           <template #icon>
@@ -190,6 +205,8 @@ const { columns, reset: resetColumns } = useLocalColumns(
 const queryForm = reactive({
   name: '',
   phone: '',
+  address: '',
+  date: '',
   pageSize: 10,
   pageNum: 1,
 })

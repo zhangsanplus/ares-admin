@@ -53,6 +53,7 @@ function handleClick() {
 
     .el-tag__close {
       margin-left: 2px;
+      transition: all .2s;
 
       &:hover {
         color: var(--el-color-primary);

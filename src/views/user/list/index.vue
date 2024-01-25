@@ -23,7 +23,7 @@
   </x-card>
 
   <x-card>
-    <el-row class="mb18">
+    <el-row style="margin-bottom: 18px;">
       <el-col :span="16">
         <el-button type="primary" @click="handleCreate">
           <template #icon>
