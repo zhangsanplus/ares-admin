@@ -1,7 +1,8 @@
 .app-menu {
   height: calc(100% - var(--app-navbar-height));
+  border-top: 1px solid var(--el-border-color-lighter);
   // border-right: 1px solid var(--el-border-color-lighter);
-  box-shadow: var(--app-shadow) 1px 3px 4px 0;
+  box-shadow: var(--app-shadow) 1px 3px 3px 0;
 }
 
 :root {
