@@ -1,6 +1,6 @@
 {
   // Enable the ESlint flat config support
-  "eslint.experimental.useFlatConfig": true,
+  "eslint.useFlatConfig": true,
 
   // Disable the default formatter
   "prettier.enable": false,
@@ -9,6 +9,7 @@
   // Auto fix
   "editor.codeActionsOnSave": {
     "source.fixAll.eslint": "explicit",
+    "source.fixAll.stylelint": "explicit",
     "source.organizeImports": "never"
   },
 

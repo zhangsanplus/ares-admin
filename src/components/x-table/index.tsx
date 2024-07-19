@@ -306,7 +306,7 @@ export default defineComponent({
         currentPage: props.pageNum,
         onSizeChange: handlePageSizeChange,
         onCurrentChange: handlePageNumChange,
-      }
+      } as const
 
       return (
         <div class="x-table-pagination">

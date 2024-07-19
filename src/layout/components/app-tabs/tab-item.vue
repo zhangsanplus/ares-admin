@@ -2,7 +2,7 @@
   <tab-dropdown trigger="contextmenu" :route="route">
     <el-tag
       class="app-tab-item" disable-transitions :closable="closable"
-      :type="tab.fullPath === $route.fullPath ? '' : 'info'" @click="handleClick" @close="handleClose"
+      :type="tab.fullPath === $route.fullPath ? undefined : 'info'" @click="handleClick" @close="handleClose"
     >
       {{ tab.title }}
     </el-tag>

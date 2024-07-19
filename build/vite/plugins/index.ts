@@ -5,7 +5,6 @@
 import vueLegacy from '@vitejs/plugin-legacy'
 import vue from '@vitejs/plugin-vue'
 import vueJsx from '@vitejs/plugin-vue-jsx'
-import vueSetupExtend from 'vite-plugin-vue-setup-extend'
 import { unpluginDeps } from './unplugin'
 import type { PluginOption } from 'vite'
 
@@ -14,8 +13,6 @@ export function createVitePlugins(isBuild: boolean) {
     vue(),
     // jsx 语法支持
     vueJsx(),
-    // setup 组件名语法糖
-    vueSetupExtend(),
     // 自动导入组件和字体图标等
     ...unpluginDeps(),
   ]

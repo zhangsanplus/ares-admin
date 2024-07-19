@@ -53,5 +53,5 @@ export function isRegExp(val: any) {
 }
 
 export function isExternal(val: any) {
-  return /^(https?:|mailto:|tel:)/.test(val)
+  return /^(?:https?:|mailto:|tel:)/.test(val)
 }

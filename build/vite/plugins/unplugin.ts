@@ -22,7 +22,6 @@ export function unpluginDeps() {
       imports: [
         'vue',
         'vue-router',
-        'vue/macros',
         '@vueuse/core',
         'pinia',
       ],

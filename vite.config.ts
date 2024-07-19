@@ -24,7 +24,6 @@ export default defineConfig(({ command, mode }: ConfigEnv): UserConfig => {
     server: {
       host: '0.0.0.0',
       port: env.VITE_DEV_PORT,
-      https: false,
       proxy: createProxy(env),
     },
     esbuild: {
