@@ -1,5 +1,4 @@
 import XCard from './x-card/index.vue'
-import XColumn from './x-column/index.vue'
 import XQueryForm from './x-query-form/index.vue'
 import XSpace from './x-space/index.vue'
 import XTable from './x-table'
@@ -10,7 +9,6 @@ const components: Record<string, Component> = {
   XTable,
   XCard,
   XQueryForm,
-  XColumn,
 }
 
 export function setupGlobalComponents(app: App) {

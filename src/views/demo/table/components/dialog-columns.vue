@@ -17,7 +17,7 @@
     </template>
 
     <!-- body -->
-    <div class="x-custom-column">
+    <div class="custom-columns">
       <template v-for="(item) in items" :key="item.prop || item.type">
         <el-checkbox v-if="!item.type" v-model="item.show" :label="item.label" size="large" />
       </template>
@@ -85,7 +85,7 @@ function handleCancel() {
 </script>
 
 <style lang="scss" scoped>
-  .x-custom-column {
+  .custom-columns {
     min-height: 100px;
     padding: 10px;
 

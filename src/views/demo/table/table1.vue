@@ -89,16 +89,14 @@
 
     <x-table
       ref="tableRef"
-      v-model:visible-column="dialogVisible"
       border
       :columns="columns"
       :data-source="tableData"
-      :default-sort="{ prop: 'age', order: 'ascending' }"
+      :default-sort="{ prop: 'status', order: 'ascending' }"
       :total="tableTotal"
       :page-size="queryForm.pageSize"
       :page-num="queryForm.pageNum"
       @change="handleTableChange"
-      @column-change="handleColumnChange"
       @selection-change="handleSelectionChange"
       @header-dragend="handleHeaderDragend"
     >
@@ -107,9 +105,13 @@
       </template>
 
       <template #sex-header>
-        <el-button plain size="small">
-          刷新自动恢复列宽
-        </el-button>
+        性别
+        <el-tooltip placement="top">
+          <template #content>
+            调整表头列宽度后会自动保存到本地<br>当下次访问时会自动恢复
+          </template>
+          <i-ep-info-filled />
+        </el-tooltip>
       </template>
 
       <template #action>
@@ -133,13 +135,30 @@
       </template>
     </x-table>
   </x-card>
+
+  <dialog-columns v-model:visible="dialogVisible" :columns="columns" @change="handleColumnsChange" />
 </template>
 
 <script setup lang='ts'>
 import { getUserList } from '@/api/user'
-import useLocalColumns from '@/composables/local-columns'
+import DialogColumns from './components/dialog-columns.vue'
+import useColumns from './composables/use-columns'
 
-const { columns, reset: resetColumns } = useLocalColumns(
+const queryForm = reactive({
+  name: '',
+  phone: '',
+  address: '',
+  date: '',
+  pageSize: 10,
+  pageNum: 1,
+})
+
+const dialogVisible = ref(false)
+const tableRef = ref()
+const tableTotal = ref(0)
+const tableData = ref<UserType.ListItem[]>([])
+
+const { columns, reset: resetColumns } = useColumns(
   'table1',
   [
     {
@@ -202,31 +221,6 @@ const { columns, reset: resetColumns } = useLocalColumns(
   ],
 )
 
-const queryForm = reactive({
-  name: '',
-  phone: '',
-  address: '',
-  date: '',
-  pageSize: 10,
-  pageNum: 1,
-})
-
-const dialogVisible = ref(false)
-const tableRef = ref()
-const tableTotal = ref(0)
-const tableData = ref<UserType.ListItem[]>([])
-
-async function getList() {
-  const { data } = await getUserList(queryForm)
-  data.list.sort((a, b) => a.age - b.age)
-  tableData.value = data.list
-  tableTotal.value = data.count
-}
-
-onMounted(() => {
-  getList()
-})
-
 // 操作
 function handleClick() {
   ElMessage.info('开发中！')
@@ -238,13 +232,8 @@ function showCustomColumn() {
 }
 
 // 自定义列
-function handleColumnChange(cols: XTableColumn[]) {
+function handleColumnsChange(cols: XTableColumn[]) {
   columns.value = cols
-}
-
-// 清除多选
-function clearSelection() {
-  tableRef.value.$refs.elTableRef.clearSelection()
 }
 
 // 表头宽度本地化
@@ -259,6 +248,11 @@ function handleHeaderDragend(newWidth: number, _oldWidth: number, column: any) {
   })
 }
 
+// 清除多选
+function clearSelection() {
+  tableRef.value.$refs.elTableRef.clearSelection()
+}
+
 // 多选
 function handleSelectionChange(val: XTableData[]) {
   console.log('selection change =>', JSON.parse(JSON.stringify(val)))
@@ -271,4 +265,15 @@ function handleTableChange(data: XTableChangeData) {
   queryForm.pageSize = pageSize
   ElMessage.success(`${data.type} change ✨`)
 }
+
+async function getList() {
+  const { data } = await getUserList(queryForm)
+  data.list.sort((a, b) => a.age - b.age)
+  tableData.value = data.list
+  tableTotal.value = data.count
+}
+
+onMounted(() => {
+  getList()
+})
 </script>

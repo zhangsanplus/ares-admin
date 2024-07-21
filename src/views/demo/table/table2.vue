@@ -57,7 +57,7 @@
 
 <script setup lang='ts'>
 import { getArticleList } from '@/api/article'
-import useTable from '@/composables/table'
+import useTable from '@/composables/use-table'
 
 const columns = ref([
   {

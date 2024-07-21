@@ -1,12 +1,6 @@
 import { ElLoading, ElPagination, ElTable, ElTableColumn } from 'element-plus'
-import XColumn from '@/components/x-column/index.vue'
-import { isUndefined } from '@/utils/is'
 import type { PropType } from 'vue'
 import './index.scss'
-
-function getDefaultSort(attrs: Record<string, any>): any {
-  return attrs['default-sort'] || attrs.defaultSort
-}
 
 export default defineComponent({
   name: 'XTable',
@@ -117,17 +111,16 @@ export default defineComponent({
     },
 
     /**
-     * 打开自定义列
+     * 默认排序
      */
-    visibleColumn: {
-      type: Boolean,
-      default: undefined,
+    defaultSort: {
+      type: Object as PropType<XTableSort>,
     },
   },
-  emits: ['change', 'columnChange', 'update:visibleColumn'],
+  emits: ['change'],
   setup(props, { slots, attrs, emit }) {
     const nonPropsAttrs = attrs
-    const { prop: sortBy, order: sortOrder } = getDefaultSort(attrs) || {}
+    const { prop: sortBy, order: sortOrder } = props.defaultSort || {}
     const tableState = reactive<XTableState>({
       tid: 0,
       sortBy,
@@ -191,20 +184,6 @@ export default defineComponent({
     function handleTableSortChange({ prop, order }: XTableSort) {
       const { pageSize } = props
       onChange({ pageNum: 1, pageSize, prop, order, type: 'sort' })
-    }
-
-    /**
-     * 自定义列回调
-     */
-    function handleColumnChange(cols: XTableColumn[]) {
-      emit('columnChange', cols)
-    }
-
-    /**
-     * 自定义列隐藏
-     */
-    function handleVisibleChange(val: boolean) {
-      emit('update:visibleColumn', val)
     }
 
     /**
@@ -315,28 +294,13 @@ export default defineComponent({
       )
     }
 
-    /**
-     * 渲染自定义列
-     */
-    function renderCustomColumn() {
-      const customColumnProps = {
-        columns: props.columns,
-        visible: props.visibleColumn,
-        onChange: handleColumnChange,
-        onVisibleChange: handleVisibleChange,
-      }
-
-      return (
-        <XColumn {...customColumnProps} />
-      )
-    }
-
     return () => {
       const tableProps = {
         ref: 'elTableRef',
         ...nonPropsAttrs,
         maxHeight: mHeight.value,
         data: props.dataSource,
+        defaultSort: props.defaultSort,
         rowKey: props.rowKey,
         onSortChange: handleTableSortChange,
       }
@@ -371,7 +335,6 @@ export default defineComponent({
             }
           </ElTable>
           {showPagination.value && renderPagination()}
-          {!isUndefined(props.visibleColumn) && renderCustomColumn()}
         </div>
       )
     }
