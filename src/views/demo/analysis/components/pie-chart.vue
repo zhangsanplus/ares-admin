@@ -1,9 +1,9 @@
 <template>
-  <div ref="chartRef" :style="{ width, height }" />
+  <base-chart :options="options" :style="{ width, height }" />
 </template>
 
 <script lang="ts" setup>
-import { useECharts } from '../use-echarts'
+import BaseChart from '@/components/base-chart/index.vue'
 import type { PieChartData } from '@/plugins/echarts'
 import type { EChartsOption } from 'echarts'
 
@@ -15,35 +15,21 @@ interface Props {
 
 const props = withDefaults(defineProps<Props>(), {
   width: '100%',
-  height: '360px',
+  height: '320px',
 })
 
-const chartRef = ref<HTMLElement | null>(null)
-const { getInstance } = useECharts(chartRef as Ref<HTMLDivElement>, setOptions)
+const colors = [
+  'rgba(255, 137, 77, 1)',
+  'rgba(22, 100, 255, 1)',
+  'rgba(82, 204, 163, 1)',
+  'rgba(255, 77, 77, 1)',
+  'rgba(150, 99, 255, 1)',
+  'rgba(255, 147, 175, 1)',
+  'rgba(82, 198, 222, 1)',
+]
 
-watch(
-  () => props.dataSource,
-  () => setOptions(),
-  {
-    deep: true,
-  },
-)
-
-function setOptions() {
-  const chartInstance = getInstance()
-  if (!chartInstance) return
-
-  const colors = [
-    'rgba(255, 137, 77, 1)',
-    'rgba(22, 100, 255, 1)',
-    'rgba(82, 204, 163, 1)',
-    'rgba(255, 77, 77, 1)',
-    'rgba(150, 99, 255, 1)',
-    'rgba(255, 147, 175, 1)',
-    'rgba(82, 198, 222, 1)',
-  ]
-
-  const options: EChartsOption = {
+const options = computed(() => {
+  const opt: EChartsOption = {
     series: {
       type: 'pie',
       data: props.dataSource,
@@ -80,6 +66,6 @@ function setOptions() {
     color: colors,
     backgroundColor: 'transparent',
   }
-  chartInstance.setOption(options, true)
-}
+  return opt
+})
 </script>

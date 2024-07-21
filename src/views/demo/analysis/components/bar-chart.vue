@@ -1,9 +1,10 @@
 <template>
-  <div ref="chartRef" :style="{ width, height }" />
+  <base-chart :options="options" :style="{ width, height }" />
 </template>
 
 <script lang="ts" setup>
-import { useECharts } from '../use-echarts'
+import BaseChart from '@/components/base-chart/index.vue'
+import useAppStore from '@/store/modules/app'
 import type { BarChartData } from '@/plugins/echarts'
 import type { EChartsOption, SeriesOption } from 'echarts'
 
@@ -15,36 +16,21 @@ interface Props {
 
 const props = withDefaults(defineProps<Props>(), {
   width: '100%',
-  height: '360px',
-  dataSource: () => [],
+  height: '320px',
 })
 
-const chartRef = ref<HTMLElement | null>(null)
-const { isDark, getInstance } = useECharts(chartRef as Ref<HTMLDivElement>, setOptions)
+const appStore = useAppStore()
+const isDark = toRef(appStore, 'isDark')
 
-watch(
-  () => props.dataSource,
-  () => setOptions(),
-  {
-    deep: true,
-  },
-)
+const colors = [
+  'rgba(22, 100, 255, 1)',
+]
 
-function setOptions() {
-  const chartInstance = getInstance()
-  if (!chartInstance) return
-
-  let xAxisData: BarChartData['xAxisData'] = []
-  if (props.dataSource[0]?.xAxisData) {
-    xAxisData = props.dataSource[0].xAxisData
-  }
-  const colors = [
-    'rgba(22, 100, 255, 1)',
-  ]
-  const options: EChartsOption = {
+const options = computed(() => {
+  const opt: EChartsOption = {
     xAxis: {
       type: 'category',
-      data: xAxisData,
+      data: props.dataSource[0]?.xAxisData ?? [],
       axisLine: {
         lineStyle: {
           color: isDark.value ? '#3f3f3f' : '#ececec',
@@ -98,6 +84,6 @@ function setOptions() {
     color: colors.map(i => i[0]),
     backgroundColor: 'transparent',
   }
-  chartInstance.setOption(options, true)
-}
+  return opt
+})
 </script>

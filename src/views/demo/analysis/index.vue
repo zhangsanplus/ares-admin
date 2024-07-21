@@ -13,7 +13,7 @@
       <x-card title="每日数据">
         <template #header-right>
           <el-radio-group v-model="type" @change="handleChange">
-            <el-radio-button v-for="(item) in ['IP', 'PV', 'UV']" :key="item" :label="item">
+            <el-radio-button v-for="(item) in ['IP', 'PV', 'UV']" :key="item" :value="item">
               {{ item }}
             </el-radio-button>
           </el-radio-group>

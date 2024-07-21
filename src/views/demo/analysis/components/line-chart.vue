@@ -1,9 +1,11 @@
 <template>
-  <div ref="chartRef" :style="{ width, height }" />
+  <base-chart :options="options" :style="{ width, height }" />
 </template>
 
 <script lang="ts" setup>
-import { useECharts } from '../use-echarts'
+import BaseChart from '@/components/base-chart/index.vue'
+import echarts from '@/plugins/echarts'
+import useAppStore from '@/store/modules/app'
 import type { LineChartData } from '@/plugins/echarts'
 import type { EChartsOption, SeriesOption } from 'echarts'
 
@@ -15,43 +17,26 @@ interface Props {
 
 const props = withDefaults(defineProps<Props>(), {
   width: '100%',
-  height: '380px',
-  dataSource: () => [],
+  height: '320px',
 })
 
-const chartRef = ref<HTMLElement | null>(null)
-const { isDark, echarts, getInstance } = useECharts(chartRef as Ref<HTMLDivElement>, setOptions)
+const appStore = useAppStore()
+const isDark = toRef(appStore, 'isDark')
 
-watch(
-  () => props.dataSource,
-  () => setOptions(),
-  {
-    deep: true,
-  },
-)
+const colors = [
+  ['rgba(22, 100, 255, 1)', 'rgba(22, 100, 255, 0.15)', 'rgba(22, 100, 255, 0)'],
+  ['rgba(255, 77, 77, 1)', 'rgba(255, 77, 77, 0.15)', 'rgba(255, 77, 77, 0)'],
+  ['rgba(82, 204, 163, 1)', 'rgba(82, 204, 163, 0.2)', 'rgba(82, 204, 163, 0)'],
+  ['rgba(255, 137, 77, 1)', 'rgba(255, 137, 77, 0.2)', 'rgba(255, 137, 77, 0)'],
+  ['rgba(150, 99, 255, 1)', 'rgba(150, 99, 255, 0.2)', 'rgba(150, 99, 255, 0)'],
+  ['rgba(82, 198, 222, 1)', 'rgba(82, 198, 222, 0.2)', 'rgba(82, 198, 222, 0)'],
+]
 
-function setOptions() {
-  const chartInstance = getInstance()
-  if (!chartInstance) return
-
-  let xAxisData: LineChartData['xAxisData'] = []
-  if (props.dataSource[0]?.xAxisData) {
-    xAxisData = props.dataSource[0].xAxisData
-  }
-
-  const colors = [
-    ['rgba(22, 100, 255, 1)', 'rgba(22, 100, 255, 0.15)', 'rgba(22, 100, 255, 0)'],
-    ['rgba(255, 77, 77, 1)', 'rgba(255, 77, 77, 0.15)', 'rgba(255, 77, 77, 0)'],
-    ['rgba(82, 204, 163, 1)', 'rgba(82, 204, 163, 0.2)', 'rgba(82, 204, 163, 0)'],
-    ['rgba(255, 137, 77, 1)', 'rgba(255, 137, 77, 0.2)', 'rgba(255, 137, 77, 0)'],
-    ['rgba(150, 99, 255, 1)', 'rgba(150, 99, 255, 0.2)', 'rgba(150, 99, 255, 0)'],
-    ['rgba(82, 198, 222, 1)', 'rgba(82, 198, 222, 0.2)', 'rgba(82, 198, 222, 0)'],
-  ]
-
-  const options: EChartsOption = {
+const options = computed(() => {
+  const opt: EChartsOption = {
     xAxis: {
       type: 'category',
-      data: xAxisData,
+      data: props.dataSource[0]?.xAxisData ?? [],
       boundaryGap: false,
       // 坐标轴轴线相关设置
       axisLine: {
@@ -136,6 +121,6 @@ function setOptions() {
     color: colors.map(i => i[0]),
     backgroundColor: 'transparent',
   }
-  chartInstance.setOption(options, true)
-}
+  return opt
+})
 </script>
