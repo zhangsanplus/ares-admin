@@ -1,7 +1,7 @@
 import echarts from '@/plugins/echarts'
 import useAppStore from '@/store/modules/app'
 
-export default function useECharts(chartRef: Ref<HTMLElement>, setOptions: Fn) {
+export default function useECharts(chartRef: Ref<HTMLElement>, setOption: () => void) {
   const chart = shallowRef<echarts.ECharts | null>(null)
   const appStore = useAppStore()
   const theme = computed(() => (appStore.isDark ? 'dark' : 'light'))
@@ -19,7 +19,7 @@ export default function useECharts(chartRef: Ref<HTMLElement>, setOptions: Fn) {
     const el = chartRef.value
     if (el) {
       chart.value = echarts.init(el, theme.value)
-      setOptions()
+      setOption()
     }
   }
 
@@ -39,7 +39,7 @@ export default function useECharts(chartRef: Ref<HTMLElement>, setOptions: Fn) {
     window.addEventListener('resize', resizeFn)
   })
 
-  onUnmounted(() => {
+  onBeforeUnmount(() => {
     if (chart.value) {
       chart.value.dispose()
       chart.value = null

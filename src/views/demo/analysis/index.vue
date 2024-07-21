@@ -2,7 +2,7 @@
   <div class="wrapper">
     <x-card title="实时数据">
       <template #header-right>
-        <el-button type="primary" text>
+        <el-button type="primary" text @click="handleClick">
           查看更多
         </el-button>
       </template>
@@ -39,6 +39,10 @@ const type = ref<'IP' | 'PV' | 'UV'>('IP')
 const lineData = ref<LineChartData[]>([])
 const barData = ref<BarChartData[]>([])
 const pieData = ref<PieChartData[]>([])
+
+function handleClick() {
+  ElMessage.info('开发中')
+}
 
 function handleChange() {
   barData.value = generateBarData()

@@ -3,7 +3,7 @@ const defaultSetting: AppType.DefaultSetting = {
   theme: 'light',
   size: 'default',
   storagePrefix: 'ares',
-  menuWidth: 220,
+  menuWidth: 210,
   showTabs: true,
 }
 
