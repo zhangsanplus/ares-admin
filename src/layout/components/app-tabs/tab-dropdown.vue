@@ -1,7 +1,11 @@
 <template>
   <el-dropdown
-    ref="elDropdownRef" :trigger="trigger" placement="bottom-start" popper-class="tabs-dropdown-popper"
-    @command="handleSelect" @visible-change="onVisibleChange"
+    ref="elDropdownRef"
+    :trigger="trigger"
+    placement="bottom-start"
+    popper-class="tabs-dropdown-popper"
+    @command="handleSelect"
+    @visible-change="onVisibleChange"
   >
     <span ref="elDropdownSlotRef">
       <slot />
@@ -72,8 +76,7 @@ async function handleSelect(command: string) {
       },
     })
     tabsStore.addCache(props.route.name as string)
-  }
-  else if (command === CommandEnum.current) {
+  } else if (command === CommandEnum.current) {
     const index = visitedTabList.value.findIndex(i => i.fullPath === fullPath)
     tabsStore.deleteTab(index, props.route.name as string)
 
@@ -83,8 +86,7 @@ async function handleSelect(command: string) {
         router.push(prevTab.fullPath)
       }
     }
-  }
-  else if (command === CommandEnum.others) {
+  } else if (command === CommandEnum.others) {
     tabsStore.resetTabList()
 
     if (isActivated.value) {
@@ -92,8 +94,7 @@ async function handleSelect(command: string) {
     } else {
       router.push(props.route.fullPath)
     }
-  }
-  else if (command === CommandEnum.all) {
+  } else if (command === CommandEnum.all) {
     tabsStore.resetTabList()
     router.push({ name: RouteNameEnum.DASHBOARD })
   }

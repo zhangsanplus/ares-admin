@@ -2,7 +2,12 @@
   <div class="app-tabs">
     <el-scrollbar>
       <div class="app-tabs-wrap">
-        <tab-item v-for="(tab, index) in visitedTabList" :key="tab.fullPath" :index="index" :tab="tab" />
+        <tab-item
+          v-for="(tab, index) in visitedTabList"
+          :key="tab.fullPath"
+          :index="index"
+          :tab="tab"
+        />
       </div>
 
       <!-- <tab-dropdown trigger="click" :route="currentRoute">

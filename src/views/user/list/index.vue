@@ -1,6 +1,6 @@
 <template>
   <x-card>
-    <x-query-form inline label-width="70px" style="margin-bottom: -18px;">
+    <x-query-form label-width="90px">
       <el-form-item label="用户名">
         <el-input v-model="queryForm.name" placeholder="请输入用户名" />
       </el-form-item>
@@ -55,7 +55,12 @@
         <el-tag v-if="row.role === 1" disable-transitions style="width: 65px;">
           管理员
         </el-tag>
-        <el-tag v-else type="success" disable-transitions style="width: 65px;">
+        <el-tag
+          v-else
+          type="success"
+          disable-transitions
+          style="width: 65px;"
+        >
           普通用户
         </el-tag>
       </template>

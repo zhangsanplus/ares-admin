@@ -3,7 +3,12 @@
     <el-icon><i-ep-check /></el-icon>&nbsp;验证通过
   </div>
 
-  <el-button v-else type="info" long @click="handleClick">
+  <el-button
+    v-else
+    type="info"
+    long
+    @click="handleClick"
+  >
     <template #icon>
       <i-ep-help />
     </template>

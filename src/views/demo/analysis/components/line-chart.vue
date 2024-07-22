@@ -5,7 +5,6 @@
 <script lang="ts" setup>
 import BaseChart from '@/components/base-chart/index.vue'
 import echarts from '@/plugins/echarts'
-import useAppStore from '@/store/modules/app'
 import type { LineChartData } from '@/plugins/echarts'
 import type { EChartsOption, SeriesOption } from 'echarts'
 

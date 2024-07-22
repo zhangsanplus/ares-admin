@@ -51,7 +51,13 @@
       失焦后自动移除两端空格，并触发一次input事件
     </p>
     <p>当前输入长度为: {{ value.length }}</p>
-    <el-input v-model="value" v-input-trim placeholder="输入一些文字和空格试试吧~" style="width: 260px;" @input="onInput" />
+    <el-input
+      v-model="value"
+      v-input-trim
+      placeholder="输入一些文字和空格试试吧~"
+      style="width: 260px;"
+      @input="onInput"
+    />
   </x-card>
 </template>
 

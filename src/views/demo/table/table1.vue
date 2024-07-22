@@ -1,69 +1,56 @@
 <template>
   <x-card full title="X-Table 示例">
-    <x-query-form label-width="26%" style="margin-bottom: -18px;">
-      <el-row>
-        <el-col :span="8" :xs="24">
-          <el-form-item label="用户名">
-            <el-input v-model="queryForm.name" placeholder="请输入" />
-          </el-form-item>
-        </el-col>
+    <x-query-form label-width="90px" direction="vertical">
+      <el-form-item label="用户名">
+        <el-input v-model="queryForm.name" placeholder="请输入" />
+      </el-form-item>
 
-        <el-col :span="8" :xs="24">
-          <el-form-item label="电话">
-            <el-input v-model="queryForm.phone" placeholder="请输入" />
-          </el-form-item>
-        </el-col>
+      <el-form-item label="电话">
+        <el-input v-model="queryForm.phone" placeholder="请输入" />
+      </el-form-item>
 
-        <el-col :span="8" :xs="24">
-          <el-form-item label="地址">
-            <el-select
-              v-model="queryForm.address"
-              clearable
-              filterable
-              placeholder="请选择"
-              style="width: 100%;"
-            >
-              <el-option label="上海市普陀区 120 弄" value="1" />
-              <el-option label="上海市嘉定区 340 弄" value="2" />
-              <el-option label="上海市宝山区 560 弄" value="3" />
-            </el-select>
-          </el-form-item>
-        </el-col>
+      <el-form-item label="地址">
+        <el-select
+          v-model="queryForm.address"
+          clearable
+          filterable
+          placeholder="请选择"
+        >
+          <el-option label="上海市普陀区 120 弄" value="1" />
+          <el-option label="上海市嘉定区 340 弄" value="2" />
+          <el-option label="上海市宝山区 560 弄" value="3" />
+        </el-select>
+      </el-form-item>
 
-        <el-col :span="8" :xs="24">
-          <el-form-item label="出生日期">
-            <el-date-picker
-              v-model="queryForm.date"
-              type="date"
-              placeholder="请选择"
-              style="width: 100%;"
-            />
-          </el-form-item>
-        </el-col>
-      </el-row>
+      <el-form-item label="出生日期">
+        <el-date-picker
+          v-model="queryForm.date"
+          type="date"
+          placeholder="请选择"
+          style="width: 100%;"
+        />
+      </el-form-item>
 
       <template #action>
-        <el-space direction="vertical" :size="18">
-          <el-button type="primary">
-            <template #icon>
-              <i-ep-search />
-            </template>
-            查询
-          </el-button>
-          <el-button type="info">
-            <template #icon>
-              <i-ep-refresh-right />
-            </template>
-            重置
-          </el-button>
-        </el-space>
+        <el-button type="primary">
+          <template #icon>
+            <i-ep-search />
+          </template>
+          查询
+        </el-button>
+        <el-button type="info">
+          <template #icon>
+            <i-ep-refresh-right />
+          </template>
+          重置
+        </el-button>
       </template>
     </x-query-form>
 
     <el-divider />
 
     <el-row style="margin-bottom: 18px;">
-      <el-col :span="16">
+      <el-col :span="16" :xs="24">
         <el-button type="primary">
           <template #icon>
             <i-ep-plus />
@@ -80,7 +67,7 @@
         </el-button>
       </el-col>
 
-      <el-col :span="8" style="text-align: right;">
+      <el-col :span="8" :xs="24" style="text-align: right;">
         <el-button type="info" @click="showCustomColumn">
           自定义列
         </el-button>
@@ -277,3 +264,5 @@ onMounted(() => {
   getList()
 })
 </script>
+
+<style lang="scss" scoped></style>

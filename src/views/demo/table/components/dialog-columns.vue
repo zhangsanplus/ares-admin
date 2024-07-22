@@ -19,7 +19,12 @@
     <!-- body -->
     <div class="custom-columns">
       <template v-for="(item) in items" :key="item.prop || item.type">
-        <el-checkbox v-if="!item.type" v-model="item.show" :label="item.label" size="large" />
+        <el-checkbox
+          v-if="!item.type"
+          v-model="item.show"
+          :label="item.label"
+          size="large"
+        />
       </template>
     </div>
   </el-dialog>

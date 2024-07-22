@@ -1,6 +1,11 @@
 <template>
   <x-card title="个人信息" full>
-    <el-form :model="form" label-width="80px" label-suffix="：" style="max-width: 460px;margin: 50px 0;">
+    <el-form
+      :model="form"
+      label-width="80px"
+      label-suffix="："
+      style="max-width: 460px;margin: 50px 0;"
+    >
       <el-form-item label="头像">
         <el-avatar :size="60">
           <img src="@/assets/avatar.png" alt="">
