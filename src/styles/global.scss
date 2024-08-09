@@ -33,13 +33,15 @@
 
 html {
   --app-margin: 14px;
-  --app-shadow: rgba(32, 32, 32, 0.05);
   --app-bg: #f0f2f5;
+  --app-card-shadow: rgba(32, 32, 32, 0.05);
+  --app-card-border: #fff;
 }
 
 html.dark {
-  --app-shadow: rgba(23, 23, 21, 0.5);
   --app-bg: #171715;
+  --app-card-shadow: rgba(23, 23, 21, 0.1);
+  --app-card-border: var(--el-border-color-lighter);
 }
 
 html,
