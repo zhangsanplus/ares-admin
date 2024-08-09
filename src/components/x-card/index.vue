@@ -27,6 +27,7 @@ defineProps<{
 .x-card {
   padding: var(--app-margin);
   background-color: var(--el-bg-color-overlay);
+  border: 1px solid var(--app-card-border);
   border-radius: 4px;
 
   &.is-full {

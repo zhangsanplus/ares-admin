@@ -119,7 +119,8 @@ onBeforeUnmount(() => {
     top: 0;
     z-index: 10;
     background-color: var(--el-bg-color-overlay);
-    box-shadow: 3px 3px 4px 0 var(--app-shadow);
+    border-bottom: 1px solid  var(--app-card-border);
+    box-shadow: 3px 3px 4px 0 var(--app-card-shadow);
   }
 
   &-main {

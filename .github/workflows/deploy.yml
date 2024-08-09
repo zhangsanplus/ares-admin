@@ -9,22 +9,42 @@ jobs:
   build:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@main
+      - uses: actions/checkout@v3
+
       - uses: pnpm/action-setup@v2
+
       - uses: actions/setup-node@v3
         with:
           node-version: 18.x
-          cache: pnpm
 
       - name: install & build
         run: |
           pnpm install --no-frozen-lockfile
           pnpm run build
 
-      - name: deploy
+      # - name: Commit
+      #   run: |
+      #     cd dist
+      #     git config --local user.email "zhangsanplus@gmail.com"
+      #     git config --local user.name "zhangsanplus"
+      #     git init
+      #     git add -A
+      #     git commit -m 'deploy' || echo "No changes to commit"
+
+      # - name: Push changes
+      #   uses: ad-m/github-push-action@master
+      #   with:
+      #     repository: zhangsanplus/zhangsanplus.github.io
+      #     branch: master
+      #     github_token: ${{ secrets.CI_TOKEN }}
+      #     force: true
+
+      - name: Commit and deploy
         env:
           access_token: ${{ secrets.CI_TOKEN }}
         run: |
           echo $access_token
           sed -i 's/\r//' deploy.sh
           bash ./deploy.sh
+
+
