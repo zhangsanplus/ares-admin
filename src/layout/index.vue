@@ -1,6 +1,6 @@
 <template>
   <div class="app-layout" :class="{ 'is-mobile': hideMenu }" :style="layoutStyle">
-    <el-drawer
+    <ElDrawer
       v-if="hideMenu"
       direction="ltr"
       class="app-layout-drawer"
@@ -10,24 +10,24 @@
       :lock-scroll="false"
       @close="handleDrawerClose"
     >
-      <app-logo />
-      <app-menu />
-    </el-drawer>
+      <AppLogo />
+      <AppMenu />
+    </ElDrawer>
 
     <div v-else class="app-layout-sider">
-      <app-logo />
-      <app-menu />
+      <AppLogo />
+      <AppMenu />
     </div>
 
     <section class="app-layout-content">
       <header class="app-layout-header">
-        <app-header />
-        <app-tabs v-if="appStore.showTabs" />
+        <AppHeader />
+        <AppTabs v-if="appStore.showTabs" />
       </header>
 
       <main class="app-layout-main">
-        <blank-layout />
-        <app-footer />
+        <BlankLayout />
+        <AppFooter />
       </main>
     </section>
   </div>
@@ -35,6 +35,7 @@
 
 <script setup lang="ts">
 import useAppStore from '@/store/modules/app'
+import { useDebounceFn } from '@vueuse/core'
 import BlankLayout from './blank-layout.vue'
 import AppFooter from './components/app-footer/index.vue'
 import AppHeader from './components/app-header/index.vue'
@@ -119,7 +120,8 @@ onBeforeUnmount(() => {
     top: 0;
     z-index: 10;
     background-color: var(--el-bg-color-overlay);
-    box-shadow: 3px 3px 4px 0 var(--app-shadow);
+    border-bottom: 1px solid  var(--app-card-border);
+    box-shadow: 3px 3px 4px 0 var(--app-card-shadow);
   }
 
   &-main {

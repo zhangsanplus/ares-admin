@@ -1,4 +1,5 @@
 import defaultSetting from '@/settings'
+import { useDark, useStorage, useToggle } from '@vueuse/core'
 
 const { storagePrefix } = defaultSetting
 const useAppStore = defineStore('app', () => {

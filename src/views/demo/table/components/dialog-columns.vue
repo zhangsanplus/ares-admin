@@ -1,28 +1,33 @@
 <template>
-  <el-dialog
+  <ElDialog
     v-model="dialogVisible"
     :width="600"
     title="自定义列"
   >
     <!-- footer -->
     <template #footer>
-      <el-row type="flex" justify="center">
-        <el-button @click="handleCancel">
+      <ElRow type="flex" justify="center">
+        <ElButton @click="handleCancel">
           取消
-        </el-button>
-        <el-button type="primary" @click="handleConfirm">
+        </ElButton>
+        <ElButton type="primary" @click="handleConfirm">
           确定
-        </el-button>
-      </el-row>
+        </ElButton>
+      </ElRow>
     </template>
 
     <!-- body -->
     <div class="custom-columns">
       <template v-for="(item) in items" :key="item.prop || item.type">
-        <el-checkbox v-if="!item.type" v-model="item.show" :label="item.label" size="large" />
+        <ElCheckbox
+          v-if="!item.type"
+          v-model="item.show"
+          :label="item.label"
+          size="large"
+        />
       </template>
     </div>
-  </el-dialog>
+  </ElDialog>
 </template>
 
 <script lang="ts" setup>

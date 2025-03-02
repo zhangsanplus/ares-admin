@@ -1,8 +1,13 @@
 <template>
   <div class="app-tabs">
-    <el-scrollbar>
+    <ElScrollbar>
       <div class="app-tabs-wrap">
-        <tab-item v-for="(tab, index) in visitedTabList" :key="tab.fullPath" :index="index" :tab="tab" />
+        <TabItem
+          v-for="(tab, index) in visitedTabList"
+          :key="tab.fullPath"
+          :index="index"
+          :tab="tab"
+        />
       </div>
 
       <!-- <tab-dropdown trigger="click" :route="currentRoute">
@@ -12,7 +17,7 @@
           </el-icon>
         </div>
       </tab-dropdown> -->
-    </el-scrollbar>
+    </ElScrollbar>
   </div>
 </template>
 
@@ -42,7 +47,6 @@ onMounted(() => {
 <style lang="scss">
 .app-tabs {
   border-top: 1px solid var(--el-border-color-lighter);
-  border-left: 1px solid var(--el-border-color-extra-light);
 
   .el-scrollbar__bar.is-horizontal {
     height: 6px;

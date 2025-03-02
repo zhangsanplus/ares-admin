@@ -1,17 +1,22 @@
 <template>
   <div v-if="modelValue" class="verify-success">
-    <el-icon><i-ep-check /></el-icon>&nbsp;验证通过
+    <ElIcon><IEpCheck /></ElIcon>&nbsp;验证通过
   </div>
 
-  <el-button v-else type="info" long @click="handleClick">
+  <ElButton
+    v-else
+    type="info"
+    long
+    @click="handleClick"
+  >
     <template #icon>
-      <i-ep-help />
+      <IEpHelp />
     </template>
     点击按钮完成验证
-  </el-button>
+  </ElButton>
 
-  <el-dialog v-model="visible" width="460px">
-    <slide-verify
+  <ElDialog v-model="visible" width="460px">
+    <SlideVerify
       ref="block"
       slider-text="请向右滑动滑块完成验证"
       :w="420"
@@ -23,18 +28,18 @@
       @success="onSuccess"
       @fail="onFail"
     />
-  </el-dialog>
+  </ElDialog>
 </template>
 
 <script setup lang="ts">
-import SlideVerify from 'vue3-slide-verify'
+import type { SlideVerifyInstance } from 'vue3-slide-verify'
 import img1 from '@/assets/verify/1.jpg'
 import img2 from '@/assets/verify/2.jpg'
 import img3 from '@/assets/verify/3.jpg'
 import img4 from '@/assets/verify/4.jpg'
 import img5 from '@/assets/verify/5.jpg'
 import img6 from '@/assets/verify/6.jpg'
-import type { SlideVerifyInstance } from 'vue3-slide-verify'
+import SlideVerify from 'vue3-slide-verify'
 import 'vue3-slide-verify/dist/style.css'
 
 defineProps<{

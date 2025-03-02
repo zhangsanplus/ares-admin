@@ -1,39 +1,39 @@
 <template>
   <div class="wrapper">
-    <x-card title="实时数据">
+    <XCard title="实时数据">
       <template #header-right>
-        <el-button type="primary" text @click="handleClick">
+        <ElButton type="primary" text @click="handleClick">
           查看更多
-        </el-button>
+        </ElButton>
       </template>
-      <line-chart :data-source="lineData" />
-    </x-card>
+      <LineChart :data-source="lineData" />
+    </XCard>
 
     <div class="card-group">
-      <x-card title="每日数据">
+      <XCard title="每日数据">
         <template #header-right>
-          <el-radio-group v-model="type" @change="handleChange">
-            <el-radio-button v-for="(item) in ['IP', 'PV', 'UV']" :key="item" :value="item">
+          <ElRadioGroup v-model="type" @change="handleChange">
+            <ElRadioButton v-for="(item) in ['IP', 'PV', 'UV']" :key="item" :value="item">
               {{ item }}
-            </el-radio-button>
-          </el-radio-group>
+            </ElRadioButton>
+          </ElRadioGroup>
         </template>
-        <bar-chart :data-source="barData" />
-      </x-card>
+        <BarChart :data-source="barData" />
+      </XCard>
 
-      <x-card title="热门城市">
-        <pie-chart :data-source="pieData" />
-      </x-card>
+      <XCard title="热门城市">
+        <PieChart :data-source="pieData" />
+      </XCard>
     </div>
   </div>
 </template>
 
 <script setup lang="ts">
+import type { BarChartData, LineChartData, PieChartData } from '@/plugins/echarts'
 import dayjs from 'dayjs'
 import BarChart from './components/bar-chart.vue'
 import LineChart from './components/line-chart.vue'
 import PieChart from './components/pie-chart.vue'
-import type { BarChartData, LineChartData, PieChartData } from '@/plugins/echarts'
 
 const type = ref<'IP' | 'PV' | 'UV'>('IP')
 const lineData = ref<LineChartData[]>([])

@@ -1,5 +1,5 @@
-import { RouteNameEnum } from '@/enums/route'
 import type { RouteLocationNormalized, RouteRecordRaw, TabItem } from 'vue-router'
+import { RouteNameEnum } from '@/enums/route'
 
 const BAN_LIST = [
   RouteNameEnum.REDIRECT,

@@ -1,9 +1,9 @@
 <template>
-  <el-scrollbar class="app-menu">
-    <el-menu :default-active="activeMenu" :collapse="isCollapse">
-      <app-sub-item :menu-list="menuItems" />
-    </el-menu>
-  </el-scrollbar>
+  <ElScrollbar class="app-menu">
+    <ElMenu :default-active="activeMenu" :collapse="isCollapse">
+      <AppSubItem :menu-list="menuItems" />
+    </ElMenu>
+  </ElScrollbar>
 </template>
 
 <script setup lang='ts'>
@@ -41,5 +41,5 @@ const menuItems = computed(() => {
 </script>
 
 <style lang="scss">
-@import './index.scss';
+@forward './index.scss';
 </style>

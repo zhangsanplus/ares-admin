@@ -1,93 +1,35 @@
 <template>
-  <x-card full title="X-Table 示例">
-    <x-query-form label-width="26%" style="margin-bottom: -18px;">
-      <el-row>
-        <el-col :span="8" :xs="24">
-          <el-form-item label="用户名">
-            <el-input v-model="queryForm.name" placeholder="请输入" />
-          </el-form-item>
-        </el-col>
-
-        <el-col :span="8" :xs="24">
-          <el-form-item label="电话">
-            <el-input v-model="queryForm.phone" placeholder="请输入" />
-          </el-form-item>
-        </el-col>
-
-        <el-col :span="8" :xs="24">
-          <el-form-item label="地址">
-            <el-select
-              v-model="queryForm.address"
-              clearable
-              filterable
-              placeholder="请选择"
-              style="width: 100%;"
-            >
-              <el-option label="上海市普陀区 120 弄" value="1" />
-              <el-option label="上海市嘉定区 340 弄" value="2" />
-              <el-option label="上海市宝山区 560 弄" value="3" />
-            </el-select>
-          </el-form-item>
-        </el-col>
-
-        <el-col :span="8" :xs="24">
-          <el-form-item label="出生日期">
-            <el-date-picker
-              v-model="queryForm.date"
-              type="date"
-              placeholder="请选择"
-              style="width: 100%;"
-            />
-          </el-form-item>
-        </el-col>
-      </el-row>
-
-      <template #action>
-        <el-space direction="vertical" :size="18">
-          <el-button type="primary">
-            <template #icon>
-              <i-ep-search />
-            </template>
-            查询
-          </el-button>
-          <el-button type="info">
-            <template #icon>
-              <i-ep-refresh-right />
-            </template>
-            重置
-          </el-button>
-        </el-space>
-      </template>
-    </x-query-form>
-
-    <el-divider />
-
-    <el-row style="margin-bottom: 18px;">
-      <el-col :span="16">
-        <el-button type="primary">
+  <XCard full title="X-Table 示例">
+    <XForm
+      v-model="queryForm"
+      :columns="formColumns"
+      search
+    />
+    <ElDivider style="margin: 0 0 18px;" />
+    <ElRow style="margin-bottom: 18px;">
+      <ElCol :span="16" :xs="24">
+        <ElButton type="primary">
           <template #icon>
-            <i-ep-plus />
+            <IEpPlus />
           </template>
           新增
-        </el-button>
-
-        <el-button type="info" @click="clearSelection">
+        </ElButton>
+        <ElButton type="info" @click="clearSelection">
           清除选择
-        </el-button>
-
-        <el-button type="info" @click="resetColumns">
+        </ElButton>
+        <ElButton type="info" @click="resetColumns">
           重置表头
-        </el-button>
-      </el-col>
+        </ElButton>
+      </ElCol>
 
-      <el-col :span="8" style="text-align: right;">
-        <el-button type="info" @click="showCustomColumn">
+      <ElCol :span="8" :xs="24" style="text-align: right;">
+        <ElButton type="info" @click="showCustomColumn">
           自定义列
-        </el-button>
-      </el-col>
-    </el-row>
+        </ElButton>
+      </ElCol>
+    </ElRow>
 
-    <x-table
+    <XTable
       ref="tableRef"
       border
       :columns="columns"
@@ -101,31 +43,31 @@
       @header-dragend="handleHeaderDragend"
     >
       <template #status="{ row }">
-        <el-switch v-model="row.status" :active-value="1" :inactive-value="0" />
+        <ElSwitch v-model="row.status" :active-value="1" :inactive-value="0" />
       </template>
 
       <template #sex-header>
         性别
-        <el-tooltip placement="top">
+        <ElTooltip placement="top">
           <template #content>
             调整表头列宽度后会自动保存到本地<br>当下次访问时会自动恢复
           </template>
-          <i-ep-info-filled />
-        </el-tooltip>
+          <IEpInfoFilled />
+        </ElTooltip>
       </template>
 
       <template #action>
-        <x-space>
-          <el-link :underline="false" type="primary" @click="handleClick">
+        <BaseSpace>
+          <ElLink :underline="false" type="primary" @click="handleClick">
             新增
-          </el-link>
-          <el-link :underline="false" type="primary" @click="handleClick">
+          </ElLink>
+          <ElLink :underline="false" type="primary" @click="handleClick">
             修改
-          </el-link>
-          <el-link :underline="false" type="primary" @click="handleClick">
+          </ElLink>
+          <ElLink :underline="false" type="primary" @click="handleClick">
             删除
-          </el-link>
-        </x-space>
+          </ElLink>
+        </BaseSpace>
       </template>
 
       <template #append>
@@ -133,16 +75,22 @@
           好好学习，天天向上
         </div>
       </template>
-    </x-table>
-  </x-card>
+    </XTable>
+  </XCard>
 
-  <dialog-columns v-model:visible="dialogVisible" :columns="columns" @change="handleColumnsChange" />
+  <DialogColumns v-model:visible="dialogVisible" :columns="columns" @change="handleColumnsChange" />
 </template>
 
 <script setup lang='ts'>
 import { getUserList } from '@/api/user'
+import BaseSpace from '@/components/base-space.vue'
 import DialogColumns from './components/dialog-columns.vue'
 import useColumns from './composables/use-columns'
+
+const dialogVisible = ref(false)
+const tableRef = ref()
+const tableTotal = ref(0)
+const tableData = ref<UserType.ListItem[]>([])
 
 const queryForm = reactive({
   name: '',
@@ -153,10 +101,44 @@ const queryForm = reactive({
   pageNum: 1,
 })
 
-const dialogVisible = ref(false)
-const tableRef = ref()
-const tableTotal = ref(0)
-const tableData = ref<UserType.ListItem[]>([])
+const formColumns: XFormColumn[] = [
+  {
+    label: '姓名',
+    prop: 'name',
+    type: 'input',
+  },
+  {
+    label: '手机号',
+    prop: 'phone',
+    type: 'input',
+  },
+  {
+    label: '地址',
+    prop: 'address',
+    type: 'select',
+    props: {
+      options: [
+        {
+          label: '上海市普陀区 120 弄',
+          value: '1',
+        },
+        {
+          label: '上海市嘉定区 340 弄',
+          value: '2',
+        },
+        {
+          label: '上海市宝山区 560 弄',
+          value: '3',
+        },
+      ],
+    },
+  },
+  {
+    label: '出生日期',
+    prop: 'date',
+    type: 'date-picker',
+  },
+]
 
 const { columns, reset: resetColumns } = useColumns(
   'table1',
@@ -277,3 +259,5 @@ onMounted(() => {
   getList()
 })
 </script>
+
+<style lang="scss" scoped></style>

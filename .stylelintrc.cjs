@@ -10,7 +10,7 @@ module.exports = {
     'at-rule-no-unknown': [
       true,
       {
-        ignoreAtRules: ['function', 'if', 'for', 'else', 'each', 'include', 'mixin'],
+        ignoreAtRules: ['forward', 'use', 'if', 'for', 'else', 'each', 'mixin'],
       },
     ],
     'color-function-notation': null,

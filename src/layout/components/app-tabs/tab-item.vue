@@ -1,18 +1,22 @@
 <template>
-  <tab-dropdown trigger="contextmenu" :route="route">
-    <el-tag
-      class="app-tab-item" disable-transitions :closable="closable"
-      :type="tab.fullPath === $route.fullPath ? undefined : 'info'" @click="handleClick" @close="handleClose"
+  <TabDropdown trigger="contextmenu" :route="route">
+    <ElTag
+      class="app-tab-item"
+      disable-transitions
+      :closable="closable"
+      :type="tab.fullPath === $route.fullPath ? 'primary' : 'info'"
+      @click="handleClick"
+      @close="handleClose"
     >
       {{ tab.title }}
-    </el-tag>
-  </tab-dropdown>
+    </ElTag>
+  </TabDropdown>
 </template>
 
 <script setup lang='ts'>
+import type { RouteLocationNormalized, TabItem } from 'vue-router'
 import useTabsStore from '@/store/modules/tabs'
 import TabDropdown from './tab-dropdown.vue'
-import type { RouteLocationNormalized, TabItem } from 'vue-router'
 
 const props = defineProps<{
   index: number
@@ -40,16 +44,14 @@ function handleClick() {
 
 <style lang="scss">
 .app-tab-item {
-  display: inline-flex;
-  align-items: center;
-  margin-right: 4px;
-  border: none;
-  border-radius: 2px;
-  cursor: pointer;
-  transition: all .2s;
-
   &.el-tag {
-    --el-tag-bg-color: var(--el-color-info-light-9);
+    --el-tag-bg-color: var(--el-color-info-light-9) !important;
+    margin-right: 4px;
+    border: none;
+
+    border-radius: 2px;
+    cursor: pointer;
+    transition: all .2s;
 
     .el-tag__close {
       margin-left: 2px;
@@ -82,7 +84,7 @@ function handleClick() {
 
 html.dark {
   .app-tab-item.el-tag {
-    --el-tag-bg-color: var(--el-color-info-light-8);
+    --el-tag-bg-color: var(--el-color-info-light-8) !important;
   }
 }
 </style>

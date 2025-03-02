@@ -1,16 +1,19 @@
 import useClipboard from 'vue-clipboard3'
 
+/**
+ * 空函数
+ */
 export const noop: Fn = () => {}
 
 /**
- * sleep
+ * 延迟函数
  */
 export function sleep(ms: number) {
   return new Promise(resolve => setTimeout(resolve, ms))
 }
 
 /**
- * 点击复制
+ * 文本复制
  */
 export function copyText(text: string | number, showToast = true) {
   const { toClipboard } = useClipboard()

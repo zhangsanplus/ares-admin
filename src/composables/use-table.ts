@@ -1,129 +1,117 @@
-import { cloneDeep } from 'lodash-es'
 import type { AxiosRequestConfig } from 'axios'
-import type { ShallowRef } from 'vue'
+import { cloneDeep } from 'lodash-es'
+import { computed, onMounted, onUnmounted, ref } from 'vue'
 
-// 表格排序
-interface TableSort {
-  prop: string
-  order: 'ascending' | 'descending'
-}
+type ExtractServiceParams<T> = T extends (
+  params: infer P,
+  config?: AxiosRequestConfig
+) => any
+  ? Omit<P, keyof PagingRequest>
+  : never
 
-// 表格分页
-interface TablePaging {
-  pageNum: number
-  pageSize: number
-}
+type ExtractServiceData<T> = T extends (
+  params: any,
+  config?: AxiosRequestConfig
+) => Promise<HttpResponse<infer P>>
+  ? P extends PagingResult<infer Q>
+    ? Q
+    : P
+  : never
 
-// 表格 props
-interface TableProps<TDataItem> {
-  loading: boolean
-  dataSource: TDataItem[]
-  total: number
-  pageNum: number
-  pageSize: number
-  defaultSort?: TableSort
-  onChange: (data: XTableChangeData) => void
-}
-
-// 请求参数
-type TableServiceParams<TParams> = TParams & TablePaging & TableSort
-
-// 请求结果
-type TableServiceReturn<TDataItem> = PagingResult<TDataItem[]> | TDataItem[]
+type ExtractServiceDataItem<T> = ExtractServiceData<T> extends Array<infer P> ? P : never
 
 // 请求响应
-type TableServiceResponse<TDataItem> = HttpResponse<TableServiceReturn<TDataItem>>
+type TableServiceResponse<TDataItem> = HttpResponse<PagingResult<TDataItem[]> | TDataItem[]>
 
-// 请求方法
-type UseTableService<TDataItem, TParams> = (params: TableServiceParams<TParams>, config?: AxiosRequestConfig) => Promise<TableServiceResponse<TDataItem>>
+// 请求函数
+type UseTableService<TDataItem, TParams> = (
+  params: TParams,
+  config?: AxiosRequestConfig
+) => Promise<TableServiceResponse<TDataItem>>
 
 // 配置项
 interface UseTableOptions<TDataItem, TParams> {
   immediate?: boolean
   pageable?: boolean
-  defaultParams?: TParams
-  defaultSort?: TableSort
-  defaultPaging?: Partial<TablePaging>
-  onSuccess?: (data: TableServiceResponse<TDataItem>, params: TableServiceParams<TParams>) => void
-  onError?: (e: unknown, params: TableServiceParams<TParams>) => void
+  pageSize?: number
+  pageNum?: number
+  onBeforeRequest?: (params: TParams, paging: PagingRequest) => TParams
+  onChange?: (data: XTableChangeData) => void
+  onSuccess?: (data: TableServiceResponse<TDataItem>) => void
+  onError?: (error: unknown) => void
   onFinally?: () => void
 }
 
 // 返回值
 interface UseTableReturn<TDataItem, TParams> {
-  loading: Ref<boolean>
-  form: Ref<TParams>
-  data: ShallowRef<TDataItem[]>
-  tableProps: ComputedRef<TableProps<TDataItem>>
   query: () => Promise<void>
   reset: () => Promise<void>
   abort: () => void
+  loading: Ref<boolean>
+  form: Ref<TParams>
+  data: Ref<TDataItem[]>
+  tableProps: ComputedRef<{
+    loading: boolean
+    dataSource: TDataItem[]
+    pageNum: number
+    pageSize: number
+    total: number
+    pageable: boolean
+    onChange: (data: XTableChangeData) => void
+  }>
 }
 
 export default function useTable<
-  TDataItem,
-  TParams extends Record<string, unknown>,
+  TService extends UseTableService<any, any>,
+  TDataItem extends ExtractServiceDataItem<TService>,
+  TParams extends ExtractServiceParams<TService>,
 >(
-  service: UseTableService<TDataItem, TParams>,
-  options: UseTableOptions<TDataItem, TParams> = {},
+  service: TService,
+  defaultParams?: TParams,
+  options?: UseTableOptions<TDataItem, ExtractServiceParams<TService>>,
 ): UseTableReturn<TDataItem, TParams> {
   const {
-    defaultParams,
     immediate = true,
     pageable = true,
+    pageSize = 10,
+    pageNum = 1,
     onSuccess,
     onError,
     onFinally,
-  } = options
+    onBeforeRequest,
+    onChange,
+  } = options || {}
 
-  const controller = ref<AbortController>()
-
-  const loading = ref(false)
-  const form = ref({}) as Ref<TParams>
-  const pagingData = ref({}) as Ref<TablePaging>
-  const sortData = ref<Partial<TableSort>>({})
-  const data = shallowRef<TDataItem[]>([])
+  // 状态管理
+  const data = ref<TDataItem[]>([]) as Ref<TDataItem[]>
+  const form = ref<TParams>({} as TParams) as Ref<TParams>
+  const pagingData = ref<PagingRequest>({ pageNum, pageSize })
   const total = ref(0)
+  const loading = ref(false)
+  let abortController: AbortController | null = null
 
-  const initData = () => {
-    const {
-      defaultSort = {},
-      defaultPaging = {},
-    } = options
-
-    loading.value = false
-    pagingData.value = { pageNum: 1, pageSize: 10, ...defaultPaging }
-    sortData.value = { ...defaultSort }
-    form.value = cloneDeep(defaultParams) || ({} as TParams)
-  }
-
+  // 参数处理
   const getParams = () => {
-    let params = { ...form.value }
-
-    // 分页参数
-    if (pageable) {
-      params = { ...params, ...pagingData.value }
+    if (onBeforeRequest) {
+      return onBeforeRequest(form.value, pagingData.value)
     }
 
-    // 排序参数
-    const sortable = !!options.defaultSort
-    if (sortable) {
-      params = { ...params, ...sortData.value }
-    }
-
-    return params as TableServiceParams<TParams>
+    return pageable
+      ? { ...form.value, ...pagingData.value }
+      : form.value
   }
 
+  // 数据请求
   const fetchData = async () => {
-    if (loading.value) return
-
-    loading.value = true
-    const params = getParams()
     try {
-      controller.value = new AbortController()
-      const res = await service(params, {
-        signal: controller.value.signal,
+      abortController?.abort()
+      loading.value = true
+      abortController = new AbortController()
+
+      const res = await service(getParams(), {
+        signal: abortController.signal,
       })
+
       if (pageable) {
         const ret = res.data as PagingResult<TDataItem[]>
         data.value = ret.list
@@ -131,67 +119,86 @@ export default function useTable<
       } else {
         const ret = res.data as TDataItem[]
         data.value = ret
+        total.value = ret.length
       }
-      onSuccess?.(res, params)
+
+      onSuccess?.(res)
     } catch (error) {
-      onError?.(error, params)
+      if (!(error instanceof DOMException && error.name === 'AbortError')) {
+        onError?.(error)
+      }
     } finally {
       loading.value = false
       onFinally?.()
     }
   }
 
-  const onChange = ({ pageSize, pageNum, prop, order }: XTableChangeData) => {
-    pagingData.value.pageNum = pageNum
-    pagingData.value.pageSize = pageSize
-    sortData.value.prop = prop
-    sortData.value.order = order
+  // 分页/排序变化处理
+  const handleChange = (changeData: XTableChangeData) => {
+    pagingData.value.pageNum = changeData.pageNum
+    pagingData.value.pageSize = changeData.pageSize
+    onChange?.(changeData)
     fetchData()
   }
 
+  // 取消请求
+  const abort = () => {
+    abortController?.abort()
+  }
+
+  // 初始化
+  const initialize = () => {
+    if (defaultParams) {
+      form.value = cloneDeep(defaultParams)
+    }
+    pagingData.value = {
+      pageNum,
+      pageSize,
+    }
+    loading.value = false
+  }
+
+  // 查询
   const query = async () => {
     pagingData.value.pageNum = 1
     await fetchData()
   }
 
+  // 重置
   const reset = async () => {
-    initData()
+    initialize()
     await fetchData()
   }
 
-  const abort = () => {
-    controller.value?.abort()
-  }
-
+  // 生命周期
   onMounted(() => {
-    initData()
+    initialize()
     if (immediate) {
-      query()
+      fetchData()
     }
   })
 
-  const tableProps = computed<TableProps<TDataItem>>(() => {
-    const { defaultSort } = options
-    const { pageSize, pageNum } = pagingData.value
-    return {
-      loading: loading.value,
-      dataSource: data.value,
-      total: total.value,
-      pageable,
-      pageSize,
-      pageNum,
-      defaultSort,
-      onChange,
-    }
+  onUnmounted(() => {
+    abortController?.abort()
   })
+
+  const tableProps = computed(() => ({
+    loading: loading.value,
+    dataSource: data.value,
+    pageNum: pagingData.value.pageNum,
+    pageSize: pagingData.value.pageSize,
+    total: total.value,
+    pageable,
+    onChange: handleChange,
+  }))
 
   return {
+    query,
+    reset,
+    abort,
     loading,
     form,
     data,
     tableProps,
-    query,
-    reset,
-    abort,
   }
 }

@@ -1,8 +1,8 @@
 <template>
   <div class="app-footer">
-    <el-link type="info" href="https://github.com/zhangsanplus/ares-admin" target="_blank">
+    <ElLink type="info" href="https://github.com/zhangsanplus/ares-admin" target="_blank">
       ares-admin
-    </el-link>&nbsp;开箱即用的中后台前端模板
+    </ElLink>&nbsp;开箱即用的中后台前端模板
   </div>
 </template>
 

@@ -1,7 +1,6 @@
-import axios from 'axios'
-import { ResponseEnum } from '@/enums/http'
-import useUserStore from '@/store/modules/user'
 import type { AxiosInstance, AxiosRequestConfig, InternalAxiosRequestConfig } from 'axios'
+import useUserStore from '@/store/modules/user'
+import axios from 'axios'
 
 const URL = import.meta.env.VITE_API_BASE_URL
 const config = {
@@ -44,11 +43,10 @@ class RequestHttp {
         // 响应数据为二进制流
         if (res instanceof ArrayBuffer) return res
         // 响应错误
-        if (res.code !== ResponseEnum.SUCCESS) {
+        if (res.code !== 0) {
           // token 过期,重新登录
-          if (res.code === ResponseEnum.LOGIN_EXPIRED) {
-            const userStore = useUserStore()
-            userStore.logout()
+          if (res.code === 1000) {
+            useUserStore().logout()
           }
           return Promise.reject(res.msg || 'Request Error')
         }

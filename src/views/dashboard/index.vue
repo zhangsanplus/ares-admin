@@ -1,5 +1,5 @@
 <template>
-  <analysis />
+  <Analysis />
 </template>
 
 <script setup lang="ts" name="dashboard">

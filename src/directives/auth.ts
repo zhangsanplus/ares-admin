@@ -6,9 +6,9 @@
  * 异步权限时可通过 updated 钩子更新
  */
 
+import type { Directive, DirectiveBinding } from 'vue'
 import useUserStore from '@/store/modules/user'
 import { isArray } from '@/utils/is'
-import type { Directive, DirectiveBinding } from 'vue'
 
 type BindingType = DirectiveBinding<string | string[]>
 

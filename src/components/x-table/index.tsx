@@ -1,5 +1,5 @@
-import { ElLoading, ElPagination, ElTable, ElTableColumn } from 'element-plus'
 import type { PropType } from 'vue'
+import { ElLoading, ElPagination, ElTable, ElTableColumn } from 'element-plus'
 import './index.scss'
 
 export default defineComponent({
@@ -116,11 +116,28 @@ export default defineComponent({
     defaultSort: {
       type: Object as PropType<XTableSort>,
     },
+
+    /**
+     * 表格的类
+     */
+    class: {
+      type: [String, Object] as PropType<string | Record<string, any>>,
+      default: () => ({}),
+    },
+
+    /**
+     * 表格的样式
+     */
+    style: {
+      type: [String, Object] as PropType<string | Record<string, any>>,
+      default: () => ({}),
+    },
   },
   emits: ['change'],
   setup(props, { slots, attrs, emit }) {
     const nonPropsAttrs = attrs
     const { prop: sortBy, order: sortOrder } = props.defaultSort || {}
+
     const tableState = reactive<XTableState>({
       tid: 0,
       sortBy,
@@ -133,16 +150,14 @@ export default defineComponent({
     })
 
     const mHeight = computed(() => {
-      if (props.maxHeight === 'auto') {
-        return 'auto'
-      }
+      if (props.maxHeight === 'auto') return 'auto'
       return showPagination.value ? props.maxHeight - 44 : props.maxHeight
     })
 
     /**
-     * 获取插槽
+     * 获取表格列插槽
      */
-    function getSlot(column: XTableColumn, suffix?: string) {
+    function getColumnSlot(column: XTableColumn, suffix?: string) {
       const name = column.prop || column.type
       if (name) {
         const key = suffix ? `${name}-${suffix}` : name
@@ -201,23 +216,36 @@ export default defineComponent({
 
     /**
      * 渲染特殊列
+     * selection/index/expand
      */
     function renderTypeColumn(column: XTableColumn) {
-      if (column.type === 'expand') {
-        return (
-          <ElTableColumn {...getColumnProps(column)}>
-            {{
-              default: (scope: Record<string, any>) => {
-                const slot = getSlot(column)
-                return slot?.(scope)
-              },
-            }}
-          </ElTableColumn>
-        )
+      const columnSlot = getColumnSlot(column)
+      const columnProps = getColumnProps(column)
+
+      const renderDefaultSlot = (scope: Record<string, any>) => {
+        return columnSlot?.(scope)
       }
-      return (
-        <ElTableColumn {...getColumnProps(column)} />
-      )
+
+      const renderIndexSlot = (scope: Record<string, any>) => {
+        return columnSlot?.(scope) ?? (props.pageNum - 1) * props.pageSize + scope.$index + 1
+      }
+
+      switch (column.type) {
+        case 'index':
+          return (
+            <ElTableColumn {...columnProps}>
+              {{ default: renderIndexSlot }}
+            </ElTableColumn>
+          )
+        case 'expand':
+          return (
+            <ElTableColumn {...columnProps}>
+              {{ default: renderDefaultSlot }}
+            </ElTableColumn>
+          )
+        default:
+          return <ElTableColumn {...columnProps} />
+      }
     }
 
     /**
@@ -228,11 +256,11 @@ export default defineComponent({
         default?: (scope: Record<string, any>) => any
         header?: (scope: Record<string, any>) => any
       } = {}
-      const slot = getSlot(column)
-      const headerSlot = getSlot(column, 'header')
+      const columnSlot = getColumnSlot(column)
+      const headerSlot = getColumnSlot(column, 'header')
 
-      if (slot) {
-        columnSlots.default = scope => slot(scope)
+      if (columnSlot) {
+        columnSlots.default = scope => columnSlot(scope)
       }
 
       if (headerSlot) {
@@ -264,9 +292,7 @@ export default defineComponent({
       if (column.hidden) return
       return (
         <ElTableColumn {...getColumnProps(column)}>
-          {
-            children.map(column => renderTableColumn(column))
-          }
+          {children.map(column => renderTableColumn(column))}
         </ElTableColumn>
       )
     }
@@ -276,7 +302,6 @@ export default defineComponent({
      */
     function renderPagination() {
       const paginationProps = {
-        size: 'small',
         background: true,
         total: props.total,
         layout: props.pagerLayout,
@@ -319,7 +344,7 @@ export default defineComponent({
       }
 
       return (
-        <div class="x-table">
+        <div class={['x-table', props.class]} style={props.style}>
           <ElTable
             {...tableProps}
             v-loading={props.loading}

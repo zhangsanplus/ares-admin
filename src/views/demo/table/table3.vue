@@ -1,25 +1,25 @@
 <template>
-  <x-card title="树形表格">
-    <x-table
+  <XCard title="树形表格">
+    <XTable
       default-expand-all
       :columns="columns"
       :data-source="tableData1"
       :pageable="false"
     />
-  </x-card>
+  </XCard>
 
-  <x-card title="懒加载">
-    <x-table
+  <XCard title="懒加载">
+    <XTable
       lazy
       :load="load"
       :columns="columns"
       :data-source="tableData2"
       :pageable="false"
     />
-  </x-card>
+  </XCard>
 
-  <x-card title="展开行">
-    <x-table
+  <XCard title="展开行">
+    <XTable
       :columns="columns3"
       :data-source="tableData3"
       :pageable="false"
@@ -27,13 +27,13 @@
       <template #expand="{ row }">
         <p style="margin: 0 8px;padding: 15px; background: var(--el-table-header-bg-color);">
           这条数据的日期是
-          <el-text type="primary">
+          <ElText type="primary">
             {{ row.date }}
-          </el-text>
+          </ElText>
         </p>
       </template>
-    </x-table>
-  </x-card>
+    </XTable>
+  </XCard>
 </template>
 
 <script setup lang='ts'>

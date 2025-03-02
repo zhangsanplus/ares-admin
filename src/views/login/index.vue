@@ -6,27 +6,27 @@
         <div class="login-title">
           欢迎登录 {{ appStore.title }}
         </div>
-        <el-form
+        <ElForm
           ref="formRef"
           hide-required-asterisk
           :model="form"
           :rules="rules"
           @submit="handleSubmit"
         >
-          <el-form-item prop="username">
-            <el-input
+          <ElFormItem prop="username">
+            <ElInput
               v-model.trim="form.username"
               :validate-event="false"
               placeholder="请输入账号"
             >
               <template #prefix>
-                <el-icon><i-ep-user /></el-icon>
+                <ElIcon><IEpUser /></ElIcon>
               </template>
-            </el-input>
-          </el-form-item>
+            </ElInput>
+          </ElFormItem>
 
-          <el-form-item prop="password">
-            <el-input
+          <ElFormItem prop="password">
+            <ElInput
               v-model.trim="form.password"
               :validate-event="false"
               type="password"
@@ -34,52 +34,53 @@
               placeholder="请输入密码"
             >
               <template #prefix>
-                <el-icon><i-ep-lock /></el-icon>
+                <ElIcon><IEpLock /></ElIcon>
               </template>
-            </el-input>
-          </el-form-item>
+            </ElInput>
+          </ElFormItem>
 
-          <el-form-item prop="verify">
-            <login-verify ref="verifyRef" v-model="form.verify" />
-          </el-form-item>
+          <ElFormItem prop="verify">
+            <LoginVerify ref="verifyRef" v-model="form.verify" />
+          </ElFormItem>
 
-          <el-form-item>
-            <el-row justify="space-between" style="width: 100%;">
-              <el-checkbox
+          <ElFormItem>
+            <ElRow justify="space-between" style="width: 100%;">
+              <ElCheckbox
                 v-model="form.remember"
                 label="记住密码"
               />
 
-              <el-link type="primary" :underline="false">
+              <ElLink type="primary" :underline="false">
                 忘记密码
-              </el-link>
-            </el-row>
-          </el-form-item>
+              </ElLink>
+            </ElRow>
+          </ElFormItem>
 
-          <el-space direction="vertical" fill style="width: 100%;">
-            <el-button
+          <ElSpace direction="vertical" fill style="width: 100%;">
+            <ElButton
               long
               type="primary"
               :loading="loading"
               @click="handleSubmit"
             >
               登录
-            </el-button>
-            <el-button long text>
+            </ElButton>
+            <ElButton long text>
               注册账号
-            </el-button>
-          </el-space>
-        </el-form>
+            </ElButton>
+          </ElSpace>
+        </ElForm>
       </div>
     </div>
   </div>
 </template>
 
 <script setup lang="ts">
+import type { FormInstance } from 'element-plus'
 import useAppStore from '@/store/modules/app'
 import useUserStore from '@/store/modules/user'
+import { useStorage } from '@vueuse/core'
 import LoginVerify from './login-verify.vue'
-import type { FormInstance } from 'element-plus'
 
 const rules = {
   username: [

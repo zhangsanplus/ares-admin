@@ -1,6 +1,6 @@
 <template>
   <div class="app-toggle" @click="toggleCollapse">
-    <i-custom-fold :class="{ 'is-active': appStore.collapsed }" />
+    <ICustomFold :class="{ 'is-active': appStore.collapsed }" />
   </div>
 </template>
 

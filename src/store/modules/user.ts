@@ -2,6 +2,7 @@ import * as userApi from '@/api/user'
 import { RouteNameEnum } from '@/enums/route'
 import { generateRoutes } from '@/router/utils'
 import defaultSetting from '@/settings'
+import { useStorage } from '@vueuse/core'
 
 const { storagePrefix } = defaultSetting
 const useUserStore = defineStore('user', () => {

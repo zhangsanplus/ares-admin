@@ -1,5 +1,5 @@
-import Layout from '@/layout/index.vue'
 import type { RouteRecordRaw } from 'vue-router'
+import Layout from '@/layout/index.vue'
 
 const external: RouteRecordRaw = {
   path: '/external',

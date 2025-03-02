@@ -1,47 +1,56 @@
 /**
- * v-copy="some text"
- * v-copy.contextmenu.prevent="some text"
+ * v-copy
  * 文本复制指令
- * 支持右键复制
+ * @example <div v-copy="some text">复制</div>
+ * @example <div v-copy.contextmenu.prevent="some text">右键复制</div>
  */
-
+import type { Directive } from 'vue'
 import { copyText } from '@/utils'
-import type { Directive, DirectiveBinding } from 'vue'
 
-interface ElType extends HTMLElement {
-  __copyText__?: string
-  __handleCopy__?: (evt: Event) => void
+interface CopyDirectivesElement extends HTMLElement {
+  _opts?: {
+    event: string
+    text: string
+    handler: (evt: Event) => void
+  }
 }
 
-type BindingType = DirectiveBinding<string>
-
-const copy: Directive = {
-  mounted(el: ElType, binding: BindingType) {
+const copy: Directive<CopyDirectivesElement> = {
+  mounted(el, binding) {
     const { prevent, contextmenu } = binding.modifiers
+    const text = binding.value
 
-    el.__copyText__ = binding.value
-    el.__handleCopy__ = (evt: Event) => {
-      if (prevent) {
-        evt.preventDefault()
-      }
-      copyText(el.__copyText__!)
+    if (!text) return
+
+    const handler = (evt: Event) => {
+      if (prevent) evt.preventDefault()
+      copyText(text)
     }
 
-    if (contextmenu) {
-      el.addEventListener('contextmenu', el.__handleCopy__)
-    } else {
-      el.addEventListener('click', el.__handleCopy__)
+    const event = contextmenu ? 'contextmenu' : 'click'
+    el.addEventListener(event, handler)
+
+    el._opts = {
+      handler,
+      text,
+      event,
     }
   },
 
-  // 监听 v node 变化后重新获取value
-  updated(el: ElType, { value }: BindingType) {
-    el.__copyText__ = value
+  // vnode变化后重新获取value
+  updated(el, binding) {
+    const text = binding.value
+    if (el._opts) {
+      el._opts.text = text
+    }
   },
 
-  beforeUnmount(el: ElType) {
-    el.removeEventListener('click', el.__handleCopy__ as any)
-    el.removeEventListener('contextmenu', el.__handleCopy__ as any)
+  beforeUnmount(el) {
+    const ctx = el._opts
+    if (ctx) {
+      el.removeEventListener(ctx.event, ctx.handler)
+      delete el._opts
+    }
   },
 }
 

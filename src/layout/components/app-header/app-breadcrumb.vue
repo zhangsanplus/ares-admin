@@ -1,16 +1,16 @@
 <template>
-  <el-breadcrumb class="app-breadcrumb" :separator-icon="ArrowRight">
-    <el-breadcrumb-item v-for="(item, index) in breadcrumbs" :key="item.path">
+  <ElBreadcrumb class="app-breadcrumb" :separator-icon="ArrowRight">
+    <ElBreadcrumbItem v-for="(item, index) in breadcrumbs" :key="item.path">
       <span v-if="index === breadcrumbs.length - 1" class="no-redirect">{{ item.meta.title }}</span>
       <a v-else @click.prevent="handleLink(item)">{{ item.meta.title }}</a>
-    </el-breadcrumb-item>
-  </el-breadcrumb>
+    </ElBreadcrumbItem>
+  </ElBreadcrumb>
 </template>
 
 <script setup lang="ts">
-import { ArrowRight } from '@element-plus/icons-vue'
-import { HOME_ROUTE_INFO, RouteNameEnum } from '@/enums/route'
 import type { RouteLocationMatched } from 'vue-router'
+import { HOME_ROUTE_INFO, RouteNameEnum } from '@/enums/route'
+import { ArrowRight } from '@element-plus/icons-vue'
 
 const router = useRouter()
 const currentRoute = useRoute()

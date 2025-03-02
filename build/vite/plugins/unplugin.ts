@@ -9,7 +9,7 @@ import Icons from 'unplugin-icons/vite'
 import { ElementPlusResolver } from 'unplugin-vue-components/resolvers'
 import Components from 'unplugin-vue-components/vite'
 
-export function unpluginDeps() {
+export function configUnplugin() {
   return [
     AutoImport({
       resolvers: [
@@ -22,13 +22,14 @@ export function unpluginDeps() {
       imports: [
         'vue',
         'vue-router',
-        '@vueuse/core',
         'pinia',
       ],
       dts: 'types/auto-imports.d.ts',
     }),
     Components({
-      dirs: [], // 避免解析到src/components
+      // dirs: [], // 避免解析到src/components
+      dirs: ['src/components/x-*'],
+      extensions: ['vue', 'tsx'],
       deep: false,
       resolvers: [
         // 自动导入 Element Plus 组件

@@ -1,7 +1,7 @@
 <template>
-  <x-card :title="route.path">
+  <XCard :title="route.path">
     <p>这是一个嵌套菜单页面</p>
-  </x-card>
+  </XCard>
 </template>
 
 <script setup lang='ts'>

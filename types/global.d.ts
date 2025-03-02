@@ -64,3 +64,9 @@ interface HttpResponse<T = unknown> {
   code: number
   data: T
 }
+
+/**
+ * 组件属性
+ */
+// type ComponentProps<T> = T extends DefineComponent<infer P, any, any> ? P : never
+type ComponentProps<T> = T extends new (...args: any[]) => any ? InstanceType<T>['$props'] : never

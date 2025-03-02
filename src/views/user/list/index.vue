@@ -1,81 +1,76 @@
 <template>
-  <x-card>
-    <x-query-form inline label-width="70px" style="margin-bottom: -18px;">
-      <el-form-item label="用户名">
-        <el-input v-model="queryForm.name" placeholder="请输入用户名" />
-      </el-form-item>
-
-      <el-form-item label="手机号码">
-        <el-input v-model="queryForm.phone" placeholder="请输入手机号码" />
-      </el-form-item>
-
-      <template #action>
-        <el-form-item>
-          <el-button type="primary" @click="handleQuery">
+  <XCard>
+    <div class="container">
+      <XForm v-model="queryForm" :columns="formColumns">
+        <template #action>
+          <ElButton type="primary" @click="handleQuery">
             <template #icon>
-              <i-ep-search />
+              <IEpSearch />
             </template>
             查询
-          </el-button>
-        </el-form-item>
-      </template>
-    </x-query-form>
-  </x-card>
+          </ElButton>
+        </template>
+      </XForm>
 
-  <x-card>
-    <el-row style="margin-bottom: 18px;">
-      <el-col :span="16">
-        <el-button type="primary" @click="handleCreate">
-          <template #icon>
-            <i-ep-plus />
-          </template>
-          新增
-        </el-button>
-      </el-col>
-    </el-row>
+      <ElDivider style="margin: 1px 0 18px;" />
 
-    <x-table
-      v-loading="loading"
-      :columns="columns"
-      :data-source="tableData"
-      :total="tableTotal"
-      :page-size="queryForm.pageSize"
-      :page-num="queryForm.pageNum"
-      @change="handleTableChange"
-    >
-      <template #status="{ row }">
-        <el-switch
-          :model-value="row.status"
-          :active-value="1"
-          :inactive-value="1"
-        />
-      </template>
+      <ElRow style="margin-bottom: 18px;">
+        <ElCol :span="16">
+          <ElButton type="primary" @click="handleCreate">
+            <template #icon>
+              <IEpPlus />
+            </template>
+            新增
+          </ElButton>
+        </ElCol>
+      </ElRow>
 
-      <template #role="{ row }">
-        <el-tag v-if="row.role === 1" disable-transitions style="width: 65px;">
-          管理员
-        </el-tag>
-        <el-tag v-else type="success" disable-transitions style="width: 65px;">
-          普通用户
-        </el-tag>
-      </template>
+      <XTable
+        v-loading="loading"
+        :columns="columns"
+        :data-source="tableData"
+        :total="tableTotal"
+        :page-size="queryForm.pageSize"
+        :page-num="queryForm.pageNum"
+        class="flex-1"
+        @change="handleTableChange"
+      >
+        <template #status="{ row }">
+          <ElSwitch :model-value="row.status" :active-value="1" :inactive-value="1" />
+        </template>
 
-      <template #action="{ row }">
-        <x-space>
-          <el-link :underline="false" type="primary" @click="handleCreate">
-            修改
-          </el-link>
-          <el-link :underline="false" type="danger" @click="handleDelete(row)">
-            删除
-          </el-link>
-        </x-space>
-      </template>
-    </x-table>
-  </x-card>
+        <template #role="{ row }">
+          <ElTag v-if="row.role === 1" disable-transitions style="width: 65px;">
+            管理员
+          </ElTag>
+          <ElTag
+            v-else
+            type="success"
+            disable-transitions
+            style="width: 65px;"
+          >
+            普通用户
+          </ElTag>
+        </template>
+
+        <template #action="{ row }">
+          <BaseSpace>
+            <ElLink :underline="false" type="primary" @click="handleCreate">
+              修改
+            </ElLink>
+            <ElLink :underline="false" type="danger" @click="handleDelete(row)">
+              删除
+            </ElLink>
+          </BaseSpace>
+        </template>
+      </XTable>
+    </div>
+  </XCard>
 </template>
 
 <script setup lang='ts'>
 import { getUserList } from '@/api/user'
+import BaseSpace from '@/components/base-space.vue'
 
 const columns = ref(
   [
@@ -109,12 +104,32 @@ const columns = ref(
   ],
 )
 
+const formColumns = ref<XFormColumn[]>([
+  {
+    label: '姓名',
+    prop: 'name',
+    type: 'input',
+    props: {
+      placeholder: '请输入姓名',
+    },
+  },
+  {
+    label: '手机号',
+    prop: 'phone',
+    type: 'input',
+    props: {
+      placeholder: '请输入手机号',
+    },
+  },
+])
+
 const queryForm = reactive({
   name: '',
   phone: '',
-  pageSize: 10,
+  pageSize: 20,
   pageNum: 1,
 })
+
 const loading = ref(false)
 const tableData = ref<UserType.ListItem[]>([])
 const tableTotal = ref(0)
@@ -167,3 +182,17 @@ onMounted(() => {
   getList()
 })
 </script>
+
+<style lang="scss" scoped>
+.flex-1 {
+  flex: 1;
+}
+
+@media screen and (width >= 1024px) {
+  .container {
+    display: flex;
+    flex-direction: column;
+    height: calc(100vh - 185px);
+  }
+}
+</style>

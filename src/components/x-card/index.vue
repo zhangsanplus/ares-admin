@@ -1,15 +1,14 @@
 <template>
   <div class="x-card" :class="{ 'is-full': full }">
-    <!-- title -->
-    <div v-if="title || $slots['header-right']" class="x-card-header">
-      <h3 v-if="title">
-        {{ title }}
+    <div v-if="title || $slots.title || $slots.right" class="x-card-header">
+      <h3 v-if="title || $slots.title">
+        <slot name="title">
+          {{ title }}
+        </slot>
       </h3>
-
-      <slot name="header-right" />
+      <slot name="right" />
     </div>
 
-    <!-- content -->
     <div class="x-card-content">
       <slot />
     </div>
@@ -27,6 +26,7 @@ defineProps<{
 .x-card {
   padding: var(--app-margin);
   background-color: var(--el-bg-color-overlay);
+  border: 1px solid var(--app-card-border);
   border-radius: 4px;
 
   &.is-full {

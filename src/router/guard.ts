@@ -1,8 +1,8 @@
-import NProgress from 'nprogress'
+import type { Router } from 'vue-router'
 import { RouteNameEnum } from '@/enums/route'
 import useUserStore from '@/store/modules/user'
+import NProgress from 'nprogress'
 import { NOT_FOUND_ROUTE } from './routes'
-import type { Router } from 'vue-router'
 
 NProgress.configure({
   // easing: 'ease', // 动画方式

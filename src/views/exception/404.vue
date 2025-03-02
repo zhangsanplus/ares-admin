@@ -1,15 +1,15 @@
 <template>
-  <x-card full>
-    <el-empty description="抱歉，您访问的页面不存在。" class="exception">
-      <el-button type="info" @click="goHome">
+  <XCard full>
+    <ElEmpty description="抱歉，您访问的页面不存在。" class="exception">
+      <ElButton type="info" @click="goHome">
         首页
-      </el-button>
+      </ElButton>
 
-      <el-button type="primary" @click="goBack">
+      <ElButton type="primary" @click="goBack">
         返回
-      </el-button>
-    </el-empty>
-  </x-card>
+      </ElButton>
+    </ElEmpty>
+  </XCard>
 </template>
 
 <script setup lang="ts">

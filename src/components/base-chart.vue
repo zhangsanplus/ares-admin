@@ -3,8 +3,8 @@
 </template>
 
 <script lang="ts" setup>
-import useECharts from '@/composables/use-echarts'
 import type { EChartsOption } from 'echarts'
+import useECharts from '@/composables/use-echarts'
 
 interface Props {
   options: EChartsOption
@@ -21,9 +21,9 @@ watch(
   { deep: true },
 )
 
-onMounted(setOptions)
-
 function setOptions() {
   chart.value?.setOption(props.options, true)
 }
+
+onMounted(setOptions)
 </script>

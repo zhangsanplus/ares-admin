@@ -1,6 +1,6 @@
+import type { RouteRecordRaw } from 'vue-router'
 import BlankLayout from '@/layout/blank-layout.vue'
 import Layout from '@/layout/index.vue'
-import type { RouteRecordRaw } from 'vue-router'
 
 const nest: RouteRecordRaw = {
   path: '/nest',

@@ -1,7 +1,7 @@
 <template>
-  <el-icon>
+  <ElIcon>
     <component :is="icon" />
-  </el-icon>
+  </ElIcon>
 </template>
 
 <script setup lang="ts">

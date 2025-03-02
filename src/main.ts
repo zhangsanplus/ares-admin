@@ -1,20 +1,17 @@
-import '@/styles/index.scss'
-import { createApp } from 'vue'
-import { setupGlobalComponents } from '@/components'
 import { setupGlobalDirectives } from '@/directives'
 import { setupRouter } from '@/router'
 import { setupStore } from '@/store'
+import { createApp } from 'vue'
 import App from './App.vue'
+import '@/styles/index.scss'
+import '@/composables/use-websocket'
 
 const app = createApp(App)
 
-// 配置 store
 setupStore(app)
-// 注册全局组件
-setupGlobalComponents(app)
-// 注册全局指令
+
 setupGlobalDirectives(app)
-// 配置路由
+
 setupRouter(app)
 
 app.mount('#app')

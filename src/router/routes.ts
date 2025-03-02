@@ -1,6 +1,6 @@
+import type { RouteRecordRaw } from 'vue-router'
 import { HOME_ROUTE_INFO, RouteNameEnum } from '@/enums/route'
 import Layout from '@/layout/index.vue'
-import type { RouteRecordRaw } from 'vue-router'
 
 const BASE_ROUTE: RouteRecordRaw = {
   path: '/',

@@ -1,7 +1,7 @@
 <template>
-  <el-config-provider :locale="zhCn" :size="appStore.size">
-    <router-view />
-  </el-config-provider>
+  <ElConfigProvider :locale="zhCn" :size="appStore.size">
+    <RouterView />
+  </ElConfigProvider>
 </template>
 
 <script setup lang="ts">

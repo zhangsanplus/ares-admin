@@ -1,27 +1,27 @@
 <template>
   <template v-for="subItem in menuList" :key="subItem.path">
-    <el-sub-menu v-if="subItem.children && subItem.children.length > 0" :index="subItem.path">
+    <ElSubMenu v-if="subItem.children && subItem.children.length > 0" :index="subItem.path">
       <template #title>
-        <menu-icon v-if="subItem.meta?.icon" :name="`${subItem.meta.icon}`" />
+        <MenuIcon v-if="subItem.meta?.icon" :name="`${subItem.meta.icon}`" />
         <span>{{ subItem.meta?.title }}</span>
       </template>
-      <app-sub-item :menu-list="subItem.children" :show-icon="false" />
-    </el-sub-menu>
+      <AppSubItem :menu-list="subItem.children" :show-icon="false" />
+    </ElSubMenu>
 
-    <el-menu-item v-else :index="subItem.path" @click="handleClick(subItem.path)">
-      <menu-icon v-if="showIcon && subItem.meta?.icon" :name="`${subItem.meta.icon}`" />
+    <ElMenuItem v-else :index="subItem.path" @click="handleClick(subItem.path)">
+      <MenuIcon v-if="showIcon && subItem.meta?.icon" :name="`${subItem.meta.icon}`" />
       <template #title>
         <span>{{ subItem.meta?.title }}</span>
       </template>
-    </el-menu-item>
+    </ElMenuItem>
   </template>
 </template>
 
 <script setup lang="ts" name="app-sub-item">
+import type { MenuItem } from 'vue-router'
 import { RouteNameEnum } from '@/enums/route'
 import { isExternal } from '@/utils/is'
 import MenuIcon from './menu-icon.vue'
-import type { MenuItem } from 'vue-router'
 
 withDefaults(defineProps<{
   menuList: MenuItem[]

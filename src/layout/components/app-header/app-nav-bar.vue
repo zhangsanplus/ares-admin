@@ -1,82 +1,83 @@
 <template>
   <div class="app-nav-bar">
-    <el-space :size="14">
-      <el-button text circle @click="appStore.toggleDark">
-        <el-icon>
-          <i-ep-moon v-if="appStore.isDark" />
-          <i-ep-sunny v-else />
-        </el-icon>
-      </el-button>
+    <ElSpace :size="14">
+      <ElButton text circle @click="appStore.toggleDark">
+        <ElIcon>
+          <IEpMoon v-if="appStore.isDark" />
+          <IEpSunny v-else />
+        </ElIcon>
+      </ElButton>
 
-      <el-dropdown trigger="click" @command="toggleSize">
-        <el-button text circle>
-          <el-icon>
-            <i-custom-text-size />
-          </el-icon>
-        </el-button>
+      <ElDropdown trigger="click" @command="toggleSize">
+        <ElButton text circle>
+          <ElIcon>
+            <ICustomTextSize />
+          </ElIcon>
+        </ElButton>
 
         <template #dropdown>
-          <el-dropdown-menu>
-            <el-dropdown-item command="default">
+          <ElDropdownMenu>
+            <ElDropdownItem command="default">
               默认
-            </el-dropdown-item>
-            <el-dropdown-item command="small">
+            </ElDropdownItem>
+            <ElDropdownItem command="small">
               小
-            </el-dropdown-item>
-            <el-dropdown-item command="large">
+            </ElDropdownItem>
+            <ElDropdownItem command="large">
               大
-            </el-dropdown-item>
-          </el-dropdown-menu>
+            </ElDropdownItem>
+          </ElDropdownMenu>
         </template>
-      </el-dropdown>
+      </ElDropdown>
 
-      <el-button text circle @click="toggleFullScreen">
-        <el-icon>
-          <i-custom-fullscreen-exit v-if="isFullscreen" />
-          <i-custom-fullscreen v-else />
-        </el-icon>
-      </el-button>
+      <ElButton text circle @click="toggleFullScreen">
+        <ElIcon>
+          <ICustomFullscreenExit v-if="isFullscreen" />
+          <ICustomFullscreen v-else />
+        </ElIcon>
+      </ElButton>
 
-      <el-badge is-dot style="margin-right: 8px;">
-        <el-button text circle>
-          <el-icon><i-ep-bell /></el-icon>
-        </el-button>
-      </el-badge>
-    </el-space>
+      <ElBadge is-dot style="margin-right: 8px;">
+        <ElButton text circle>
+          <ElIcon><IEpBell /></ElIcon>
+        </ElButton>
+      </ElBadge>
+    </ElSpace>
 
-    <el-dropdown trigger="click" @command="handleSelect">
+    <ElDropdown trigger="click" @command="handleSelect">
       <div class="app-user">
         <div class="app-avatar">
           <img src="@/assets/avatar.png">
         </div>
         <div class="app-user-name">
-          {{ userinfo.username }}&nbsp;&nbsp;<el-icon><i-ep-arrow-down /></el-icon>
+          {{ userinfo.username }}&nbsp;&nbsp;<ElIcon><IEpArrowDown /></ElIcon>
         </div>
       </div>
 
       <template #dropdown>
-        <el-dropdown-menu>
-          <el-dropdown-item :command="CommandEnum.github">
-            <el-icon><i-custom-github /></el-icon>
+        <ElDropdownMenu>
+          <ElDropdownItem :command="CommandEnum.github">
+            <ElIcon><ICustomGithub /></ElIcon>
             项目源码
-          </el-dropdown-item>
-          <el-dropdown-item :command="CommandEnum.setting">
-            <el-icon><i-ep-setting /></el-icon>
+          </ElDropdownItem>
+          <ElDropdownItem :command="CommandEnum.setting">
+            <ElIcon><IEpSetting /></ElIcon>
             用户设置
-          </el-dropdown-item>
-          <el-dropdown-item :command="CommandEnum.logout" divided>
-            <el-icon><i-ep-switch-button /></el-icon>
+          </ElDropdownItem>
+          <ElDropdownItem :command="CommandEnum.logout" divided>
+            <ElIcon><IEpSwitchButton /></ElIcon>
             退出登录
-          </el-dropdown-item>
-        </el-dropdown-menu>
+          </ElDropdownItem>
+        </ElDropdownMenu>
       </template>
-    </el-dropdown>
+    </ElDropdown>
   </div>
 </template>
 
 <script setup lang="ts">
 import useAppStore from '@/store/modules/app'
 import useUserStore from '@/store/modules/user'
+import { useFullscreen } from '@vueuse/core'
 
 enum CommandEnum {
   github = 'github',

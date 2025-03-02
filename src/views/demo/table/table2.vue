@@ -1,63 +1,59 @@
 <template>
-  <x-card>
-    <x-query-form inline label-width="70px" action-width="260px" style="margin-bottom: -18px;">
-      <el-form-item label="文章标题">
-        <el-input v-model="form.title" placeholder="请输入标题" />
-      </el-form-item>
-
-      <template #action>
-        <el-space>
-          <el-button type="primary" @click="query">
+  <XCard>
+    <div class="container">
+      <XForm v-model="form" :columns="formColumns">
+        <template #action>
+          <ElButton type="primary" @click="query">
             <template #icon>
-              <i-ep-search />
+              <IEpSearch />
             </template>
             查询
-          </el-button>
-
-          <el-button type="info" @click="reset">
+          </ElButton>
+          <ElButton type="info" @click="reset">
             <template #icon>
-              <i-ep-search />
+              <IEpRefreshRight />
             </template>
             重置
-          </el-button>
-
-          <el-popover
+          </ElButton>
+          <ElPopover
             :width="240"
+            trigger="hover"
             placement="top-start"
             effect="dark"
-            trigger="hover"
             content="在需要时可调用 abort 方法来取消请求。打开 DevTools 工具模拟网速可进行测试"
           >
             <template #reference>
-              <el-button type="info" @click="abort">
+              <ElButton type="info" @click="abort">
                 取消请求
-              </el-button>
+              </ElButton>
             </template>
-          </el-popover>
-        </el-space>
-      </template>
-    </x-query-form>
-  </x-card>
+          </ElPopover>
+        </template>
+      </XForm>
 
-  <x-card>
-    <x-table
-      :columns="columns"
-      v-bind="tableProps"
-    >
-      <template #status="{ row }">
-        <el-switch
-          :model-value="row.status"
-          :active-value="1"
-          :inactive-value="1"
-        />
-      </template>
-    </x-table>
-  </x-card>
+      <XTable :columns="columns" v-bind="tableProps" class="flex-1">
+        <template #status="{ row }">
+          <ElSwitch :model-value="row.status" :active-value="1" :inactive-value="1" />
+        </template>
+      </XTable>
+    </div>
+  </XCard>
 </template>
 
 <script setup lang='ts'>
 import { getArticleList } from '@/api/article'
 import useTable from '@/composables/use-table'
+
+const formColumns = ref<XFormColumn[]>([
+  {
+    prop: 'title',
+    type: 'input',
+    label: '文章标题',
+    props: {
+      placeholder: '请输入标题',
+    },
+  },
+])
 
 const columns = ref([
   {
@@ -79,12 +75,38 @@ const columns = ref([
   },
 ])
 
-const { tableProps, form, query, reset, abort } = useTable(getArticleList, {
-  defaultParams: {
+const { tableProps, form, query, reset, abort } = useTable(
+  getArticleList,
+  {
     title: '',
+    title2: '',
   },
-  onSuccess(data, params) {
-    console.log('data, params =>', data, params)
+  {
+    pageSize: 20,
+    onBeforeRequest(params, paging) {
+      return {
+        ...paging,
+        title: params.title,
+        remark: 'beforeRequest',
+      }
+    },
+    onSuccess(data) {
+      console.log('onSuccess', data)
+    },
   },
-})
+)
 </script>
+
+<style lang="scss" scoped>
+.flex-1 {
+  flex: 1;
+}
+
+@media screen and (width >= 980px) {
+  .container {
+    display: flex;
+    flex-direction: column;
+    height: calc(100vh - 185px);
+  }
+}
+</style>

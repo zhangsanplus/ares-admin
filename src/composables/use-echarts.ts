@@ -1,5 +1,6 @@
 import echarts from '@/plugins/echarts'
 import useAppStore from '@/store/modules/app'
+import { tryOnScopeDispose, useDebounceFn } from '@vueuse/core'
 
 export default function useECharts(chartRef: Ref<HTMLElement>, setOption: () => void) {
   const chart = shallowRef<echarts.ECharts | null>(null)
@@ -39,7 +40,7 @@ export default function useECharts(chartRef: Ref<HTMLElement>, setOption: () => 
     window.addEventListener('resize', resizeFn)
   })
 
-  onBeforeUnmount(() => {
+  tryOnScopeDispose(() => {
     if (chart.value) {
       chart.value.dispose()
       chart.value = null

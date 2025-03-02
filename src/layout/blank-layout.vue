@@ -1,9 +1,9 @@
 <template>
-  <router-view v-slot="{ Component, route }">
-    <keep-alive :include="cacheList">
+  <RouterView v-slot="{ Component, route }">
+    <KeepAlive :include="cacheList">
       <component :is="Component" :key="route.fullPath" />
-    </keep-alive>
-  </router-view>
+    </KeepAlive>
+  </RouterView>
 </template>
 
 <script setup lang="ts">

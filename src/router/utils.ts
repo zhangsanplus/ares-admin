@@ -1,6 +1,6 @@
+import type { MenuItem, RouteRecordRaw } from 'vue-router'
 import { isExternal } from '@/utils/is'
 import asyncRoutes from './async-routes'
-import type { MenuItem, RouteRecordRaw } from 'vue-router'
 
 /**
  * 将两个路径拼接为一个

@@ -1,8 +1,8 @@
 <template>
   <div class="app-header">
-    <app-toggle />
-    <app-breadcrumb v-if="!isMobile" />
-    <app-nav-bar />
+    <AppToggle />
+    <AppBreadcrumb v-if="!isMobile" />
+    <AppNavBar />
   </div>
 </template>
 

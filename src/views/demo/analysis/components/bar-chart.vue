@@ -1,11 +1,11 @@
 <template>
-  <base-chart :options="options" :style="{ width, height }" />
+  <BaseChart :options="options" :style="{ width, height }" />
 </template>
 
 <script lang="ts" setup>
-import BaseChart from '@/components/base-chart/index.vue'
 import type { BarChartData } from '@/plugins/echarts'
 import type { EChartsOption, SeriesOption } from 'echarts'
+import BaseChart from '@/components/base-chart.vue'
 
 interface Props {
   height?: string

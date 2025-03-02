@@ -1,28 +1,34 @@
+import type { PluginOption } from 'vite'
+import process from 'node:process'
+import vueLegacy from '@vitejs/plugin-legacy'
+import vue from '@vitejs/plugin-vue'
+import vueJsx from '@vitejs/plugin-vue-jsx'
+import { configCompressPlugin } from './compress'
+import { configHtmlPlugin } from './html'
+import { configUnplugin } from './unplugin'
+import { configVisualizerPlugin } from './visualizer'
+
 /**
  * @name createVitePlugins
  * @description 封装plugins数组统一调用
  */
-import vueLegacy from '@vitejs/plugin-legacy'
-import vue from '@vitejs/plugin-vue'
-import vueJsx from '@vitejs/plugin-vue-jsx'
-import { unpluginDeps } from './unplugin'
-import type { PluginOption } from 'vite'
-
 export function createVitePlugins(isBuild: boolean) {
   const vitePlugins: PluginOption[] = [
     vue(),
-    // jsx 语法支持
     vueJsx(),
-    // 自动导入组件和字体图标等
-    ...unpluginDeps(),
+    ...configUnplugin(),
   ]
 
+  // 生产环境
   if (isBuild) {
-    // 旧版浏览器支持
     vitePlugins.push(vueLegacy())
+    vitePlugins.push(configHtmlPlugin())
+    vitePlugins.push(configCompressPlugin('gzip'))
+  }
 
-    // gzip压缩
-    // vitePlugins.push(configCompressPlugin('gzip'))
+  // 打包分析
+  if (process.env.REPORT === 'true') {
+    vitePlugins.push(configVisualizerPlugin())
   }
 
   return vitePlugins

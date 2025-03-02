@@ -1,6 +1,6 @@
+import type { RouteRecordRaw } from 'vue-router'
 import { RouteNameEnum } from '@/enums/route'
 import Layout from '@/layout/index.vue'
-import type { RouteRecordRaw } from 'vue-router'
 
 const exception: RouteRecordRaw = {
   path: '/exception',

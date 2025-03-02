@@ -1,41 +1,46 @@
 <template>
-  <el-dropdown
-    ref="elDropdownRef" :trigger="trigger" placement="bottom-start" popper-class="tabs-dropdown-popper"
-    @command="handleSelect" @visible-change="onVisibleChange"
+  <ElDropdown
+    ref="elDropdownRef"
+    :trigger="trigger"
+    placement="bottom-start"
+    popper-class="tabs-dropdown-popper"
+    @command="handleSelect"
+    @visible-change="onVisibleChange"
   >
     <span ref="elDropdownSlotRef">
       <slot />
     </span>
     <template #dropdown>
-      <el-dropdown-menu>
-        <el-dropdown-item :command="CommandEnum.reload" :disabled="!isActivated">
-          <el-icon><i-ep-refresh-right /></el-icon>
+      <ElDropdownMenu>
+        <ElDropdownItem :command="CommandEnum.reload" :disabled="!isActivated">
+          <ElIcon><IEpRefreshRight /></ElIcon>
           重新加载
-        </el-dropdown-item>
+        </ElDropdownItem>
 
-        <el-dropdown-item :command="CommandEnum.current" :disabled="!closable">
-          <el-icon><i-ep-close /></el-icon>
+        <ElDropdownItem :command="CommandEnum.current" :disabled="!closable">
+          <ElIcon><IEpClose /></ElIcon>
           关闭标签页
-        </el-dropdown-item>
+        </ElDropdownItem>
 
-        <el-dropdown-item :command="CommandEnum.others" divided>
-          <el-icon><i-ep-switch /></el-icon>
+        <ElDropdownItem :command="CommandEnum.others" divided>
+          <ElIcon><IEpSwitch /></ElIcon>
           关闭其他标签页
-        </el-dropdown-item>
+        </ElDropdownItem>
 
-        <el-dropdown-item :command="CommandEnum.all">
-          <el-icon><i-ep-semi-select /></el-icon>
+        <ElDropdownItem :command="CommandEnum.all">
+          <ElIcon><IEpSemiSelect /></ElIcon>
           关闭全部标签页
-        </el-dropdown-item>
-      </el-dropdown-menu>
+        </ElDropdownItem>
+      </ElDropdownMenu>
     </template>
-  </el-dropdown>
+  </ElDropdown>
 </template>
 
 <script setup lang="ts">
+import type { RouteLocationNormalized } from 'vue-router'
 import { RouteNameEnum } from '@/enums/route'
 import useTabsStore from '@/store/modules/tabs'
-import type { RouteLocationNormalized } from 'vue-router'
+import { useEventListener } from '@vueuse/core'
 
 const props = defineProps<{
   route: RouteLocationNormalized
@@ -72,8 +77,7 @@ async function handleSelect(command: string) {
       },
     })
     tabsStore.addCache(props.route.name as string)
-  }
-  else if (command === CommandEnum.current) {
+  } else if (command === CommandEnum.current) {
     const index = visitedTabList.value.findIndex(i => i.fullPath === fullPath)
     tabsStore.deleteTab(index, props.route.name as string)
 
@@ -83,8 +87,7 @@ async function handleSelect(command: string) {
         router.push(prevTab.fullPath)
       }
     }
-  }
-  else if (command === CommandEnum.others) {
+  } else if (command === CommandEnum.others) {
     tabsStore.resetTabList()
 
     if (isActivated.value) {
@@ -92,8 +95,7 @@ async function handleSelect(command: string) {
     } else {
       router.push(props.route.fullPath)
     }
-  }
-  else if (command === CommandEnum.all) {
+  } else if (command === CommandEnum.all) {
     tabsStore.resetTabList()
     router.push({ name: RouteNameEnum.DASHBOARD })
   }

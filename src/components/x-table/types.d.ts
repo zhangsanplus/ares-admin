@@ -3,8 +3,7 @@ import type { ElTableColumn } from 'element-plus/lib/components/table'
 
 export { }
 
-type ElTableType = InstanceType<typeof ElTable>
-type ElTableProps = ElTableType['$props']
+type ElTableProps = InstanceType<typeof ElTable>['$props']
 type ElTableColumnProps = InstanceType<typeof ElTableColumn>['$props']
 type ElTableSort = Pick<Required<ElTableProps>['defaultSort'], 'prop' | 'order'>
 

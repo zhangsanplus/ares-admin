@@ -1,13 +1,12 @@
 <template>
-  <base-chart :options="options" :style="{ width, height }" />
+  <BaseChart :options="options" :style="{ width, height }" />
 </template>
 
 <script lang="ts" setup>
-import BaseChart from '@/components/base-chart/index.vue'
-import echarts from '@/plugins/echarts'
-import useAppStore from '@/store/modules/app'
 import type { LineChartData } from '@/plugins/echarts'
 import type { EChartsOption, SeriesOption } from 'echarts'
+import BaseChart from '@/components/base-chart.vue'
+import echarts from '@/plugins/echarts'
 
 interface Props {
   height?: string

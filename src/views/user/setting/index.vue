@@ -1,34 +1,57 @@
 <template>
-  <x-card title="个人信息" full>
-    <el-form :model="form" label-width="80px" label-suffix="：" style="max-width: 460px;margin: 50px 0;">
-      <el-form-item label="头像">
-        <el-avatar :size="60">
+  <XCard title="个人信息" full>
+    <XForm
+      v-model="form"
+      :columns="formColumns"
+      :col-props="{
+        span: 24,
+      }"
+      label-width="80px"
+      label-suffix="："
+      style="max-width: 460px;margin: 50px 0;"
+    >
+      <template #avatar>
+        <ElAvatar :size="60">
           <img src="@/assets/avatar.png" alt="">
-        </el-avatar>
-      </el-form-item>
-
-      <el-form-item label="姓名">
-        <el-input v-model="form.username" placeholder="请填写用户姓名" />
-      </el-form-item>
-
-      <el-form-item label="角色">
-        <el-select v-model="form.role" placeholder="请选择用户角色" style="width: 100%;">
-          <el-option label="管理员" :value="1" />
-          <el-option label="普通用户" :value="2" />
-        </el-select>
-      </el-form-item>
-    </el-form>
-  </x-card>
+        </ElAvatar>
+      </template>
+    </XForm>
+  </XCard>
 </template>
 
 <script lang="ts" setup>
 import useUserStore from '@/store/modules/user'
 
-const userStore = useUserStore()
 const form = reactive<Partial<UserType.UserInfo>>({
   username: '',
   role: undefined,
 })
+
+const formColumns = reactive<XFormColumn[]>([
+  {
+    label: '头像',
+    prop: 'avatar',
+    type: 'custom',
+  },
+  {
+    label: '姓名',
+    prop: 'username',
+    type: 'input',
+  },
+  {
+    label: '角色',
+    prop: 'role',
+    type: 'select',
+    props: {
+      options: [
+        { label: '管理员', value: 1 },
+        { label: '普通用户', value: 2 },
+      ],
+    },
+  },
+])
+
+const userStore = useUserStore()
 
 onMounted(() => {
   const userinfo = userStore.userinfo

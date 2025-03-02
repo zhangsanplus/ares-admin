@@ -1,5 +1,5 @@
-import Layout from '@/layout/index.vue'
 import type { RouteRecordRaw } from 'vue-router'
+import Layout from '@/layout/index.vue'
 
 const table: RouteRecordRaw = {
   path: '/table',
@@ -14,10 +14,18 @@ const table: RouteRecordRaw = {
   children: [
     {
       path: '/table/table1',
-      name: 'table',
+      name: 'table1',
       component: () => import('@/views/demo/table/table1.vue'),
       meta: {
         title: '查询表格',
+      },
+    },
+    {
+      path: '/table/table2',
+      name: 'table2',
+      component: () => import('@/views/demo/table/table2.vue'),
+      meta: {
+        title: 'UseTable',
       },
     },
     {
@@ -29,13 +37,14 @@ const table: RouteRecordRaw = {
       },
     },
     {
-      path: '/table/table2',
-      name: 'table2',
-      component: () => import('@/views/demo/table/table2.vue'),
+      path: '/table/form1',
+      name: 'form1',
+      component: () => import('@/views/demo/table/form1.vue'),
       meta: {
-        title: 'UseTable',
+        title: '表单示例',
       },
     },
+
   ],
 }
 

@@ -1,11 +1,8 @@
-// $button-hover: lighten(#165dff, 10%);
-@import 'element-plus/dist/index.css';
-@import 'element-plus/theme-chalk/dark/css-vars.css';
-@import './theme.scss';
+@forward 'element-plus/dist/index.css';
+@forward 'element-plus/theme-chalk/dark/css-vars.css';
+@forward './theme.scss';
 
 .el-button {
-
-  // 长按钮样式
   &[long] {
     width: 100%;
   }
@@ -37,8 +34,4 @@
 .el-table__header-wrapper tr th.el-table-fixed-column--left,
 .el-table__header-wrapper tr th.el-table-fixed-column--right {
   background-color: var(--el-bg-color-overlay);
-}
-
-.el-divider--horizontal {
-  margin: 18px 0;
 }
