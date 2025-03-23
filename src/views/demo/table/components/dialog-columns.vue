@@ -31,6 +31,8 @@
 </template>
 
 <script lang="ts" setup>
+import type { XTableColumn } from '@/components/x-table/types'
+
 interface ModalProps {
   visible: boolean
   columns: XTableColumn[]

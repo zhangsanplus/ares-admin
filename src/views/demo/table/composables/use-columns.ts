@@ -1,3 +1,4 @@
+import type { XTableColumn } from '@/components/x-table/types'
 import { useLocalStorage } from '@vueuse/core'
 import { cloneDeep } from 'lodash-es'
 

@@ -8,13 +8,13 @@
         </template>
       </ElPopover>
     </template>
-
     <XForm
       v-model="formModel"
       :columns="formColumns1"
       label-width="100px"
+      label-suffix=":"
       search
-      @search="handleSubmit"
+      @submit="handleSubmit"
       @reset="handleReset"
     />
   </XCard>
@@ -35,18 +35,21 @@
       search
       search-on-change
       :collapsed-rows="3"
-      @search="handleChange"
+      @submit="handleChange"
       @reset="handleReset"
     />
   </XCard>
 </template>
 
-<script setup lang="ts">
+<script setup lang="tsx">
+import type { XFormColumn } from '@/components/x-form/types'
+import { Location } from '@element-plus/icons-vue'
+
 const formModel = ref({
   name: '',
   phone: '',
   address: '',
-  gender: '',
+  gender: '1',
   city: [],
   age: '',
   date: '',
@@ -107,6 +110,10 @@ const formColumns2: XFormColumn[] = [
     label: '手机号',
     prop: 'phone',
     type: 'input',
+    slots: {
+      prepend: () => '+86',
+      append: () => '后缀',
+    },
   },
   {
     label: '地址',
@@ -128,9 +135,19 @@ const formColumns2: XFormColumn[] = [
         },
       ],
     },
+    slots: {
+      label: option => (
+        <span>
+          <el-icon><Location /></el-icon>
+          {option.label}
+        </span>
+      ),
+    },
   },
   {
-    label: '出生日期',
+    label: () => (
+      <span style="color: red;">出生日期</span>
+    ),
     prop: 'date',
     type: 'date-picker',
   },
@@ -189,6 +206,7 @@ const formColumns2: XFormColumn[] = [
     prop: 'city',
     type: 'checkbox',
     props: {
+      button: true,
       options: [
         {
           label: '上海',
@@ -204,6 +222,11 @@ const formColumns2: XFormColumn[] = [
         },
       ],
     },
+  },
+  {
+    prop: 'divider',
+    type: 'divider',
+    label: '分割线',
   },
   {
     label: '时间',

@@ -69,6 +69,8 @@
 </template>
 
 <script setup lang='ts'>
+import type { XFormColumn } from '@/components/x-form/types'
+import type { XTableChangeData } from '@/components/x-table/types'
 import { getUserList } from '@/api/user'
 import BaseSpace from '@/components/base-space.vue'
 

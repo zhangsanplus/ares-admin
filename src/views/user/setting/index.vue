@@ -20,6 +20,7 @@
 </template>
 
 <script lang="ts" setup>
+import type { XFormColumn } from '@/components/x-form/types'
 import useUserStore from '@/store/modules/user'
 
 const form = reactive<Partial<UserType.UserInfo>>({

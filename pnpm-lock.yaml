@@ -35,6 +35,9 @@ dependencies:
   pinia:
     specifier: ^3.0.1
     version: 3.0.1(typescript@5.8.2)(vue@3.5.13)
+  valr:
+    specifier: ^0.0.2
+    version: 0.0.2
   vue:
     specifier: ^3.5.13
     version: 3.5.13(typescript@5.8.2)
@@ -10266,6 +10269,12 @@ packages:
     dependencies:
       builtins: 1.0.3
     dev: true
+
+  /valr@0.0.2:
+    resolution: {integrity: sha512-1CdpFXw6x7inQFmxuMAR2DtFWk0YCRbnZ4bB9I4aupElb6deUHftbdcBD4EZ8jb9Ucxkus/9ePPbZmP6d1bAcg==}
+    dependencies:
+      async-validator: 4.2.5
+    dev: false
 
   /vfile-location@2.0.6:
     resolution: {integrity: sha512-sSFdyCP3G6Ka0CEmN83A2YCMKIieHx0EDaj5IDP4g1pa5ZJ4FJDvpO0WODLxo4LUX4oe52gmSCK7Jw4SBghqxA==}

@@ -41,6 +41,7 @@
 </template>
 
 <script setup lang='ts'>
+import type { XFormColumn } from '@/components/x-form/types'
 import { getArticleList } from '@/api/article'
 import useTable from '@/composables/use-table'
 

@@ -1,4 +1,5 @@
 import type { PropType } from 'vue'
+import type { XTableChangeData, XTableColumn, XTableData, XTableSort, XTableState } from './types'
 import { ElLoading, ElPagination, ElTable, ElTableColumn } from 'element-plus'
 import './index.scss'
 

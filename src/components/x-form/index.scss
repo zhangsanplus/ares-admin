@@ -1,0 +1,24 @@
+.x-form {
+  .el-form-item {
+    width: 100%;
+    margin-bottom: 18px;
+  }
+
+  .is-suffix-item .el-space {
+    width: 100%;
+  }
+
+  &.x-form-action--right{
+    .el-form-item.is-suffix-item .el-space {
+      justify-content: flex-end;
+    }
+  }
+
+  .el-input,
+  .el-input-number,
+  .el-select,
+  .el-date-editor.el-input,
+  .el-date-editor.el-input__wrapper {
+    width: 100%;
+  }
+}

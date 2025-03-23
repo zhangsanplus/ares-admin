@@ -1,3 +1,5 @@
+import type { XFormColProps, XFormParsedColProps, XFormParsedColumn } from './types'
+
 export const points = ['xs', 'sm', 'md', 'lg', 'xl'] as const
 
 /**
@@ -63,4 +65,24 @@ export function getSumColProps(list: XFormParsedColProps[]) {
     })
     return acc
   }, { xs: 0, sm: 0, md: 0, lg: 0, xl: 0 })
+}
+
+export function mergeProps<T extends Record<string, any>>(props?: T, defaultProps?: T): T | undefined {
+  if (props && defaultProps) return Object.assign({}, defaultProps, props)
+  if (props) return props
+  return defaultProps
+}
+
+export function isColumnVisible(column: XFormParsedColumn, modelValue: any) {
+  if (typeof column.show !== 'undefined') {
+    return typeof column.show === 'function'
+      ? column.show(modelValue)
+      : column.show
+  }
+  if (typeof column.hide !== 'undefined') {
+    return !(typeof column.hide === 'function'
+      ? column.hide(modelValue)
+      : column.hide)
+  }
+  return true
 }
