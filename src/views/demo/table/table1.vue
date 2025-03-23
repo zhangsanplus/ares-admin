@@ -1,89 +1,96 @@
 <template>
   <XCard full title="X-Table 示例">
-    <XForm
-      v-model="queryForm"
-      :columns="formColumns"
-      search
-    />
-    <ElDivider style="margin: 0 0 18px;" />
-    <ElRow style="margin-bottom: 18px;">
-      <ElCol :span="16" :xs="24">
-        <ElButton type="primary">
-          <template #icon>
-            <IEpPlus />
-          </template>
-          新增
-        </ElButton>
-        <ElButton type="info" @click="clearSelection">
-          清除选择
-        </ElButton>
-        <ElButton type="info" @click="resetColumns">
-          重置表头
-        </ElButton>
-      </ElCol>
+    <div class="container">
+      <XForm
+        v-model="queryForm"
+        :columns="formOptions"
+        searchable
+        default-collapsed
+      />
 
-      <ElCol :span="8" :xs="24" style="text-align: right;">
-        <ElButton type="info" @click="showCustomColumn">
-          自定义列
-        </ElButton>
-      </ElCol>
-    </ElRow>
+      <ElDivider style="margin: 0 0 18px;" />
 
-    <XTable
-      ref="tableRef"
-      border
-      :columns="columns"
-      :data-source="tableData"
-      :default-sort="{ prop: 'status', order: 'ascending' }"
-      :total="tableTotal"
-      :page-size="queryForm.pageSize"
-      :page-num="queryForm.pageNum"
-      @change="handleTableChange"
-      @selection-change="handleSelectionChange"
-      @header-dragend="handleHeaderDragend"
-    >
-      <template #status="{ row }">
-        <ElSwitch v-model="row.status" :active-value="1" :inactive-value="0" />
-      </template>
-
-      <template #sex-header>
-        性别
-        <ElTooltip placement="top">
-          <template #content>
-            调整表头列宽度后会自动保存到本地<br>当下次访问时会自动恢复
-          </template>
-          <IEpInfoFilled />
-        </ElTooltip>
-      </template>
-
-      <template #action>
-        <BaseSpace>
-          <ElLink :underline="false" type="primary" @click="handleClick">
+      <ElRow style="margin-bottom: 18px;">
+        <ElCol :span="16" :xs="24">
+          <ElButton type="primary">
+            <template #icon>
+              <IEpPlus />
+            </template>
             新增
-          </ElLink>
-          <ElLink :underline="false" type="primary" @click="handleClick">
-            修改
-          </ElLink>
-          <ElLink :underline="false" type="primary" @click="handleClick">
-            删除
-          </ElLink>
-        </BaseSpace>
-      </template>
+          </ElButton>
+          <ElButton type="info" @click="clearSelection">
+            清除选择
+          </ElButton>
+          <ElButton type="info" @click="resetColumns">
+            重置表头
+          </ElButton>
+        </ElCol>
 
-      <template #append>
-        <div style=" padding: 12px;text-align: center;">
-          好好学习，天天向上
-        </div>
-      </template>
-    </XTable>
+        <ElCol :span="8" :xs="24" style="text-align: right;">
+          <ElButton type="info" @click="showCustomColumn">
+            自定义列
+          </ElButton>
+        </ElCol>
+      </ElRow>
+
+      <XTable
+        ref="tableRef"
+        border
+        class="flex-1"
+        :columns="columns"
+        :data-source="tableData"
+        :default-sort="{ prop: 'status', order: 'ascending' }"
+        :total="tableTotal"
+        :page-size="queryForm.pageSize"
+        :page-num="queryForm.pageNum"
+        @change="handleTableChange"
+        @selection-change="handleSelectionChange"
+        @header-dragend="handleHeaderDragend"
+      >
+        <template #status="{ row }">
+          <ElSwitch v-model="row.status" :active-value="1" :inactive-value="0" />
+        </template>
+
+        <template #sex-header>
+          性别
+          <ElTooltip placement="top">
+            <template #content>
+              调整表头列宽度后会自动保存到本地<br>当下次访问时会自动恢复
+            </template>
+            <IEpInfoFilled />
+          </ElTooltip>
+        </template>
+
+        <template #action>
+          <XSpace>
+            <ElLink :underline="false" type="primary" @click="handleClick">
+              新增
+            </ElLink>
+            <ElLink :underline="false" type="primary" @click="handleClick">
+              修改
+            </ElLink>
+            <ElLink :underline="false" type="primary" @click="handleClick">
+              删除
+            </ElLink>
+          </XSpace>
+        </template>
+
+        <template #append>
+          <div style=" padding: 12px;text-align: center;">
+            好好学习，天天向上
+          </div>
+        </template>
+      </XTable>
+    </div>
   </XCard>
 
   <DialogColumns v-model:visible="dialogVisible" :columns="columns" @change="handleColumnsChange" />
 </template>
 
 <script setup lang='ts'>
+import type { XFormColumn } from '@/components/x-form/types'
+import type { XTableChangeData, XTableColumn, XTableData } from '@/components/x-table/types'
 import { getUserList } from '@/api/user'
-import BaseSpace from '@/components/base-space.vue'
 import DialogColumns from './components/dialog-columns.vue'
 import useColumns from './composables/use-columns'
 
@@ -101,7 +108,7 @@ const queryForm = reactive({
   pageNum: 1,
 })
 
-const formColumns: XFormColumn[] = [
+const formOptions: XFormColumn[] = [
   {
     label: '姓名',
     prop: 'name',
@@ -260,4 +267,16 @@ onMounted(() => {
 })
 </script>
 
-<style lang="scss" scoped></style>
+<style lang="scss" scoped>
+.flex-1 {
+  flex: 1;
+}
+
+@media screen and (width >= 980px) {
+  .container {
+    display: flex;
+    flex-direction: column;
+    height: calc(100vh - 225px);
+  }
+}
+</style>

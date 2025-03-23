@@ -1,3 +1,4 @@
+import type { XTableColumn } from '@/components/x-table/types'
 import { useLocalStorage } from '@vueuse/core'
 import { cloneDeep } from 'lodash-es'
 
@@ -30,11 +31,11 @@ export default function useLocalColumns(key: string, initialValue: XTableColumn[
   const storageValue = useLocalStorage<XTableColumn[]>(`x-cols-${key}`, [])
   const columns = ref(mergeColumn(storageValue.value, initialValue))
 
-  function reset() {
+  const reset = () => {
     columns.value = cloneDeep(initialValue)
   }
 
-  function updateStorageValue() {
+  watchEffect(() => {
     storageValue.value = columns.value.map((i) => {
       return {
         type: i.type,
@@ -43,13 +44,7 @@ export default function useLocalColumns(key: string, initialValue: XTableColumn[
         hidden: i.hidden,
       }
     })
-  }
-
-  watch(
-    columns,
-    () => updateStorageValue(),
-    { deep: true },
-  )
+  })
 
   return {
     columns,

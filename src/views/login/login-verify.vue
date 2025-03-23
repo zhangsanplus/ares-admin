@@ -1,5 +1,5 @@
 <template>
-  <div v-if="modelValue" class="verify-success">
+  <div v-if="isValid " class="verify-success">
     <ElIcon><IEpCheck /></ElIcon>&nbsp;验证通过
   </div>
 
@@ -42,14 +42,9 @@ import img6 from '@/assets/verify/6.jpg'
 import SlideVerify from 'vue3-slide-verify'
 import 'vue3-slide-verify/dist/style.css'
 
-defineProps<{
-  modelValue: boolean
-}>()
-
-const emit = defineEmits<(e: 'update:modelValue', val: boolean) => void>()
-
 const imgs = [img1, img2, img3, img4, img5, img6]
 const block = ref<SlideVerifyInstance>()
+const isValid = defineModel<boolean>()
 const visible = ref(false)
 
 function handleClick() {
@@ -66,7 +61,7 @@ function onAgain() {
 
 function onSuccess(times: number) {
   console.log('耗时 =>', times)
-  emit('update:modelValue', true)
+  isValid.value = true
   visible.value = false
 }
 

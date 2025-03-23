@@ -1,7 +1,7 @@
 <template>
   <XCard>
     <div class="container">
-      <XForm v-model="form" :columns="formColumns">
+      <XForm v-model="form" :columns="formOptions">
         <template #action>
           <ElButton type="primary" @click="query">
             <template #icon>
@@ -41,10 +41,11 @@
 </template>
 
 <script setup lang='ts'>
+import type { XFormColumn } from '@/components/x-form/types'
 import { getArticleList } from '@/api/article'
 import useTable from '@/composables/use-table'
 
-const formColumns = ref<XFormColumn[]>([
+const formOptions = ref<XFormColumn[]>([
   {
     prop: 'title',
     type: 'input',

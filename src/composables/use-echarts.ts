@@ -2,7 +2,7 @@ import echarts from '@/plugins/echarts'
 import useAppStore from '@/store/modules/app'
 import { tryOnScopeDispose, useDebounceFn } from '@vueuse/core'
 
-export default function useECharts(chartRef: Ref<HTMLElement>, setOption: () => void) {
+export default function useECharts(chartRef: Ref<HTMLElement | undefined>, setOption: () => void) {
   const chart = shallowRef<echarts.ECharts | null>(null)
   const appStore = useAppStore()
   const theme = computed(() => (appStore.isDark ? 'dark' : 'light'))

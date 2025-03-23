@@ -1,7 +1,7 @@
 <template>
   <XCard>
     <div class="container">
-      <XForm v-model="queryForm" :columns="formColumns">
+      <XForm v-model="queryForm" :columns="formOptions">
         <template #action>
           <ElButton type="primary" @click="handleQuery">
             <template #icon>
@@ -54,14 +54,14 @@
         </template>
 
         <template #action="{ row }">
-          <BaseSpace>
+          <XSpace>
             <ElLink :underline="false" type="primary" @click="handleCreate">
               修改
             </ElLink>
             <ElLink :underline="false" type="danger" @click="handleDelete(row)">
               删除
             </ElLink>
-          </BaseSpace>
+          </XSpace>
         </template>
       </XTable>
     </div>
@@ -69,8 +69,9 @@
 </template>
 
 <script setup lang='ts'>
+import type { XFormColumn } from '@/components/x-form/types'
+import type { XTableChangeData } from '@/components/x-table/types'
 import { getUserList } from '@/api/user'
-import BaseSpace from '@/components/base-space.vue'
 
 const columns = ref(
   [
@@ -104,7 +105,7 @@ const columns = ref(
   ],
 )
 
-const formColumns = ref<XFormColumn[]>([
+const formOptions = ref<XFormColumn[]>([
   {
     label: '姓名',
     prop: 'name',

@@ -2,32 +2,36 @@
   <XCard title="个人信息" full>
     <XForm
       v-model="form"
-      :columns="formColumns"
-      :col-props="{
-        span: 24,
-      }"
+      :columns="formOptions"
+      :col-props="{ span: 24 }"
       label-width="80px"
       label-suffix="："
       style="max-width: 460px;margin: 50px 0;"
     >
       <template #avatar>
-        <ElAvatar :size="60">
-          <img src="@/assets/avatar.png" alt="">
-        </ElAvatar>
+        <XUpload v-model="form.avatar" accept="image/*" style="cursor: pointer;">
+          <ElAvatar :size="60" :src="img" />
+        </XUpload>
       </template>
     </XForm>
   </XCard>
 </template>
 
 <script lang="ts" setup>
+import type { XFormColumn } from '@/components/x-form/types'
+import avatarImg from '@/assets/avatar.png'
 import useUserStore from '@/store/modules/user'
 
-const form = reactive<Partial<UserType.UserInfo>>({
+const userStore = useUserStore()
+
+const img = ref(avatarImg)
+const form = ref<UserType.UserInfo>({
   username: '',
-  role: undefined,
+  role: 1,
+  avatar: null,
 })
 
-const formColumns = reactive<XFormColumn[]>([
+const formOptions = reactive<XFormColumn[]>([
   {
     label: '头像',
     prop: 'avatar',
@@ -51,11 +55,15 @@ const formColumns = reactive<XFormColumn[]>([
   },
 ])
 
-const userStore = useUserStore()
+watchEffect(() => {
+  if (form.value.avatar) {
+    img.value = URL.createObjectURL(form.value.avatar)
+  }
+})
 
 onMounted(() => {
   const userinfo = userStore.userinfo
-  form.username = userinfo.username
-  form.role = userinfo.role
+  form.value.username = userinfo.username
+  form.value.role = userinfo.role
 })
 </script>

@@ -53,13 +53,14 @@
     "mitt": "^3.0.1",
     "nprogress": "^0.2.0",
     "pinia": "^3.0.1",
+    "valr": "^0.0.4",
     "vue": "^3.5.13",
     "vue-clipboard3": "^2.0.0",
     "vue-router": "^4.5.0",
     "vue3-slide-verify": "^1.1.6"
   },
   "devDependencies": {
-    "@antfu/eslint-config": "^4.3.0",
+    "@antfu/eslint-config": "^4.11.0",
     "@babel/core": "^7.26.9",
     "@commitlint/cli": "^19.7.1",
     "@commitlint/config-conventional": "^19.7.1",

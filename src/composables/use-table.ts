@@ -1,6 +1,6 @@
+import type { XTableChangeData } from '@/components/x-table/types'
 import type { AxiosRequestConfig } from 'axios'
 import { cloneDeep } from 'lodash-es'
-import { computed, onMounted, onUnmounted, ref } from 'vue'
 
 type ExtractServiceParams<T> = T extends (
   params: infer P,

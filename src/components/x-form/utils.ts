@@ -1,66 +1,104 @@
-export const points = ['xs', 'sm', 'md', 'lg', 'xl'] as const
+import type { XFormColProps, XFormParsedColProps, XFormParsedColumn } from './types'
 
 /**
- * @description: 获取实际占有列数
- * @param {number} a 已用列数
- * @param {number} b 期望占有列数
- * @return 实际占有列数
+ * 定义可用的断点
  */
-export function getGreaterSpan(a: number, b: number) {
-  const c = 24 - a % 24 // 可用列数
-  return c < b ? 24 : c // 可用列数小于期望列数时，则占满24列
+export const BREAKPOINTS = ['xs', 'sm', 'md', 'lg', 'xl'] as const
+
+/**
+ * 断点优先级映射表 (从大到小)
+ */
+const BREAKPOINT_PRIORITY: Record<typeof BREAKPOINTS[number], typeof BREAKPOINTS[number][]> = {
+  xl: ['xl'],
+  lg: ['lg', 'xl'],
+  md: ['md', 'lg', 'xl'],
+  sm: ['sm', 'md', 'lg', 'xl'],
+  xs: ['xs', 'sm', 'md', 'lg', 'xl'],
 }
 
 /**
- * @description: 根据断点获取列数
- * @param cols 配置
- * @param point 当前断点
- * @returns 列数
+ * 根据指定断点获取有效列宽
+ * @param columnProps 列配置
+ * @param targetBreakpoint 目标断点
+ * @returns 计算后的列宽数值
  */
-export function getSpanByPoint(
-  cols: XFormColProps,
-  point: keyof XFormParsedColProps,
-): number {
-  const defaultSpan = cols.span || 24
-  switch (point) {
-    case 'xl':
-      return cols.xl ?? defaultSpan
-    case 'lg':
-      return cols.lg ?? cols.xl ?? defaultSpan
-    case 'md':
-      return cols.md ?? cols.lg ?? cols.xl ?? defaultSpan
-    case 'sm':
-      return cols.sm ?? cols.md ?? cols.lg ?? cols.xl ?? defaultSpan
-    default:
-      return cols.xs ?? cols.sm ?? cols.md ?? cols.lg ?? cols.xl ?? defaultSpan
+export function getSpanForBreakpoint(columnProps: XFormColProps, targetBreakpoint: keyof XFormParsedColProps): number {
+  const defaultSpan = columnProps.span ?? 24
+  const cascadingBreakpoints = BREAKPOINT_PRIORITY[targetBreakpoint]
+
+  for (const breakpoint of cascadingBreakpoints) {
+    const spanValue = columnProps[breakpoint]
+    if (spanValue !== undefined) return spanValue
   }
+  return defaultSpan
 }
 
 /**
- * @description: 解析配置，获取每个断点列数
- * @param cols 配置
- * @returns 每个断点列数
+ * 计算实际占用列数，自动处理换行逻辑
+ * @param usedSpan 已使用列数
+ * @param desiredSpan 期望列数
+ * @returns 实际占用列数
  */
-export function normalizeColProps(cols: XFormColProps) {
-  return points.reduce((acc, key) => {
-    acc[key] += getSpanByPoint(cols, key)
-    return acc
+export function calcEffectiveSpan(usedSpan: number, desiredSpan: number) {
+  const availableSpan = 24 - usedSpan % 24
+  return availableSpan < desiredSpan ? 24 : availableSpan
+}
+
+/**
+ * 标准化列配置为全断点格式
+ * @param columnProps 原始列配置
+ * @returns 标准化后的列配置对象
+ */
+export function normalizeColProps(columnProps: XFormColProps): XFormParsedColProps {
+  return BREAKPOINTS.reduce((normalizedProps, breakpoint) => {
+    normalizedProps[breakpoint] = getSpanForBreakpoint(columnProps, breakpoint)
+    return normalizedProps
   }, { xs: 0, sm: 0, md: 0, lg: 0, xl: 0 })
 }
 
 /**
- * @description: 获取每个断点总占列数
- * @param list 配置列表
- * @returns 每个断点总占列数
+ * 计算多列在不同断点的列数总和（考虑自动换行）
+ * @param spans 列配置数组
+ * @returns 各断点总列数对象
  */
-export function getSumColProps(list: XFormParsedColProps[]) {
-  return list.reduce((acc, item) => {
-    points.forEach((point) => {
-      // acc[point] += item[point]
-      // 如果增加的列在当前行放不下，会在下一行显示
-      const ramain = 24 - acc[point] % 24
-      acc[point] += ramain < item[point] ? (ramain + item[point]) : item[point]
+export function getTotalSpans(spans: XFormParsedColProps[]): XFormParsedColProps {
+  return spans.reduce((totalSpans, currentSpan) => {
+    BREAKPOINTS.forEach((breakpoint) => {
+      const remainingSpace = 24 - totalSpans[breakpoint] % 24
+      totalSpans[breakpoint] += remainingSpace < currentSpan[breakpoint]
+        ? (remainingSpace + currentSpan[breakpoint])
+        : currentSpan[breakpoint]
     })
-    return acc
+    return totalSpans
   }, { xs: 0, sm: 0, md: 0, lg: 0, xl: 0 })
+}
+
+/**
+ * @description: 合并props
+ * @param props 组件props
+ * @param defaultProps 默认props
+ * @returns 合并后的props
+ */
+export function mergeProps<T>(props: T, defaultProps?: T): T {
+  return props && defaultProps ? { ...defaultProps, ...props } : props
+}
+
+/**
+ * @description: 判断列是否可见
+ * @param column 列配置
+ * @param modelValue 表单值
+ * @returns 列是否可见
+ */
+export function isColumnVisible(column: XFormParsedColumn, modelValue: any): boolean {
+  if ('show' in column) {
+    return typeof column.show === 'function'
+      ? column.show(modelValue)
+      : column.show === undefined ? true : column.show
+  }
+  if ('hide' in column) {
+    return typeof column.hide === 'function'
+      ? !column.hide(modelValue)
+      : column.hide === undefined ? false : !column.hide
+  }
+  return true
 }

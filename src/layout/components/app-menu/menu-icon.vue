@@ -8,6 +8,7 @@
 import MenuDashboard from '~icons/custom-menu/dashboard'
 import MenuDirective from '~icons/custom-menu/directive'
 import MenuException from '~icons/custom-menu/exception'
+import MenuForm from '~icons/custom-menu/form'
 import MenuLink from '~icons/custom-menu/link'
 import MenuNest from '~icons/custom-menu/nest'
 import MenuRoute from '~icons/custom-menu/route'
@@ -27,7 +28,12 @@ const icons: Record<string, any> = {
   'menu-route': MenuRoute,
   'menu-table': MenuTable,
   'menu-user': MenuUser,
+  'menu-form': MenuForm,
 }
 
 const icon = icons[props.name]
+
+if (!icon) {
+  console.error(`请检查 [menu-icon.vue] 组件是否配置了 [${props.name}] 图标`)
+}
 </script>

@@ -7,7 +7,7 @@ const table: RouteRecordRaw = {
   component: Layout,
   redirect: '/table/table1',
   meta: {
-    title: '表单表格',
+    title: '表格组件',
     icon: 'menu-table',
     order: 79,
   },
@@ -36,15 +36,6 @@ const table: RouteRecordRaw = {
         title: '表格示例',
       },
     },
-    {
-      path: '/table/form1',
-      name: 'form1',
-      component: () => import('@/views/demo/table/form1.vue'),
-      meta: {
-        title: '表单示例',
-      },
-    },
-
   ],
 }
 
