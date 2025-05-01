@@ -1,8 +1,8 @@
+import { tryOnScopeDispose, useDebounceFn, useEventListener } from '@vueuse/core'
 import echarts from '@/plugins/echarts'
 import useAppStore from '@/store/modules/app'
-import { tryOnScopeDispose, useDebounceFn } from '@vueuse/core'
 
-export default function useECharts(chartRef: Ref<HTMLElement>, setOption: () => void) {
+export default function useECharts(chartRef: Ref<HTMLElement | undefined>, onReady: () => void) {
   const chart = shallowRef<echarts.ECharts | null>(null)
   const appStore = useAppStore()
   const theme = computed(() => (appStore.isDark ? 'dark' : 'light'))
@@ -10,22 +10,41 @@ export default function useECharts(chartRef: Ref<HTMLElement>, setOption: () => 
 
   const resizeFn = useDebounceFn(resizeChart, 200)
 
-  watch(collapsed, () => {
-    setTimeout(resizeFn, 300) // 等左侧菜单动画结束
-  })
+  watch(
+    chartRef,
+    () => refreshChart(),
+    {
+      immediate: true,
+      flush: 'post',
+    },
+  )
 
-  watch(theme, refreshChart)
+  watch(
+    theme,
+    () => refreshChart(),
+  )
+
+  watch(
+    collapsed,
+    () => {
+      // 等左侧菜单动画结束
+      setTimeout(resizeFn, 300)
+    },
+  )
 
   function initChart() {
     const el = chartRef.value
-    if (el) {
+    if (el && !chart.value) {
       chart.value = echarts.init(el, theme.value)
-      setOption()
+      onReady?.()
     }
   }
 
   function refreshChart() {
-    chart.value?.dispose()
+    if (chart.value) {
+      chart.value.dispose()
+      chart.value = null
+    }
     initChart()
   }
 
@@ -33,23 +52,21 @@ export default function useECharts(chartRef: Ref<HTMLElement>, setOption: () => 
     chart.value?.resize()
   }
 
-  onActivated(refreshChart)
+  useEventListener('resize', resizeFn)
 
-  onMounted(() => {
-    initChart()
-    window.addEventListener('resize', resizeFn)
-  })
+  onActivated(refreshChart)
 
   tryOnScopeDispose(() => {
     if (chart.value) {
       chart.value.dispose()
       chart.value = null
     }
-    window.removeEventListener('resize', resizeFn)
   })
 
   return {
     echarts,
     chart,
+    refreshChart,
+    initChart,
   }
 }

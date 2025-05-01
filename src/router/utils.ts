@@ -23,7 +23,7 @@ function getMenuItem(route: RouteRecordRaw): MenuItem {
     return {
       path: _route.path,
       meta: _route.meta,
-      children: _route.children,
+      children: _route.children?.map(getMenuItem) || [],
     }
   }
 

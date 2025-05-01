@@ -10,8 +10,8 @@
 .app-footer {
   display: flex;
   justify-content: center;
-  padding-top: var(--app-margin);
+  align-items: center;
+  height: var(--app-footer-height);
   color: var(--el-text-color-disabled);
-  line-height: calc(var(--app-footer-height) - var(--app-margin));
 }
 </style>

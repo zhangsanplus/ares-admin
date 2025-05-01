@@ -1,17 +1,17 @@
 import type { AxiosRequestConfig } from 'axios'
+import type { XTableChangeData } from '@/components/x-table/types'
 import { cloneDeep } from 'lodash-es'
-import { computed, onMounted, onUnmounted, ref } from 'vue'
 
 type ExtractServiceParams<T> = T extends (
   params: infer P,
-  config?: AxiosRequestConfig
+  config?: AxiosRequestConfig,
 ) => any
   ? Omit<P, keyof PagingRequest>
   : never
 
 type ExtractServiceData<T> = T extends (
   params: any,
-  config?: AxiosRequestConfig
+  config?: AxiosRequestConfig,
 ) => Promise<HttpResponse<infer P>>
   ? P extends PagingResult<infer Q>
     ? Q
@@ -26,7 +26,7 @@ type TableServiceResponse<TDataItem> = HttpResponse<PagingResult<TDataItem[]> | 
 // 请求函数
 type UseTableService<TDataItem, TParams> = (
   params: TParams,
-  config?: AxiosRequestConfig
+  config?: AxiosRequestConfig,
 ) => Promise<TableServiceResponse<TDataItem>>
 
 // 配置项

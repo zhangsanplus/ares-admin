@@ -1,5 +1,5 @@
 <template>
-  <div class="wrapper">
+  <div class="analysis-page">
     <XCard title="实时数据">
       <template #header-right>
         <ElButton type="primary" text @click="handleClick">
@@ -101,7 +101,7 @@ onMounted(() => {
 </script>
 
 <style lang="scss" scoped>
-.wrapper {
+.analysis-page {
   width: 100%;
 
   .x-card {

@@ -31,8 +31,9 @@
 </template>
 
 <script lang="ts" setup>
+import type { XTableColumn } from '@/components/x-table/types'
+
 interface ModalProps {
-  visible: boolean
   columns: XTableColumn[]
 }
 
@@ -40,37 +41,25 @@ type XCustomColumn = XTableColumn & {
   show: boolean
 }
 
-const props = withDefaults(defineProps<ModalProps>(), {
-  visible: false,
-})
+const props = defineProps<ModalProps>()
 
 const emit = defineEmits<{
-  (e: 'update:visible', value: boolean): void
-  (e: 'visibleChange', value: boolean): void
   (e: 'change', value: XTableColumn[]): void
 }>()
 
-const dialogVisible = computed({
-  get: () => props.visible,
-  set: (val) => {
-    emit('update:visible', val)
-    emit('visibleChange', val)
-  },
+const dialogVisible = defineModel('visible', {
+  type: Boolean,
+  default: false,
 })
 
 const items = ref<XCustomColumn[]>([])
 
-watch(
-  () => props.visible,
-  (value) => {
-    if (value) {
-      items.value = props.columns.map(i => ({
-        ...i,
-        show: !i.hidden,
-      }))
-    }
-  },
-)
+watchEffect(() => {
+  items.value = props.columns.map(i => ({
+    ...i,
+    show: !i.hidden,
+  }))
+})
 
 function handleConfirm() {
   const data = items.value.map((i) => {

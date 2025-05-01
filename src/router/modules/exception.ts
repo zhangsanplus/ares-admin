@@ -1,5 +1,5 @@
 import type { RouteRecordRaw } from 'vue-router'
-import { RouteNameEnum } from '@/enums/route'
+import { ROUTE_NAME_ENUM } from '@/constants'
 import Layout from '@/layout/index.vue'
 
 const exception: RouteRecordRaw = {
@@ -15,7 +15,7 @@ const exception: RouteRecordRaw = {
   children: [
     {
       path: '/exception/404',
-      name: RouteNameEnum.NOT_FOUND,
+      name: ROUTE_NAME_ENUM.NOT_FOUND,
       component: () => import('@/views/exception/404.vue'),
       meta: {
         title: '404',
@@ -23,7 +23,7 @@ const exception: RouteRecordRaw = {
     },
     {
       path: '/exception/403',
-      name: RouteNameEnum.FORBIDDEN,
+      name: ROUTE_NAME_ENUM.FORBIDDEN,
       component: () => import('@/views/exception/403.vue'),
       meta: {
         title: '403',

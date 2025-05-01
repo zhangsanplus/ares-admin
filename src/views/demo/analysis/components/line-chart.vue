@@ -3,8 +3,8 @@
 </template>
 
 <script lang="ts" setup>
-import type { LineChartData } from '@/plugins/echarts'
 import type { EChartsOption, SeriesOption } from 'echarts'
+import type { LineChartData } from '@/plugins/echarts'
 import BaseChart from '@/components/base-chart.vue'
 import echarts from '@/plugins/echarts'
 

@@ -1,5 +1,5 @@
 /**
- * 图片压缩
+ * 图片压缩示例
  * 该插件国内安装容易失败,有需要再开启
  * https://github.com/anncwb/vite-plugin-imagemin
  */

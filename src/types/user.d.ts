@@ -30,7 +30,8 @@ declare namespace UserType {
   interface UserInfo {
     username: string
     role: number
-    authList: string[]
+    avatar?: File | null
+    authList?: string[]
   }
 
   interface MenuItem {

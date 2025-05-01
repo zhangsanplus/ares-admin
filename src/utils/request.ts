@@ -1,6 +1,6 @@
 import type { AxiosInstance, AxiosRequestConfig, InternalAxiosRequestConfig } from 'axios'
-import useUserStore from '@/store/modules/user'
 import axios from 'axios'
+import useUserStore from '@/store/modules/user'
 
 const URL = import.meta.env.VITE_API_BASE_URL
 const config = {

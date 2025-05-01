@@ -3,8 +3,8 @@
 </template>
 
 <script lang="ts" setup>
-import type { PieChartData } from '@/plugins/echarts'
 import type { EChartsOption } from 'echarts'
+import type { PieChartData } from '@/plugins/echarts'
 import BaseChart from '@/components/base-chart.vue'
 
 interface Props {

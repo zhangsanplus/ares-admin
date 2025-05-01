@@ -25,8 +25,8 @@ export class WebSocketClient {
   private autoReconnect: boolean = true
   private reconnectAttempts: number = 0
   private messageQueue: any[] = []
-  private heartbeatTimer: NodeJS.Timeout | null = null
-  private reconnectTimer: NodeJS.Timeout | null = null
+  private heartbeatTimer: ReturnType<typeof setTimeout> | null = null
+  private reconnectTimer: ReturnType<typeof setTimeout> | null = null
 
   // Event handlers
   onmessage?: (message: any) => void
@@ -89,8 +89,9 @@ export class WebSocketClient {
   }
 
   private handleMessage(event: MessageEvent) {
-    const message = this.options.deserialize(event.data)
-    if (event.data === this.options.heartbeatMessage) {
+    const { serialize, deserialize, heartbeatMessage } = this.options
+    const message = deserialize(event.data)
+    if (event.data === serialize(heartbeatMessage)) {
       console.info('[WebSocket Client]: Received pong from server.')
     } else {
       this.onmessage?.(message)
@@ -100,12 +101,13 @@ export class WebSocketClient {
   private handleClose(event: CloseEvent) {
     this.status = ConnectionStatus.DISCONNECTED
     this.stopHeartbeat()
-    if (this.autoReconnect && this.reconnectAttempts < this.options.maxReconnectAttempts) {
+    const { maxReconnectAttempts, reconnectInterval } = this.options
+    if (this.autoReconnect && this.reconnectAttempts < maxReconnectAttempts) {
       this.reconnectTimer = setTimeout(() => {
         this.reconnectAttempts++
         this.reconnect()
         console.log(`[WebSocket Client]: Reconnecting attempt ${this.reconnectAttempts}...`)
-      }, this.options.reconnectInterval)
+      }, reconnectInterval)
     } else {
       console.error('[WebSocket Client]: WebSocket closed and reconnection attempts exhausted.')
     }

@@ -1,12 +1,14 @@
 <template>
-  <div v-if="modelValue" class="verify-success">
-    <ElIcon><IEpCheck /></ElIcon>&nbsp;验证通过
+  <div v-if="isValid" class="verify-success">
+    <ElIcon>
+      <IEpCheck />
+    </ElIcon>&nbsp;验证通过
   </div>
 
   <ElButton
     v-else
     type="info"
-    long
+    class="w-full"
     @click="handleClick"
   >
     <template #icon>
@@ -23,7 +25,6 @@
       :h="220"
       :imgs="imgs"
       :show="false"
-      class="slide-verify-custom"
       @again="onAgain"
       @success="onSuccess"
       @fail="onFail"
@@ -33,23 +34,18 @@
 
 <script setup lang="ts">
 import type { SlideVerifyInstance } from 'vue3-slide-verify'
+import SlideVerify from 'vue3-slide-verify'
 import img1 from '@/assets/verify/1.jpg'
 import img2 from '@/assets/verify/2.jpg'
 import img3 from '@/assets/verify/3.jpg'
 import img4 from '@/assets/verify/4.jpg'
 import img5 from '@/assets/verify/5.jpg'
 import img6 from '@/assets/verify/6.jpg'
-import SlideVerify from 'vue3-slide-verify'
-import 'vue3-slide-verify/dist/style.css'
-
-defineProps<{
-  modelValue: boolean
-}>()
-
-const emit = defineEmits<(e: 'update:modelValue', val: boolean) => void>()
+import './slide-verify.scss'
 
 const imgs = [img1, img2, img3, img4, img5, img6]
 const block = ref<SlideVerifyInstance>()
+const isValid = defineModel<boolean>()
 const visible = ref(false)
 
 function handleClick() {
@@ -66,7 +62,7 @@ function onAgain() {
 
 function onSuccess(times: number) {
   console.log('耗时 =>', times)
-  emit('update:modelValue', true)
+  isValid.value = true
   visible.value = false
 }
 
@@ -78,43 +74,6 @@ defineExpose({ visible })
 </script>
 
 <style lang="scss">
-.slide-verify-custom {
-  .slide-verify-slider {
-    color: var(--el-text-color-regular);
-    background: var(--el-fill-color-light);
-    border: 1px solid var(--el-border-color);
-  }
-
-  .slide-verify-slider-text {
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    pointer-events: none;
-  }
-
-  .slide-verify-slider-mask {
-    position: static;
-    height: 38px;
-  }
-
-  .slide-verify-slider-mask-item {
-    top: 0 !important;
-    height: 38px;
-    background: var(--el-fill-color);
-
-    .iconfont {
-      color: var(--el-text-color-secondary);
-      font-size: 28px;
-    }
-
-    &:hover .iconfont {
-      color: var(--el-color-white);
-    }
-  }
-}
-
 .verify-success {
   display: flex;
   align-items: center;

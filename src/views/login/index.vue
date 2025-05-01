@@ -1,5 +1,15 @@
 <template>
-  <div class="login-container">
+  <div class="login-page">
+    <ElSwitch
+      :model-value="appStore.isDark"
+      inline-prompt
+      :active-value="true"
+      :inactive-value="false"
+      :active-icon="Sunny"
+      :inactive-icon="Moon"
+      class="login-switch"
+      @change="appStore.toggleDark"
+    />
     <div class="login-wrapper">
       <div class="login-banner" />
       <div class="login-form">
@@ -50,7 +60,7 @@
                 label="记住密码"
               />
 
-              <ElLink type="primary" :underline="false">
+              <ElLink type="primary" underline="never" @click="handleAlert">
                 忘记密码
               </ElLink>
             </ElRow>
@@ -58,14 +68,14 @@
 
           <ElSpace direction="vertical" fill style="width: 100%;">
             <ElButton
-              long
+              class="w-full"
               type="primary"
               :loading="loading"
               @click="handleSubmit"
             >
               登录
             </ElButton>
-            <ElButton long text>
+            <ElButton class="w-full" text @click="handleAlert">
               注册账号
             </ElButton>
           </ElSpace>
@@ -77,9 +87,10 @@
 
 <script setup lang="ts">
 import type { FormInstance } from 'element-plus'
+import { Moon, Sunny } from '@element-plus/icons-vue'
+import { useStorage } from '@vueuse/core'
 import useAppStore from '@/store/modules/app'
 import useUserStore from '@/store/modules/user'
-import { useStorage } from '@vueuse/core'
 import LoginVerify from './login-verify.vue'
 
 const rules = {
@@ -151,11 +162,15 @@ function handleSubmit() {
     onLogin()
   })
 }
+
+function handleAlert() {
+  ElMessage.warning('功能开发中...')
+}
 </script>
 
 <style lang="scss">
 .login {
-  &-container {
+  &-page {
     display: flex;
     align-items: center;
     justify-content: center;
@@ -206,6 +221,17 @@ function handleSubmit() {
     margin-bottom: 50px;
     font-size: 24px;
     text-align: center;
+  }
+
+  &-switch {
+    position: absolute;
+    top: 20px;
+    right: 20px;
+
+    &.is-checked .el-switch__core {
+      background-color: var(--el-fill-color);
+      border-color: var(--el-fill-color);
+    }
   }
 }
 

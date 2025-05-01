@@ -1,8 +1,8 @@
+import { useStorage } from '@vueuse/core'
 import * as userApi from '@/api/user'
-import { RouteNameEnum } from '@/enums/route'
+import { ROUTE_NAME_ENUM } from '@/constants'
 import { generateRoutes } from '@/router/utils'
 import defaultSetting from '@/settings'
-import { useStorage } from '@vueuse/core'
 
 const { storagePrefix } = defaultSetting
 const useUserStore = defineStore('user', () => {
@@ -64,7 +64,7 @@ const useUserStore = defineStore('user', () => {
     isMenuLoaded.value = false
     menulist.value = []
     userinfo.value = {} as any
-    router.replace({ name: RouteNameEnum.LOGIN })
+    router.replace({ name: ROUTE_NAME_ENUM.LOGIN })
   }
 
   return {

@@ -1,6 +1,7 @@
 /**
  * @name AutoImportDeps
  * @description 按需加载，自动引入
+ * TODO: TSX 中无法自动导入 Element Plus 组件，需要手动导入
  */
 import AutoImport from 'unplugin-auto-import/vite'
 import { FileSystemIconLoader } from 'unplugin-icons/loaders'
@@ -11,37 +12,29 @@ import Components from 'unplugin-vue-components/vite'
 
 export function configUnplugin() {
   return [
+    // 自动导入函数、指令等
     AutoImport({
       resolvers: [
-        // 自动导入 Element Plus 相关函数，如：ElMessage, ElMessageBox...
-        ElementPlusResolver({
-          importStyle: false,
-        }),
+        ElementPlusResolver({ importStyle: false }),
       ],
-      // 自动导入 Vue 相关函数，如：ref, reactive, toRef 等
-      imports: [
-        'vue',
-        'vue-router',
-        'pinia',
-      ],
+      dirs: ['src/composables'],
+      imports: ['vue', 'vue-router', 'pinia'],
       dts: 'types/auto-imports.d.ts',
     }),
+
+    // 自动导入组件
     Components({
+      resolvers: [
+        ElementPlusResolver({ importStyle: false }),
+        IconsResolver({
+          enabledCollections: ['ep'],
+          customCollections: ['custom'],
+        }),
+      ],
       // dirs: [], // 避免解析到src/components
       dirs: ['src/components/x-*'],
       extensions: ['vue', 'tsx'],
       deep: false,
-      resolvers: [
-        // 自动导入 Element Plus 组件
-        ElementPlusResolver({
-          importStyle: false,
-        }),
-        // 自动注册图标组件
-        IconsResolver({
-          enabledCollections: ['ep'],
-          customCollections: ['custom', 'custom-menu'],
-        }),
-      ],
       dts: 'types/components.d.ts',
     }),
 

@@ -19,7 +19,7 @@
 
 <script setup lang="ts" name="app-sub-item">
 import type { MenuItem } from 'vue-router'
-import { RouteNameEnum } from '@/enums/route'
+import { ROUTE_NAME_ENUM } from '@/constants'
 import { isExternal } from '@/utils/is'
 import MenuIcon from './menu-icon.vue'
 
@@ -39,7 +39,7 @@ function handleClick(path: string) {
     window.open(path, '_blank', 'noopener,noreferrer')
   } else if (fullPath === path) {
     router.replace({
-      name: RouteNameEnum.REDIRECT,
+      name: ROUTE_NAME_ENUM.REDIRECT,
       params: { path: fullPath },
     })
   } else {

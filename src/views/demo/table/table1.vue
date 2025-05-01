@@ -1,11 +1,14 @@
 <template>
-  <XCard full title="X-Table 示例">
+  <XCard title="X-Table 示例" fullpage>
     <XForm
       v-model="queryForm"
-      :columns="formColumns"
-      search
+      :columns="formOptions"
+      searchable
+      default-collapsed
     />
+
     <ElDivider style="margin: 0 0 18px;" />
+
     <ElRow style="margin-bottom: 18px;">
       <ElCol :span="16" :xs="24">
         <ElButton type="primary">
@@ -32,6 +35,7 @@
     <XTable
       ref="tableRef"
       border
+      class="flex-1"
       :columns="columns"
       :data-source="tableData"
       :default-sort="{ prop: 'status', order: 'ascending' }"
@@ -57,17 +61,17 @@
       </template>
 
       <template #action>
-        <BaseSpace>
-          <ElLink :underline="false" type="primary" @click="handleClick">
+        <XSpace>
+          <ElLink underline="never" type="primary" @click="handleClick">
             新增
           </ElLink>
-          <ElLink :underline="false" type="primary" @click="handleClick">
+          <ElLink underline="never" type="primary" @click="handleClick">
             修改
           </ElLink>
-          <ElLink :underline="false" type="primary" @click="handleClick">
+          <ElLink underline="never" type="primary" @click="handleClick">
             删除
           </ElLink>
-        </BaseSpace>
+        </XSpace>
       </template>
 
       <template #append>
@@ -82,8 +86,9 @@
 </template>
 
 <script setup lang='ts'>
+import type { XFormColumn } from '@/components/x-form/types'
+import type { XTableChangeData, XTableColumn, XTableData } from '@/components/x-table/types'
 import { getUserList } from '@/api/user'
-import BaseSpace from '@/components/base-space.vue'
 import DialogColumns from './components/dialog-columns.vue'
 import useColumns from './composables/use-columns'
 
@@ -101,7 +106,7 @@ const queryForm = reactive({
   pageNum: 1,
 })
 
-const formColumns: XFormColumn[] = [
+const formOptions: XFormColumn[] = [
   {
     label: '姓名',
     prop: 'name',
@@ -260,4 +265,8 @@ onMounted(() => {
 })
 </script>
 
-<style lang="scss" scoped></style>
+<style lang="scss" scoped>
+.flex-1 {
+  flex: 1;
+}
+</style>

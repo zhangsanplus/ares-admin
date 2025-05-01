@@ -1,5 +1,5 @@
 import type { RouteRecordRaw } from 'vue-router'
-import { HOME_ROUTE_INFO, RouteNameEnum } from '@/enums/route'
+import { HOME_ROUTE_INFO, ROUTE_NAME_ENUM } from '@/constants'
 import Layout from '@/layout/index.vue'
 
 const BASE_ROUTE: RouteRecordRaw = {
@@ -15,7 +15,7 @@ const BASE_ROUTE: RouteRecordRaw = {
     },
     {
       path: '/redirect/:path(.*)',
-      name: RouteNameEnum.REDIRECT,
+      name: ROUTE_NAME_ENUM.REDIRECT,
       component: () => import('@/views/redirect/index.vue'),
       meta: {
         title: 'Redirect',
@@ -27,19 +27,10 @@ const BASE_ROUTE: RouteRecordRaw = {
 
 const LOGIN_ROUTE: RouteRecordRaw = {
   path: '/login',
-  name: RouteNameEnum.LOGIN,
+  name: ROUTE_NAME_ENUM.LOGIN,
   component: () => import('@/views/login/index.vue'),
   meta: {
     title: '登录',
-    hideMenu: true,
-  },
-}
-
-export const NOT_FOUND_ROUTE: RouteRecordRaw = {
-  path: '/:pathMatch(.*)*',
-  name: 'pathMatch',
-  redirect: '/exception/404',
-  meta: {
     hideMenu: true,
   },
 }

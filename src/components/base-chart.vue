@@ -12,8 +12,8 @@ interface Props {
 
 const props = defineProps<Props>()
 
-const chartRef = ref<HTMLElement | null>(null)
-const { chart } = useECharts(chartRef as Ref<HTMLElement>, setOptions)
+const chartRef = ref<HTMLElement>()
+const { chart } = useECharts(chartRef, setOptions)
 
 watch(
   () => props.options,
@@ -24,6 +24,4 @@ watch(
 function setOptions() {
   chart.value?.setOption(props.options, true)
 }
-
-onMounted(setOptions)
 </script>

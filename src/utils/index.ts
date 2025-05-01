@@ -1,4 +1,4 @@
-import useClipboard from 'vue-clipboard3'
+import { useClipboard } from '@vueuse/core'
 
 /**
  * 空函数
@@ -15,17 +15,16 @@ export function sleep(ms: number) {
 /**
  * 文本复制
  */
-export function copyText(text: string | number, showToast = true) {
-  const { toClipboard } = useClipboard()
-  toClipboard(`${text}`)
-    .then(() => {
-      if (showToast) {
-        ElMessage.success('复制成功')
-      }
-    })
-    .catch((error: Error) => {
-      console.error('copy', error)
-    })
+export async function copyText(text: string | number, showToast = true) {
+  const { copy } = useClipboard()
+  try {
+    await copy(`${text}`)
+    if (showToast) {
+      ElMessage.success('复制成功')
+    }
+  } catch (error) {
+    console.error('copy', error)
+  }
 }
 
 /**

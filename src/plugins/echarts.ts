@@ -1,5 +1,3 @@
-import darkTheme from '@/assets/echarts/dark'
-import lightTheme from '@/assets/echarts/light'
 import { BarChart, LineChart, PieChart } from 'echarts/charts'
 import {
   DatasetComponent,
@@ -10,6 +8,8 @@ import {
 } from 'echarts/components'
 import * as echarts from 'echarts/core'
 import { CanvasRenderer } from 'echarts/renderers'
+import darkTheme from '@/assets/echarts/dark'
+import lightTheme from '@/assets/echarts/light'
 
 echarts.registerTheme('light', lightTheme)
 echarts.registerTheme('dark', darkTheme)

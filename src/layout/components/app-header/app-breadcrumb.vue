@@ -9,15 +9,15 @@
 
 <script setup lang="ts">
 import type { RouteLocationMatched } from 'vue-router'
-import { HOME_ROUTE_INFO, RouteNameEnum } from '@/enums/route'
 import { ArrowRight } from '@element-plus/icons-vue'
+import { HOME_ROUTE_INFO, ROUTE_NAME_ENUM } from '@/constants'
 
 const router = useRouter()
 const currentRoute = useRoute()
 const breadcrumbs = ref<RouteLocationMatched[]>([])
 
 function isDashboard(route: RouteLocationMatched) {
-  return route.name === RouteNameEnum.DASHBOARD
+  return route.name === ROUTE_NAME_ENUM.DASHBOARD
 }
 
 function getBreadcrumb() {

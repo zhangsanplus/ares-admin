@@ -1,5 +1,5 @@
 <template>
-  <div class="app-layout" :class="{ 'is-mobile': hideMenu }" :style="layoutStyle">
+  <div class="app-layout has-footer" :class="{ 'is-mobile': hideMenu }" :style="layoutStyle">
     <ElDrawer
       v-if="hideMenu"
       direction="ltr"
@@ -34,8 +34,8 @@
 </template>
 
 <script setup lang="ts">
-import useAppStore from '@/store/modules/app'
 import { useDebounceFn } from '@vueuse/core'
+import useAppStore from '@/store/modules/app'
 import BlankLayout from './blank-layout.vue'
 import AppFooter from './components/app-footer/index.vue'
 import AppHeader from './components/app-header/index.vue'
@@ -77,11 +77,8 @@ onBeforeUnmount(() => {
 
 <style lang="scss">
 .app-layout {
-  height: 100%;
-
   --app-navbar-height: 50px;
-  --app-footer-height: 40px;
-  --app-main-height: calc(100vh - var(--app-margin) * 2 - var(--app-navbar-height) - var(--app-tabs-height) - var(--app-footer-height));
+  height: 100%;
 
   &.is-mobile {
     .app-layout-content {
@@ -89,43 +86,54 @@ onBeforeUnmount(() => {
     }
   }
 
-  &-content {
-    padding-left: var(--app-aside-width);
-    transition: padding .3s ease-in-out;
-  }
+  &.has-footer {
+    --app-footer-height: 42px;
+    --app-main-height: calc(100vh - var(--app-navbar-height) - var(--app-tabs-height));
 
-  &-drawer {
-    .el-drawer__body {
-      height: 100vh;
-      padding: 0;
-    }
-
-    .app-menu {
-      border-right: 0;
+    .app-layout-main {
+      min-height: var(--app-main-height);
+      padding-bottom: 0;
     }
   }
+}
 
-  &-sider {
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: var(--app-aside-width);
+.app-layout-content {
+  height: 100%;
+  padding-left: var(--app-aside-width);
+  transition: padding .3s ease-in-out;
+}
+
+.app-layout-drawer {
+  .el-drawer__body {
     height: 100vh;
-    background-color: var(--el-bg-color-overlay);
-    transition: width .3s ease-in-out;
+    padding: 0;
   }
 
-  &-header {
-    position: sticky;
-    top: 0;
-    z-index: 10;
-    background-color: var(--el-bg-color-overlay);
-    border-bottom: 1px solid  var(--app-card-border);
-    box-shadow: 3px 3px 4px 0 var(--app-card-shadow);
+  .app-menu {
+    border-right: 0;
   }
+}
 
-  &-main {
-    padding: var(--app-margin);
-  }
+.app-layout-sider {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: var(--app-aside-width);
+  height: 100vh;
+  background-color: var(--el-bg-color-overlay);
+  transition: width .3s ease-in-out;
+}
+
+.app-layout-header {
+  position: sticky;
+  top: 0;
+  z-index: 10;
+  background-color: var(--el-bg-color-overlay);
+  border-bottom: 1px solid var(--app-card-border);
+  box-shadow: 3px 3px 4px 0 var(--app-card-shadow);
+}
+
+.app-layout-main {
+  padding: var(--app-margin);
 }
 </style>

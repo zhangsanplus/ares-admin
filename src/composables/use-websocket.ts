@@ -1,6 +1,6 @@
 import type { WebSocketOptions } from '@/plugins/websocket'
-import { WebSocketClient } from '@/plugins/websocket'
 import { createEventHook, tryOnScopeDispose } from '@vueuse/core'
+import { WebSocketClient } from '@/plugins/websocket'
 
 interface WebSocketParams {
   [key: string]: any

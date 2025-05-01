@@ -1,6 +1,6 @@
 <template>
-  <div class="x-card" :class="{ 'is-full': full }">
-    <div v-if="title || $slots.title || $slots.right" class="x-card-header">
+  <div class="x-card" :class="{ 'x-card--fullpage': fullpage, 'x-card--header': showHeader }">
+    <div v-if="showHeader" class="x-card-header">
       <h3 v-if="title || $slots.title">
         <slot name="title">
           {{ title }}
@@ -16,10 +16,15 @@
 </template>
 
 <script setup lang="ts">
-defineProps<{
+const props = defineProps<{
   title?: string
-  full?: boolean
+  fullpage?: boolean
 }>()
+
+const slots = useSlots()
+const showHeader = computed(() => {
+  return props.title || slots.title || slots.right
+})
 </script>
 
 <style lang="scss">
@@ -29,12 +34,17 @@ defineProps<{
   border: 1px solid var(--app-card-border);
   border-radius: 4px;
 
-  &.is-full {
-    min-height: var(--app-main-height);
-  }
+  &.x-card--fullpage {
+    display: flex;
+    flex-direction: column;
+    height: calc(var(--app-main-height) - var(--app-margin) - var(--app-footer-height));
 
-  &+& {
-    margin-top: var(--app-margin);
+    .x-card-content {
+      display: flex;
+      flex-direction: column;
+      flex: 1;
+      min-height: 1px;
+    }
   }
 
   &-header {
@@ -67,6 +77,10 @@ defineProps<{
 
   &-content {
     position: relative;
+  }
+
+  &+& {
+    margin-top: var(--app-margin);
   }
 }
 </style>

@@ -1,8 +1,7 @@
-import type { Router } from 'vue-router'
-import { RouteNameEnum } from '@/enums/route'
-import useUserStore from '@/store/modules/user'
+import type { Router, RouteRecordRaw } from 'vue-router'
 import NProgress from 'nprogress'
-import { NOT_FOUND_ROUTE } from './routes'
+import { ROUTE_NAME_ENUM } from '@/constants'
+import useUserStore from '@/store/modules/user'
 
 NProgress.configure({
   // easing: 'ease', // 动画方式
@@ -14,10 +13,21 @@ NProgress.configure({
 })
 
 const ROUTER_WHITE_LIST = [
-  RouteNameEnum.FORBIDDEN,
-  RouteNameEnum.NOT_FOUND,
-  RouteNameEnum.REDIRECT,
+  ROUTE_NAME_ENUM.FORBIDDEN,
+  ROUTE_NAME_ENUM.REDIRECT,
 ]
+
+/**
+ * 未知路由
+ */
+const NOT_MATCH_ROUTE: RouteRecordRaw = {
+  path: '/:pathMatch(.*)*',
+  name: ROUTE_NAME_ENUM.NOT_MATCH,
+  redirect: '/exception/404',
+  meta: {
+    hideMenu: true,
+  },
+}
 
 export default function createPermissionGuard(router: Router) {
   router.beforeEach(async (to, from, next) => {
@@ -26,20 +36,20 @@ export default function createPermissionGuard(router: Router) {
     const userStore = useUserStore()
 
     // 判断访问的页面是登陆页，如果有 Token 就不需要再去登录了
-    if (to.name === RouteNameEnum.LOGIN) {
+    if (to.name === ROUTE_NAME_ENUM.LOGIN) {
       if (userStore.token) return next(from.fullPath)
       return next()
     }
 
     // 判断访问页面是否在路由白名单地址中，如果存在直接放行
-    if (ROUTER_WHITE_LIST.includes(to.name as RouteNameEnum)) {
+    if (ROUTER_WHITE_LIST.includes(to.name as any)) {
       return next()
     }
 
     // 判断是否有 Token，没有重定向到 login 页面
     if (!userStore.token) {
       return next({
-        name: RouteNameEnum.LOGIN,
+        name: ROUTE_NAME_ENUM.LOGIN,
         query: {
           redirect: to.fullPath,
           ...to.query,
@@ -53,7 +63,7 @@ export default function createPermissionGuard(router: Router) {
       await userStore.getMenuData()
 
       userStore.asyncRoutes.forEach(route => router.addRoute(route))
-      router.addRoute(NOT_FOUND_ROUTE)
+      router.addRoute(NOT_MATCH_ROUTE)
 
       return next({ ...to, replace: true })
     }
@@ -61,7 +71,7 @@ export default function createPermissionGuard(router: Router) {
     // 角色验证（角色验证和动态路由使用一种即可）
     // if (!userStore.hasRole(to.meta.role)) {
     //   return next({
-    //     name: RouteNameEnum.FORBIDDEN,
+    //     name: ROUTE_NAME_ENUM.FORBIDDEN,
     //   })
     // }
 

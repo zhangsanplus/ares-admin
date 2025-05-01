@@ -6,5 +6,8 @@
     "dbaeumer.vscode-eslint",
     "stylelint.vscode-stylelint",
     "streetsidesoftware.code-spell-checker"
+  ],
+  "unwantedRecommendations": [
+    "octref.vetur"
   ]
 }

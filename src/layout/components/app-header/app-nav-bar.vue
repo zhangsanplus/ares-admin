@@ -75,9 +75,9 @@
 </template>
 
 <script setup lang="ts">
+import { useFullscreen } from '@vueuse/core'
 import useAppStore from '@/store/modules/app'
 import useUserStore from '@/store/modules/user'
-import { useFullscreen } from '@vueuse/core'
 
 enum CommandEnum {
   github = 'github',

@@ -1,12 +1,12 @@
 import type { RouteLocationNormalized, RouteRecordRaw, TabItem } from 'vue-router'
-import { RouteNameEnum } from '@/enums/route'
+import { ROUTE_NAME_ENUM } from '@/constants'
 
 const BAN_LIST = [
-  RouteNameEnum.REDIRECT,
-  RouteNameEnum.LOGIN,
-  RouteNameEnum.REDIRECT,
-  RouteNameEnum.FORBIDDEN,
-  RouteNameEnum.NOT_FOUND,
+  ROUTE_NAME_ENUM.REDIRECT,
+  ROUTE_NAME_ENUM.LOGIN,
+  ROUTE_NAME_ENUM.REDIRECT,
+  ROUTE_NAME_ENUM.FORBIDDEN,
+  ROUTE_NAME_ENUM.NOT_FOUND,
 ]
 
 function getAffixTabs(routes: RouteRecordRaw[]) {
@@ -48,7 +48,7 @@ const useTabsStore = defineStore('tabs', () => {
    * 增加 tab
    */
   function addTab(route: RouteLocationNormalized) {
-    if (BAN_LIST.includes(route.name as RouteNameEnum)) return
+    if (BAN_LIST.includes(route.name as typeof BAN_LIST[number])) return
     if (route.meta?.hideTab) return
     if (visitedTabList.value.some(i => i.path === route.path)) return
 

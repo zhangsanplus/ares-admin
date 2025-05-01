@@ -1,6 +1,4 @@
-<script lang="tsx">
 import { ElDivider, ElSpace } from 'element-plus'
-import { defineComponent, h } from 'vue'
 
 export default defineComponent({
   name: 'BaseSpace',
@@ -14,4 +12,3 @@ export default defineComponent({
     )
   },
 })
-</script>

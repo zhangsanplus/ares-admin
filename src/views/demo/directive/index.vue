@@ -1,17 +1,17 @@
 <template>
   <XCard title="v-auth 按钮权限指令">
-    当前用户权限：{{ userinfo.authList }}
-    <p>
-      <ElButton v-auth="AuthEnum.ADD" type="primary">
+    <p>当前用户权限：{{ userinfo.authList }}</p>
+    <ElSpace>
+      <ElTag v-auth="AUTH_EMUM.ADD" type="primary">
         新增
-      </ElButton>
-      <ElButton v-auth="AuthEnum.DELETE" type="danger">
+      </ElTag>
+      <ElTag v-auth="AUTH_EMUM.DELETE" type="danger">
         删除
-      </ElButton>
-      <ElButton v-auth="AuthEnum.DETAILS" type="info">
+      </ElTag>
+      <ElTag v-auth="AUTH_EMUM.DETAILS" type="info">
         查看
-      </ElButton>
-    </p>
+      </ElTag>
+    </ElSpace>
   </XCard>
 
   <XCard title="v-copy 复制指令">
@@ -75,9 +75,6 @@
   </XCard>
 
   <XCard title="v-input-trim 指令">
-    <p style="color: #888;">
-      失焦后自动移除两端空格，并触发一次input事件
-    </p>
     <p>当前输入长度为: {{ value.length }}</p>
     <ElInput
       v-model="value"
@@ -90,11 +87,11 @@
 </template>
 
 <script setup lang="ts">
+import { AUTH_EMUM } from '@/constants'
 // v-copy 全局注册
 // v-throttle 手动引入方式
 import vDebounce from '@/directives/debounce'
 import vThrottle from '@/directives/throttle'
-import { AuthEnum } from '@/enums/auth'
 import useUserStore from '@/store/modules/user'
 
 const userStore = useUserStore()

@@ -1,4 +1,5 @@
 import type { PropType } from 'vue'
+import type { XTableChangeData, XTableColumn, XTableData, XTableSort, XTableState } from './types'
 import { ElLoading, ElPagination, ElTable, ElTableColumn } from 'element-plus'
 import './index.scss'
 
@@ -186,9 +187,8 @@ export default defineComponent({
      */
     function handlePageSizeChange(pageSize: number) {
       const { sortBy, sortOrder } = tableState
+      // 延迟，下拉框溢出可能导致 body 出现滚动条
       nextTick(() => {
-        // 下拉框溢出可能导致溢出 body 出现滚动条
-        // 加个延迟，等下拉隐藏
         onChange({ pageNum: 1, pageSize, prop: sortBy, order: sortOrder, type: 'size' })
       })
     }

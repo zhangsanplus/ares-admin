@@ -38,9 +38,9 @@
 
 <script setup lang="ts">
 import type { RouteLocationNormalized } from 'vue-router'
-import { RouteNameEnum } from '@/enums/route'
-import useTabsStore from '@/store/modules/tabs'
 import { useEventListener } from '@vueuse/core'
+import { ROUTE_NAME_ENUM } from '@/constants'
+import useTabsStore from '@/store/modules/tabs'
 
 const props = defineProps<{
   route: RouteLocationNormalized
@@ -71,7 +71,7 @@ async function handleSelect(command: string) {
   if (command === CommandEnum.reload) {
     tabsStore.deleteCache(props.route.name as string)
     await router.push({
-      name: RouteNameEnum.REDIRECT,
+      name: ROUTE_NAME_ENUM.REDIRECT,
       params: {
         path: fullPath,
       },
@@ -97,7 +97,7 @@ async function handleSelect(command: string) {
     }
   } else if (command === CommandEnum.all) {
     tabsStore.resetTabList()
-    router.push({ name: RouteNameEnum.DASHBOARD })
+    router.push({ name: ROUTE_NAME_ENUM.DASHBOARD })
   }
 }
 

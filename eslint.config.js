@@ -45,43 +45,6 @@ export default antfu(
 
       // 规定 Vue 组件中块的顺序为 template、script、style
       'vue/block-order': [2, { order: ['template', 'script', 'style'] }],
-
-      // // 编译器宏排序
-      // 'vue/define-macros-order': [2, {
-      //   order: [
-      //     'defineOptions',
-      //     'defineProps',
-      //     'defineEmits',
-      //     'defineModel',
-      //   ],
-      //   defineExposeLast: true, // defineExpose 放在最后
-      // }],
-
-      // 导入排序
-      // 'import/order': [2, {
-      //   groups: [
-      //     'builtin', // Node.js 内置模块，如 `fs`, `path` 等
-      //     'external', // 第三方模块，从 `node_modules` 导入的模块
-      //     'internal', // 项目内部的模块，可以使用通配符,如 `@/**`
-      //     'parent', // 父目录中的模块，如 `../../module`
-      //     'sibling', // 兄弟目录中的模块，如 `./module`
-      //     'index', // 当前目录中的索引模块，如 `./`
-      //     'object', // 解构导入的对象，如 `import { named } from 'module'`
-      //     'type', // 类型导入，如 `import type { Type } from 'module'`
-      //   ],
-      //   pathGroups: [
-      //     {
-      //       pattern: '@/**', // 匹配 @ 开头的路径，作为内部模块处理
-      //       group: 'internal', // 归为 internal 组
-      //     },
-      //     {
-      //       pattern: '~/**', // 匹配 ~ 开头的路径，作为内部模块处理
-      //       group: 'internal', // 归为 internal 组
-      //     },
-      //   ],
-      //   pathGroupsExcludedImportTypes: ['type'], // 排除类型导入
-      //   alphabetize: { order: 'asc', caseInsensitive: false }, // 按字母顺序排列，区分大小写
-      // }],
     },
   },
 )

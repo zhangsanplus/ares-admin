@@ -1,5 +1,5 @@
 <template>
-  <XCard full>
+  <XCard fullpage>
     <ElEmpty class="exception" description="抱歉，你无权访问这个页面。">
       <ElButton type="primary" @click="goHome">
         首页

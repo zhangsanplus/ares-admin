@@ -1,0 +1,46 @@
+/**
+ * ElementPlus 主题样式覆盖
+ * https://github.com/element-plus/element-plus/blob/dev/packages/theme-chalk/src/common/var.scss
+ */
+@forward 'element-plus/theme-chalk/src/common/var.scss' with (
+  $colors: (
+    'primary': (
+      'base': #165dff,
+    ),
+    'success': (
+      'base': #00b42a,
+    ),
+    'warning': (
+      'base': #faad14,
+    ),
+    'danger': (
+      'base': #f53f3f,
+    ),
+  ),
+  $fill-color: (
+    'light': #f7f8fa,
+  ),
+  $border-radius: (
+    'base': 3px,
+  ),
+  $font-family: (
+    '': 'Arial, PingFang SC, Tahoma, sans-serif, Helvetica Neue, Helvetica',
+  ),
+  $loading: (
+    'fullscreen-spinner-size': 28px,
+    'spinner-size': 36px,
+  ),
+  $table:(
+    'header-bg-color': #f6f7f8,
+    'tr-bg-color': var(--el-bg-color-overlay),
+  ),
+  $table-padding: (
+    'default': 8px 0,
+  ),
+  $table-cell-padding: (
+    'default': 0 15px,
+  ),
+  $menu: (
+    'item-height': 48px,
+  ),
+);
